@@ -1,0 +1,33 @@
+/*ul 태그, ol 태그의 머리기호 제거*/
+nav ul, nav ol, nav li, nav a{
+    list-style:none;
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: center;
+    align-items:center;
+    justify-content: center;
+    background-color:black;
+    font-size:large;
+    font-weight:bold;
+    color: beige;
+    text-decoration: none;
+    
+    padding:5px;
+    margin-left:25px;
+    margin-right:25px;
+    
+}
+
+nav img{
+    margin-right:55px;
+    height:45px;
+    width:auto;
+}
+
+a{text-decoration: none;}
+a:hover{color:red; ;text-decoration:underline}
+a.current-page{
+    color:red;
+    font-weight: bold;
+}

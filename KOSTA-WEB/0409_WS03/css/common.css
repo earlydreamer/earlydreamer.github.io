@@ -1,0 +1,19 @@
+
+#promotion{
+    display:flex;    flex-wrap:wrap;    position:relative;    height:150px;    overflow:auto;
+    background-color:cornsilk;
+    padding:25px;    margin-left:25px;    margin-right:25px;    margin-bottom:15px;
+
+  }
+
+  .promotion_text{
+    display:flex;    flex-wrap:wrap;    position:relative;    justify-content: center;    align-items: center;
+    font-size: larger;    font-weight: bold;
+    height:100%;    width:100%;
+    
+  }
+
+  .contents-title{
+    display:flex;   flex-wrap:wrap; position:relative;  justify-content:center; align-items:center;
+    margin-bottom:0px;
+  }

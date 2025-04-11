@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko-kr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./css/footer.css">
+    <link rel="stylesheet" type="text/css" href="./css/common.css">
+    <link rel="stylesheet" type="text/css" href="./css/navbar.css">
+    <!-- link는 여러개 할 수 있지만 겹치면 마지막에 입력한 링크의 것이 우선도가 높다 -->
+    <title>KOSTA</title>
+</head>
+<style>
+    #articles {
+        /* background-color: yellow; */
+        /*flex-wrap을 사용하는 방식*/
+        /* display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        flex-direction: row;
+        column-gap: 10px;
+        row-gap: 10px;
+        margin-left: 25px;
+        margin-right: 25px; */
+        /*grid를 사용하는 방식*/
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(32%, 1fr));
+        /*영역의 33% 차지(3개씩 출력)*/
+        margin-left: 25px;
+        margin-right: 25px;
+        column-gap: 10px;
+
+    }
+
+    #articles {
+        /* background-color: cornsilk; */
+    }
+
+    article {
+        /* margin-right: 10px; */
+    }
+
+    .main-item img {
+        /*상위 영역의 사이즈에 맞춤*/
+        width: 100%;
+    }
+
+    .main-item {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        /*상위 영역의 사이즈에 맞춤*/
+
+    }
+
+    .main-item h1,
+    p {
+        /*상하간격 너무 넓어서 좁힘*/
+        margin: 5px;
+    }
+
+    .main-item form {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        margin-right: 25px;
+    }
+
+    .main-item .contents {
+        /* background-color: white; */
+    }
+</style>
+
+<body>
+    <div id="container">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="index.html"><img src="./img/logo.jpg" alt="logo"></a> </li>
+                    <li><a href="index.html" class="current-page">HOME</a></li>
+                    <li><a href="personal.html">개인</a></li>
+                    <li><a href="business.html"> 기업</a></li>
+                    <li><a href="login.html"> 로그인 </a> </li>
+                    <li><a href="register.html"> 회원가입</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <div id="promotion">
+                <!-- <img src="" alt="광고 이미지"> -->
+                <div class="promotion_text">광고 영역 텍스트</div>
+            </div>
+
+            <div id="articles">
+                <article>
+                    <section id="main-item1" class="main-item">
+                        <img src="https://picsum.photos/id/1/200" alt="image1">
+                        <h1>main-item 1</h1>
+                        <div class="contents">
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut
+                                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                                ullamco
+                                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
+                                in
+                                voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                                cupidatat
+                                non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut
+                                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                                ullamco
+                                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
+                                in
+                                voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                                cupidatat
+                                non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </p>
+                        </div>
+                        <form>
+                            <Button type="submit">button1</Button>
+                        </form>
+
+                    </section>
+                </article>
+                <article>
+                    <section id="main-item2" class="main-item">
+                        <img src="https://picsum.photos/id/1/200" alt="image2">
+                        <h1>main-item 2</h1>
+                        <div class="contents">
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut
+                                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                                ullamco
+                                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
+                                in
+                                voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                                cupidatat
+                                non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </p>
+                        </div>
+                        <form>
+                            <Button type="submit">button2</Button>
+                        </form>
+                    </section>
+                </article>
+                <article>
+                    <section id="main-item3" class="main-item">
+
+                        <img src="https://picsum.photos/id/1/200" alt="image3">
+                        <h1>main-item 3</h1>
+                        <div class="contents">
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut
+                                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                                ullamco
+                                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit
+                                in
+                                voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                                cupidatat
+                                non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </p>
+                        </div>
+                        <form>
+                            <Button type="submit">button3</Button>
+                        </form>
+
+                    </section>
+                </article>
+            </div>
+
+        </main>
+        <footer>
+            <!-- <hr class="footer-hr"> -->
+            <!-- 주소 각 부분이 의미를 갖도록 잘라서 -->
+            <dl id="footer-address">
+                <dt class="post-number"> 12345 </dt>
+                <dt class="address-section-1">address 1 </dt>
+                <dt class="address-section-2">address 2 </dt>
+                <dt class="address-section-3">address 3 </dt>
+            </dl>
+            <dl id="footer-phone">
+                <dt> 02-0000-0000 </dt>
+            </dl>
+        </footer>
+
+    </div>
+</body>
+<script src="js/banner.js"></script>
+
+
+</html>

@@ -1,0 +1,44 @@
+
+footer{
+    border-top:1px solid lightgray;
+    margin-top:15px;
+    list-style: none;
+    flex-direction: row;
+
+    background-color:lightcyan;
+    
+    padding:3px;
+    font-size:large;
+    
+    margin-left:25px;
+    margin-right: 25px;
+    margin-bottom: 25px;
+
+}
+
+#footer-address{
+    display:flex;
+    justify-content: flex-end;
+    column-gap: 5px;
+
+    margin-left:25px;
+    margin-right: 25px;
+    margin-top:10px;
+    margin-bottom:5px;
+
+}
+#footer-phone{
+    display:flex;
+    justify-content: flex-end;
+    column-gap: 5px;
+    
+    margin-left:25px;
+    margin-right: 25px;
+    margin-top:10px;
+    margin-bottom:5px;
+
+}
+/* .footer-hr{
+    /*hr에 마진 안줘서 딱 붙게*/
+    /* margin:0px;
+} */ 

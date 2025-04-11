@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko-kr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./css/footer.css">
+    <link rel="stylesheet" type="text/css" href="./css/common.css">
+    <link rel="stylesheet" type="text/css" href="./css/navbar.css">
+
+    <title>KOSTA</title>
+</head>
+<style>
+    .fieldset {}
+
+    main {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    #login_form {
+        padding: 20px;
+        flex: auto
+    }
+
+    #login_form fieldset {
+        border: 1px solid gray;
+        padding: 50px;
+    }
+
+    #login_form label {
+        display: inline-block;
+        width: 80px;
+    }
+
+    #login_form input {
+        display: inline-block;
+        margin-bottom: 10px;
+        margin-left: 15px;
+    }
+
+    .button-area {
+        display: flex;
+        justify-content: flex-end;
+    }
+</style>
+
+<body>
+    <div id="container">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="index.html"><img src="./img/logo.jpg" alt="logo"></a> </li>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="personal.html">개인</a></li>
+                    <li><a href="business.html"> 기업</a></li>
+                    <li><a href="login.html" class="current-page"> 로그인 </a> </li>
+                    <li><a href="register.html"> 회원가입</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div id="promotion">
+            <!-- <img src="" alt="광고 이미지"> -->
+            <div class="promotion_text">광고 영역 텍스트</div>
+
+            <main>
+        </div>
+        <div class="contents">
+            <h1 class="contents-title">
+                Login
+            </h1>
+            <!-- <hr> -->
+            <form id="login_form" action="index2.html" method="post"> <!-- index2 = Servlit 들어간 페이지 될 예정 -->
+                <fieldset>
+                    <label for="user_id">아이디</label><input type="text" id="user_id"
+                        autofocus><span></span><br><!-- 유효성 검사 텍스트 표시를 위한 빈 span 태그-->
+                    <label for="user_password">비밀번호</label><input type="password"
+                        id="user_password"><span></span><!-- 유효성 검사 텍스트 표시를 위한 빈 span 태그-->
+
+                    <hr>
+                    <div class="button-area">
+                        <button type="button" id="login_button">로그인</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        </main>
+        <footer>
+            <!-- 주소 각 부분이 의미를 갖도록 잘라서 -->
+            <dl id="footer-address">
+                <dt class="post-number"> 12345 </dt>
+                <dt class="address-section-1">address 1 </dt>
+                <dt class="address-section-2">address 2 </dt>
+                <dt class="address-section-3">address 3 </dt>
+            </dl>
+            <dl id="footer-phone">
+                <dt> 02-0000-0000 </dt>
+            </dl>
+        </footer>
+
+    </div>
+</body>
+<script>
+    //form의 input 가져오기
+    const userId = document.getElementById("user_id");
+    const userPassword = document.getElementById("user_password");
+    //form의 button 가져오기
+    const login_button = document.getElementById("login_button");
+
+    //userId, userPassword의 유효성 검사
+    //한글은 입력할 수 없다. 영문, 숫자, 특수문자만 가능
+    //유효성 검사 로직
+    function validateInput(input) {
+        const regex = /^[a-zA-Z0-9!@#$%^&*()_+={}\[\]:;"'<>,.?~`-]+$/; //정규표현식
+        return input.value.trim() !== "" && regex.test(input.value);
+    }
+
+
+    const idValidation = (event) => {
+        if (event.type === "input" || event.type === "focus") {
+            if (userId.value === "") { //input이 비어있을 경우
+                //비어있을 경우에는 유효성 검사 메시지 띄우지 않음
+                userId.nextElementSibling.textContent = "";
+            } else if (!validateInput(userId)) {
+                userId.nextElementSibling.textContent = "영문, 숫자, 특수문자만 입력 가능합니다.";
+                userId.nextElementSibling.style.color = "red"; //유효성 검사 실패 시 빨간색으로 표시
+            } else {
+                userId.nextElementSibling.textContent = ""; //유효성 검사 통과 시 빈 문자열로 설정
+            }
+        } else if (event.type === "blur") {
+            userId.nextElementSibling.textContent = ""; //포커스 벗어날 시 빈 문자열로 전환
+        }
+    }
+
+    userId.addEventListener("input", idValidation); //input 이벤트 리스너 추가
+    userId.addEventListener("focus", idValidation); //input 이벤트 리스너 추가
+    userId.addEventListener("blur", idValidation); //blur 이벤트 리스너 추가
+
+    login_button.addEventListener("click", (event) => {
+        // event.preventDefault(); //기본 동작 방지 -> 버튼이 Button타입일 경우 기본동작이 별도로 등록되지 않았으니 굳이 필요없음... 
+
+        if (userId.value === "") {
+            alert("아이디를 입력해주세요.");
+            userId.focus(); //아이디 입력란에 포커스 이동
+        } else if (userPassword.value === "") {
+            alert("비밀번호를 입력해주세요.");
+            userPassword.focus(); //비밀번호 입력란에 포커스 이동
+        } else {
+            //로그인 요청하는 로직
+            //document.getElementById("login_form").submit(); //폼 제출
+            //폼 제출해도 504 에러 발생 -> 서버가 없어서 목업으로 처리 (알림만 띄우고 리다이렉트)
+            alert("로그인 성공(목업)");
+            //index.html로 이동
+            location.href = "index.html"; //index2.html로 이동
+
+        }
+
+    });
+
+</script>
+<script src="js/banner.js"></script>
+</html>

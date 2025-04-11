@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko-kr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="./css/app.css">
+    <link rel="stylesheet" type="text/css" href="./css/editor.css">
+    <link rel="stylesheet" type="text/css" href="./css/header.css">
+    <link rel="stylesheet" type="text/css" href="./css/list.css">
+</head>
+<style>
+    /*CSS는 외부 파일로*/
+</style>
+
+<body>
+    <div class="app">
+        <header>
+            <h3> Todo List : 오늘의 Plan😎</h3>
+            <h1 id="date-title"><time id="today-date-title">오늘 날짜 년 월 일</time>
+        </header>
+        <div class="editor">
+            <input type="text" id="input-todo" placeholder="새로운 할 일 입력">
+            <button id="add-todo">추가</button>
+        </div>
+        <main>
+            <div class="search-input">
+                <h3>todo-list</h3>
+                <input type="text" id="search-todo" placeholder="검색어를 입력하세요.">
+            </div>
+            <div class="todo-item" id="todo-item">
+                <!-- 이 영역은 JS로 출력 -->
+            </div>
+    </div>
+    </main>
+    <footer id="footer">
+        <div class="footer-text">
+            <ul>
+                <li>2025-04-11</li>
+                <li>Park Jaehyun</li>
+            </ul>
+        </div>
+    </footer>
+    </div>
+</body>
+<script>
+    
+    const returnToday = function () {
+        const today = new Date();//현재 날짜를 변수에 저장
+        const formattedDate = today.toISOString().split('T')[0];// 날짜를 YYYY-MM-DD 형식으로 변환
+        return formattedDate;//todayDateTitle 요소에 날짜 입력
+    } 
+
+    const setToday = function (target) {
+        // target : 오늘 날짜를 표시할 요소
+        const todayDateTitle = target;
+        const formattedDate = returnToday();
+        todayDateTitle.innerText = formattedDate;//todayDateTitle 요소에 날짜 입력
+    }
+
+    setToday(document.getElementById('today-date-title'));
+
+    let list = [];
+    list.push({ id: 1, complete: false, text: '할 일 1', date: returnToday() });
+    list.push({ id: 2, complete: false, text: '할 일 2', date: returnToday() });
+    list.push({ id: 3, complete: false, text: '할 일 3', date: returnToday() });
+
+    const addTodoList = function () {
+        const inputTodo = document.getElementById('input-todo');
+        const todoText = inputTodo.value;
+        const todayDateTitle = document.getElementById('today-date-title').innerText;
+        const todoId = list.length + 1;
+        const todoComplete = false;
+        if (todoText === '') {
+            alert('할 일을 입력하세요.');
+            return;
+        }
+
+        list.push({ id: todoId, complete: todoComplete, text: todoText, date: todayDateTitle });
+        inputTodo.value = '';//input 초기화
+        renderTodoList(list);
+    }
+
+    const renderTodoList = function (list) {
+        let listPrint = [...list];
+        const todoItem = document.querySelector('#todo-item');
+        todoItem.innerHTML = ""; //그리기 전 초기화
+        for (let i = 0; i < listPrint.length; i++) {
+            todoItem.innerHTML += `<div class='todo-item-detail'>` +
+                `<input type='checkbox' ${listPrint[i].complete ? 'checked' : ''} data-todo-id='` + listPrint[i].id + `' onChange='toggleTodoComplete(` + listPrint[i].id + `)'>` +
+                `<label class='todo-text'>` + listPrint[i].text + `</label><span></span>` +
+                `<time>` + listPrint[i].date + `</time>` +
+                `<button class='delete-todo' onclick='deleteTodoList(` + listPrint[i].id + `)'>삭제</button>` +
+                `</div>`;
+        }
+        if (listPrint.length === 0) todoItem.innerHTML = "<div class='todo-item-detail'><label>할 일이 없습니다.</label></div>";
+    }
+
+    const deleteTodoList = function (target_id) {
+        alert('삭제되었습니다.');
+        //list에서  target_id에 해당하는 todo 삭제
+        list = list.filter(function (item) {
+            return item.id !== target_id;
+        });
+        renderTodoList(list);
+    }
+
+    const toggleTodoComplete = function (target_id) {
+        // target_id에 해당하는 todo의 complete 속성 변경
+        let checkbox = document.querySelector(`input[data-todo-id='${target_id}']`);
+        list = list.map(function (item) {
+            if (item.id === target_id) {
+                item.complete = !item.complete; 1
+            }
+            return item;
+        });
+        renderTodoList(list);
+    }
+
+    const searchTodoList = function () {
+        let value = document.getElementById('search-todo').value; // search-todo의 값
+        let result = list.filter(item => item.text.includes(value)); // value에 search-todo의 값에 있는 값을 포함하는 todo list
+        renderTodoList(result); // 필터링된 todo list를 렌더링
+    }
+
+    document.getElementById('add-todo').addEventListener('click', addTodoList);
+    document.getElementById('search-todo').addEventListener('keyup', searchTodoList)
+
+
+    renderTodoList(list);//초기 list 렌더링
+
+</script>
+
+</html>

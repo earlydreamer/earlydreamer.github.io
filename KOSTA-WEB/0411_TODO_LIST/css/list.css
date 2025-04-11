@@ -1,0 +1,98 @@
+
+.search-input [type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    margin-right: 10px;
+}
+
+.todo-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.todo-item-detail {
+    display: flex;
+    flex: 1;
+    justify-content: flex-start;
+    align-items: center;
+    row-gap: 20px;
+    padding: 20px;
+    border-bottom: 1px solid rgb(240, 240, 240);
+
+}
+
+.todo-item-detail input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.todo-item-detail span {
+    margin-right: 10px;
+}
+
+.todo-item-detail #todo-text {
+    margin-right: 10px;
+    flex: 1;
+}
+
+.todo-item-detail time {
+    margin-right: 10px;
+    flex: 1;
+}
+
+.todo-item-detail button {
+    width: 50px;
+}
+
+.todo-item-detail button.delete-todo {
+    background-color: #ccc;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.todo-item-detail button.delete-todo:hover {
+    background-color: gray;
+    color: white;
+}
+
+.todo-item-detail button.delete-todo:active {
+    background-color: crimson
+}
+
+.todo-item-detail label {
+    display: flex;
+    width: 250px;
+    /*할일 목록의 텍스트 속성은 이 영역의 영향을 받음*/
+}
+
+#footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #fdfdfd;
+    border-top: 1px solid #ccc;
+    margin: 0;
+    padding: 0;
+}
+
+.footer-text {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+}
+
+.footer-text li {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}

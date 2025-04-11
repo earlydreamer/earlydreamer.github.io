@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko-kr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./css/footer.css">
+    <link rel="stylesheet" type="text/css" href="./css/common.css">
+    <link rel="stylesheet" type="text/css" href="./css/navbar.css">
+
+    <title>KOSTA</title>
+</head>
+<style>
+    #form_register {
+        padding: 20px;
+        flex: auto
+    }
+
+    #form_register fieldset {
+        border: 1px solid gray;
+        padding: 50px;
+    }
+
+    #form_register label {
+        display: inline-block;
+        width: 120px;
+    }
+
+    #form_register input {
+        display: inline-block;
+        margin-bottom: 10px;
+        margin-left: 15px;
+    }
+
+    .button-area {
+        display: flex;
+        justify-content: flex-end;
+    }
+</style>
+
+<body>
+    <div id="container">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="index.html"><img src="./img/logo.jpg" alt="logo"></a> </li>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="personal.html">개인</a></li>
+                    <li><a href="business.html"> 기업</a></li>
+                    <li><a href="login.html"> 로그인 </a> </li>
+                    <li><a href="register.html" class="current-page"> 회원가입</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div id="promotion">
+            <!-- <img src="" alt="광고 이미지"> -->
+            <div class="promotion_text">광고 영역 텍스트</div>
+        </div>
+
+        <main>
+            <div class="contents">
+                <h1 class="contents-title">Register</h1>
+                <!-- <hr> -->
+                <form id="form_register" action="index2.html" method="post"><!-- index2 = Servlit 들어간 페이지 될 예정 -->
+                    <fieldset>
+                        <label for="user_name">이름</label><input type=text id="user_name" required="required   "
+                            autofocus="autofocus"><br> <!-- required = 반드시 입력해라 -->
+                        <label for="user_email">이메일</label><input type=email id="user_email"><span></span><br>
+                        <!-- input type : 입력 형식에 맞게 -->
+                        <label for="user_phone">연락처</label><input type=tel id="user_phone"><span></span><br>
+                        <!-- 파싱 방법에 따라 type 안주기도 함 -->
+                        <label for="user_password">비밀번호</label><input type=password id="user_password"><span></span><br>
+                        <label for="user_password_validation">비밀번호 확인</label><input type=password
+                            id="user_password_validation"><span></span><br>
+
+                        <hr>
+                        <div class="button-area">
+                            <button type="submit" id="submit_button">회원가입</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+        </main>
+        <footer>
+            <!-- 주소 각 부분이 의미를 갖도록 잘라서 -->
+            <dl id="footer-address">
+                <dt class="post-number"> 12345 </dt>
+                <dt class="address-section-1">address 1 </dt>
+                <dt class="address-section-2">address 2 </dt>
+                <dt class="address-section-3">address 3 </dt>
+            </dl>
+            <dl id="footer-phone">
+                <dt> 02-0000-0000 </dt>
+            </dl>
+        </footer>
+
+    </div>
+</body>
+<script>
+    //form의 input 가져오기
+    const form = document.getElementById("form_register");
+    const user_name = document.getElementById("user_name");
+    const user_email = document.getElementById("user_email");
+    const user_phone = document.getElementById("user_phone");
+    const user_password = document.getElementById("user_password");
+    const user_password_validation = document.getElementById("user_password_validation");
+
+    const validationEmail = (event) => {
+        // 이메일 유효성 검사, 공백일 경우 validation 검사 안함
+        if (event.type === "input") {
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            // 이메일 표현이 정규식에 맞지 않거나 공백이 아닐 경우
+            if (!emailPattern.test(user_email.value) || user_email.value === "") {
+                //이메일 형식이 유효하지 않습니다. span에 표시
+                user_email.nextElementSibling.textContent = "이메일 형식이 유효하지 않습니다.";
+                user_email.nextElementSibling.style.color = "red"; // 빨간색으로 표시
+            } else {
+                user_email.nextElementSibling.textContent = ""; // span 초기화
+            }
+        }
+
+    }
+
+    user_email.addEventListener("input", validationEmail);
+    user_password.addEventListener("input", function (event) {
+        if (event.type === "input") {
+            if (user_password.value.length < 8 && user_password.value !== "") {
+                user_password.nextElementSibling.textContent = "비밀번호는 8자 이상이어야 합니다.";
+                user_password.nextElementSibling.style.color = "red"; // 빨간색으로 표시
+            } else {
+                user_password.nextElementSibling.textContent = ""; // span 초기화
+            }
+        }
+    });
+
+    user_password_validation.addEventListener("input", function (event) {
+        if (event.type === "input") {
+            if (user_password.value !== user_password_validation.value && user_password_validation.value !== "") {
+                user_password_validation.nextElementSibling.textContent = "비밀번호가 일치하지 않습니다.";
+                user_password_validation.nextElementSibling.style.color = "red"; // 빨간색으로 표시
+            } else {
+                user_password_validation.nextElementSibling.textContent = ""; // span 초기화
+            }
+        }
+    });
+
+
+    //submit 버튼 클릭 시 이벤트 발생
+    form.addEventListener("submit", function (event) {
+        event.preventDefault(); // 기본 동작 방지
+
+        console.log(`이름: ${user_name.value}`);
+        console.log(`이메일: ${user_email.value}`);
+        console.log(`연락처: ${user_phone.value}`);
+        console.log(`비밀번호: ${user_password.value}`);
+        console.log(`비밀번호 확인: ${user_password_validation.value}`);
+
+        // 유효성 검사
+        if (user_name.value === "") {
+            alert("이름을 입력하세요.");
+            user_name.focus(); // 이름 입력란으로 포커스 이동
+            return;
+        } else if (user_email.value === "") {
+            alert("이메일을 입력하세요.");
+            user_email.focus(); // 이메일 입력란으로 포커스 이동
+            return;
+        } else if (!validationEmail(event)) {
+            alert("이메일 형식이 유효하지 않습니다.");
+            user_email.focus(); // 이메일 입력란으로 포커스 이동
+            return;
+        } else if (user_phone.value === "") {
+            alert("연락처를 입력하세요.");
+            user_phone.focus(); // 연락처 입력란으로 포커스 이동
+            return;
+        } else if (user_password.value === "") {
+            alert("비밀번호를 입력하세요.");
+            user_password.focus(); // 비밀번호 입력란으로 포커스 이동
+            return;
+        } else if (user_password_validation.value === "") {
+            alert("비밀번호 확인을 입력하세요.");
+            user_password_validation.focus(); // 비밀번호 확인 입력란으로 포커스 이동
+            return;
+        } else if (user_password.value !== user_password_validation.value) {
+            alert("비밀번호가 일치하지 않습니다.");
+            user_password_validation.focus(); // 비밀번호 확인 입력란으로 포커스 이동
+            return;
+        } else if (user_password.value.length < 8) {
+            alert("비밀번호는 8자 이상이어야 합니다.");
+            user_password.focus(); // 비밀번호 입력란으로 포커스 이동
+            return;
+        }
+        // 모든 유효성 검사를 통과한 경우 서버로 데이터 전송
+        // form.submit(); // 서버로 데이터 전송 -> 실제 서버가 안 떴으므로 504 응답 나옴
+        alert("회원가입 성공!"); // 목업으로 성공 메시지 출력
+        // 리다이렉트
+        location.href = "index.html"; // index.html로 리다이렉트
+
+    });
+</script>
+<script src="js/banner.js"></script>
+
+</html>
