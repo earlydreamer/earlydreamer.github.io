@@ -45,12 +45,12 @@
     </div>
 </body>
 <script>
-    
+
     const returnToday = function () {
         const today = new Date();//현재 날짜를 변수에 저장
         const formattedDate = today.toISOString().split('T')[0];// 날짜를 YYYY-MM-DD 형식으로 변환
         return formattedDate;//todayDateTitle 요소에 날짜 입력
-    } 
+    }
 
     const setToday = function (target) {
         // target : 오늘 날짜를 표시할 요소
@@ -62,15 +62,16 @@
     setToday(document.getElementById('today-date-title'));
 
     let list = [];
-    list.push({ id: 1, complete: false, text: '할 일 1', date: returnToday() });
-    list.push({ id: 2, complete: false, text: '할 일 2', date: returnToday() });
-    list.push({ id: 3, complete: false, text: '할 일 3', date: returnToday() });
+    let currentId = 0; // 🟩 전역 ID 변수로 중복 방지
+    list.push({ id: currentId++, complete: false, text: '할 일 1', date: returnToday() });
+    list.push({ id: currentId++, complete: false, text: '할 일 2', date: returnToday() });
+    list.push({ id: currentId++, complete: false, text: '할 일 3', date: returnToday() });
 
     const addTodoList = function () {
         const inputTodo = document.getElementById('input-todo');
         const todoText = inputTodo.value;
         const todayDateTitle = document.getElementById('today-date-title').innerText;
-        const todoId = list.length + 1;
+        const todoId = currentId++; // 🟩 중복 방지를 위해 전역 ID 사용 (삭제된 항목의 인덱스 재사용하지 않고 새로운 id 계속해서 부여)
         const todoComplete = false;
         if (todoText === '') {
             alert('할 일을 입력하세요.');
@@ -88,10 +89,10 @@
         todoItem.innerHTML = ""; //그리기 전 초기화
         for (let i = 0; i < listPrint.length; i++) {
             todoItem.innerHTML += `<div class='todo-item-detail'>` +
-                `<input type='checkbox' ${listPrint[i].complete ? 'checked' : ''} data-todo-id='` + listPrint[i].id + `' onChange='toggleTodoComplete(` + listPrint[i].id + `)'>` +
-                `<label class='todo-text'>` + listPrint[i].text + `</label><span></span>` +
-                `<time>` + listPrint[i].date + `</time>` +
-                `<button class='delete-todo' onclick='deleteTodoList(` + listPrint[i].id + `)'>삭제</button>` +
+                `<input type='checkbox' id='todo-${listPrint[i].id}' ${listPrint[i].complete ? 'checked' : ''} data-todo-id='${listPrint[i].id}' onChange='toggleTodoComplete(${listPrint[i].id})'>` +
+                `<label class='todo-text' for='todo-${listPrint[i].id}'>${listPrint[i].text}</label>` +
+                `<time>${listPrint[i].date}</time>` +
+                `<button class='delete-todo' onclick='deleteTodoList(${listPrint[i].id})'>삭제</button>` +
                 `</div>`;
         }
         if (listPrint.length === 0) todoItem.innerHTML = "<div class='todo-item-detail'><label>할 일이 없습니다.</label></div>";
@@ -111,7 +112,7 @@
         let checkbox = document.querySelector(`input[data-todo-id='${target_id}']`);
         list = list.map(function (item) {
             if (item.id === target_id) {
-                item.complete = !item.complete; 1
+                item.complete = !item.complete;
             }
             return item;
         });
@@ -131,5 +132,3 @@
     renderTodoList(list);//초기 list 렌더링
 
 </script>
-
-</html>
