@@ -5,7 +5,7 @@ import { PROJECTS, SECTION_META } from "@/data/portfolio";
 import { Section } from "@/components/ui/Section";
 import Image from "next/image";
 import Link from "next/link";
-import { Github, ExternalLink } from "lucide-react";
+import { Github } from "lucide-react";
 
 export function ProjectsSection() {
     const { projects } = SECTION_META;
@@ -20,7 +20,7 @@ export function ProjectsSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.1 }}
                         viewport={{ once: true }}
-                        className="glass-card overflow-hidden group flex flex-col"
+                        className="glass-card overflow-hidden group flex flex-col cursor-pointer"
                     >
                         <div className="relative aspect-video w-full overflow-hidden bg-zinc-100 dark:bg-zinc-900">
                             {project.images?.[0] ? (
@@ -35,6 +35,13 @@ export function ProjectsSection() {
                                     No Image
                                 </div>
                             )}
+                            {/* Project Type Tag */}
+                            <span className={`absolute top-3 right-3 px-2.5 py-1 rounded-full text-xs font-medium backdrop-blur-sm ${project.projectType === "team"
+                                ? "bg-[#6667AB]/90 text-white"
+                                : "bg-emerald-500/90 text-white"
+                                }`}>
+                                {project.projectType === "team" ? "팀 프로젝트" : "개인 프로젝트"}
+                            </span>
                         </div>
 
                         <div className="flex flex-1 flex-col p-6">
@@ -72,6 +79,11 @@ export function ProjectsSection() {
                                     ))}
                                 </div>
                             )}
+
+                            {/* Click hint */}
+                            <div className="text-center text-xs text-zinc-400 mt-3 pt-3 border-t border-zinc-100 dark:border-zinc-800">
+                                클릭하여 상세 보기 →
+                            </div>
                         </div>
                     </motion.div>
                 ))}

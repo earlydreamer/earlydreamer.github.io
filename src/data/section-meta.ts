@@ -6,7 +6,7 @@ export const SECTION_META = {
         developer: {
             icon: "💻",
             title: "Developer Experience",
-            intro: "프로그래머 포지션으로 참여한 프로젝트입니다.",
+            intro: "개발자 포지션으로 다음과 같은 경험을 쌓았습니다.",
         },
         planner: {
             icon: "🎮",
@@ -27,7 +27,7 @@ export const SECTION_META = {
     },
     projects: {
         title: "Projects",
-        subtitle: "주요 프로젝트 포트폴리오",
+        subtitle: "개발 관련 포트폴리오 프로젝트입니다.",
     },
     education: {
         title: "Education",

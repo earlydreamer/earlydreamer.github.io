@@ -46,11 +46,11 @@ function ExperienceList({ experiences, icon, title, colorClass, intro }: { exper
                         <div className="space-y-4">
                             {exp.projects.map((project, pIndex) => (
                                 <div key={pIndex} className="bg-white/50 dark:bg-zinc-900/50 rounded-xl p-5 border border-white/40 shadow-sm hover:shadow-md transition-shadow">
-                                    <h5 className="font-bold text-zinc-800 dark:text-zinc-200 mb-2">{project.title}</h5>
-                                    <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-3">{project.description}</p>
+                                    <h5 className="font-bold text-lg text-zinc-900 dark:text-zinc-100 mb-1">{project.title}</h5>
+                                    <p className="text-sm font-medium text-[#6667AB] dark:text-[#8889CC] mb-3">{project.description}</p>
                                     <ul className="list-disc list-outside ml-4 space-y-1.5">
                                         {project.details.map((detail, dIndex) => (
-                                            <li key={dIndex} className="text-sm text-zinc-600 dark:text-zinc-400">
+                                            <li key={dIndex} className="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
                                                 {detail}
                                             </li>
                                         ))}

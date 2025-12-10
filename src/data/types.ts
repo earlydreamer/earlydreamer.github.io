@@ -18,6 +18,7 @@ export interface Project extends ModalExtendable {
     techStack: string[];
     role: string[];
     images: string[];
+    projectType: "team" | "personal";
     links?: {
         github?: string;
         githubLinks?: { url: string; label: string }[];
