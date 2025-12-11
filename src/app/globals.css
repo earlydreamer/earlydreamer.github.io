@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Tailwind v4: Configure dark mode to use class selector for next-themes compatibility */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
     :root {
         /* Cloud Dancer (Pantone 11-4201 TCX approx) - Soft warm white */
@@ -32,30 +35,33 @@
     }
 
     .dark {
-        /* Darker equivalent */
-        --background: #0a0a0a;
-        --foreground: #ededed;
+        /* Sophisticated dark with blue-gray tint */
+        --background: #0f1219;
+        --foreground: #ffffff;
 
-        --primary: #6667AB;
-        --primary-foreground: #ffffff;
+        /* Brighter primary for dark mode - lavender tone */
+        --primary: #b8b9ff;
+        --primary-foreground: #0f1219;
 
-        --card: rgba(0, 0, 0, 0.4);
-        --card-foreground: #ededed;
-        --popover: rgba(0, 0, 0, 0.8);
-        --popover-foreground: #ededed;
+        /* Card backgrounds with good contrast */
+        --card: rgba(35, 40, 55, 0.9);
+        --card-foreground: #ffffff;
+        --popover: rgba(35, 40, 55, 0.98);
+        --popover-foreground: #ffffff;
 
-        --muted: #1a1a1a;
-        --muted-foreground: #a1a1aa;
+        --muted: #252a38;
+        --muted-foreground: #c8c8d4;
 
-        --accent: rgba(102, 103, 171, 0.2);
-        --accent-foreground: #ededed;
+        --accent: rgba(165, 166, 240, 0.15);
+        --accent-foreground: #ffffff;
 
-        --destructive: #7f1d1d;
-        --destructive-foreground: #fef2f2;
+        --destructive: #f87171;
+        --destructive-foreground: #1a0505;
 
-        --border: rgba(255, 255, 255, 0.05);
-        --input: rgba(255, 255, 255, 0.05);
-        --ring: rgba(102, 103, 171, 0.5);
+        /* Visible borders */
+        --border: rgba(255, 255, 255, 0.15);
+        --input: rgba(255, 255, 255, 0.15);
+        --ring: rgba(165, 166, 240, 0.5);
     }
 }
 
@@ -86,8 +92,8 @@
     }
 
     .dark .glass {
-        background-color: rgba(0, 0, 0, 0.3);
-        border-color: rgba(255, 255, 255, 0.1);
+        background-color: rgba(45, 52, 70, 0.75);
+        border-color: rgba(255, 255, 255, 0.2);
     }
 
     .glass-card {
@@ -101,8 +107,8 @@
     }
 
     .dark .glass-card {
-        background-color: rgba(0, 0, 0, 0.4);
-        border-color: rgba(255, 255, 255, 0.1);
+        background-color: rgba(45, 52, 70, 0.85);
+        border-color: rgba(255, 255, 255, 0.4);
     }
 
     .glass-card:hover {
@@ -112,7 +118,7 @@
     }
 
     .dark .glass-card:hover {
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: rgba(55, 62, 80, 0.9);
     }
 
     .text-gradient-rainbow {
@@ -129,19 +135,24 @@
         background-image: linear-gradient(to right, #6667AB, #9333ea);
     }
 
+    .dark .text-gradient-primary {
+        background-image: linear-gradient(to right, #a8a9e0, #c084fc);
+    }
+
     .liquid-shape {
         position: absolute;
         z-index: -10;
         border-radius: 9999px;
-        mix-blend-mode: multiply;
-        filter: blur(64px);
-        opacity: 0.7;
+        mix-blend-mode: soft-light;
+        filter: blur(80px);
+        opacity: 0.5;
         animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     }
 
     .dark .liquid-shape {
         mix-blend-mode: screen;
-        opacity: 0.3;
+        filter: blur(64px);
+        opacity: 0.25;
     }
 
     /* Custom scrollbar for modals */
