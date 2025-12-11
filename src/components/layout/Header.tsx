@@ -18,7 +18,7 @@ const navItems = [
 export function Header() {
     const [activeSection, setActiveSection] = useState("");
     const [mounted, setMounted] = useState(false);
-    const { theme, setTheme } = useTheme();
+    const { resolvedTheme, setTheme } = useTheme();
 
     useEffect(() => {
         setMounted(true);
@@ -113,16 +113,16 @@ export function Header() {
                 {/* Theme Toggle Switch */}
                 <div className="flex items-center gap-2">
                     <motion.span
-                        key={theme}
+                        key={resolvedTheme}
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         className="text-xs font-medium"
                         style={{ color: 'var(--muted-foreground)' }}
                     >
-                        {mounted && (theme === 'dark' ? 'Dark' : 'Light')}
+                        {mounted && (resolvedTheme === 'dark' ? 'Dark' : 'Light')}
                     </motion.span>
                     <button
-                        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                        onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
                         className="relative w-14 h-7 rounded-full bg-slate-200 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 shadow-inner"
                         aria-label="Toggle theme"
                     >
@@ -131,16 +131,16 @@ export function Header() {
                             layout
                             transition={{ type: "spring", stiffness: 500, damping: 30 }}
                             className="absolute top-0.5 w-6 h-6 rounded-full bg-white dark:bg-slate-900 shadow-md flex items-center justify-center"
-                            style={{ left: mounted && theme === 'dark' ? 28 : 2 }}
+                            style={{ left: mounted && resolvedTheme === 'dark' ? 28 : 2 }}
                         >
                             <motion.div
-                                key={theme}
+                                key={resolvedTheme}
                                 initial={{ rotate: -90, opacity: 0 }}
                                 animate={{ rotate: 0, opacity: 1 }}
                                 transition={{ duration: 0.2 }}
                             >
                                 {mounted && (
-                                    theme === 'dark'
+                                    resolvedTheme === 'dark'
                                         ? <Moon className="w-3.5 h-3.5 text-blue-400" />
                                         : <Sun className="w-3.5 h-3.5 text-amber-500" />
                                 )}
