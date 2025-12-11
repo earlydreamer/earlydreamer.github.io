@@ -31,13 +31,7 @@ const levelColors: Record<SecondarySkill["level"], { bg: string; text: string }>
 
 const levelOrder: SecondarySkill["level"][] = ["실무 경험", "능숙함", "개발 가능", "경험 있음"];
 
-function groupByLevel(skills: SecondarySkill[]): Record<string, SecondarySkill[]> {
-    return skills.reduce((acc, skill) => {
-        if (!acc[skill.level]) acc[skill.level] = [];
-        acc[skill.level].push(skill);
-        return acc;
-    }, {} as Record<string, SecondarySkill[]>);
-}
+
 
 // 별점 표시 컴포넌트 (0.5 단위 지원)
 function StarRating({ rating }: { rating: number }) {
@@ -113,6 +107,7 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
     // 모달이 닫힐 때 필터 초기화
     useEffect(() => {
         if (!isOpen) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setSelectedCategory(null);
             setSelectedLevel(null);
         }
@@ -287,7 +282,7 @@ export function SkillsSection() {
                             variants={item}
                             className="glass-card flex flex-col items-center justify-center p-6 gap-4 group hover:border-[#6667AB]/50 transition-colors"
                         >
-                            <div className="relative w-16 h-16 flex items-center justify-center p-2 bg-white/50 dark:bg-zinc-800/50 rounded-2xl shadow-inner">
+                            <div className="relative w-16 h-16 flex items-center justify-center p-2 bg-white dark:bg-slate-200 rounded-2xl shadow-inner">
                                 {skill.icon ? (
                                     <Image
                                         src={skill.icon}
@@ -304,8 +299,15 @@ export function SkillsSection() {
                                 )}
                             </div>
                             <div className="text-center">
-                                <h3 className="font-semibold text-zinc-800 dark:text-zinc-200 group-hover:text-[#6667AB] transition-colors">{skill.name}</h3>
-                                <span className="text-xs px-2 py-1 rounded-full bg-[#6667AB]/10 text-[#6667AB] mt-2 inline-block">
+                                <h3 className="font-semibold group-hover:text-[#6667AB] transition-colors" style={{ color: 'var(--foreground)' }}>{skill.name}</h3>
+                                <span
+                                    className="text-xs px-2 py-1 rounded-full mt-2 inline-block border"
+                                    style={{
+                                        backgroundColor: 'var(--accent)',
+                                        color: 'var(--accent-foreground)',
+                                        borderColor: 'var(--border)'
+                                    }}
+                                >
                                     {skill.category}
                                 </span>
                             </div>
@@ -325,7 +327,7 @@ export function SkillsSection() {
                         onClick={() => setIsModalOpen(true)}
                         className="group flex items-center gap-2 px-5 py-3 rounded-full bg-zinc-100 dark:bg-zinc-800 hover:bg-[#6667AB]/10 dark:hover:bg-[#6667AB]/20 border border-zinc-200 dark:border-zinc-700 hover:border-[#6667AB]/50 transition-all duration-300"
                     >
-                        <span className="text-sm font-medium text-zinc-600 dark:text-zinc-400 group-hover:text-[#6667AB] transition-colors">
+                        <span className="text-sm font-medium group-hover:text-[#6667AB] transition-colors" style={{ color: 'var(--muted-foreground)' }}>
                             {skills.buttonText}
                         </span>
                         <ChevronRight className="w-4 h-4 text-zinc-400 group-hover:text-[#6667AB] group-hover:translate-x-1 transition-all" />

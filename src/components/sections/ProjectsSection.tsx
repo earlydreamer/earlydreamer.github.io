@@ -12,7 +12,13 @@ export function ProjectsSection() {
 
     return (
         <Section id="projects" title={projects.title} subtitle={projects.subtitle} centered>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Lighting effects - 따뜻한톤: fuchsia, rose, amber */}
+            <div className="absolute inset-0 overflow-visible pointer-events-none" style={{ zIndex: -1 }}>
+                <div className="liquid-shape w-[480px] h-[480px] bg-fuchsia-100 dark:bg-fuchsia-500/15 top-[-60px] left-[-280px] opacity-60 animate-pulse" style={{ animationDuration: "15s" }} />
+                <div className="liquid-shape w-56 h-56 bg-rose-100 dark:bg-rose-500/15 top-[40%] right-[-80px] opacity-50 animate-pulse" style={{ animationDuration: "11s" }} />
+                <div className="liquid-shape w-40 h-40 bg-amber-100 dark:bg-amber-500/15 bottom-[-20px] left-[15%] opacity-40 animate-pulse" style={{ animationDuration: "8s" }} />
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
                 {PROJECTS.map((project, index) => (
                     <motion.div
                         key={project.id}
@@ -22,7 +28,7 @@ export function ProjectsSection() {
                         viewport={{ once: true }}
                         className="glass-card overflow-hidden group flex flex-col cursor-pointer"
                     >
-                        <div className="relative aspect-video w-full overflow-hidden bg-zinc-100 dark:bg-zinc-900">
+                        <div className="relative aspect-video w-full overflow-hidden bg-zinc-100 dark:bg-slate-200">
                             {project.images?.[0] ? (
                                 <Image
                                     src={project.images[0]}
@@ -45,10 +51,10 @@ export function ProjectsSection() {
                         </div>
 
                         <div className="flex flex-1 flex-col p-6">
-                            <h3 className="font-bold text-xl mb-1 group-hover:text-[#6667AB] transition-colors">{project.title}</h3>
-                            <span className="text-xs text-zinc-500 mb-3 block">{project.period}</span>
+                            <h3 className="font-bold text-xl mb-1 group-hover:text-[#6667AB] transition-colors" style={{ color: 'var(--foreground)' }}>{project.title}</h3>
+                            <span className="text-xs mb-3 block" style={{ color: 'var(--muted-foreground)' }}>{project.period}</span>
 
-                            <p className="text-sm text-zinc-600 dark:text-zinc-300 mb-4 flex-1 line-clamp-3">
+                            <p className="text-sm mb-4 flex-1 line-clamp-3" style={{ color: 'var(--muted-foreground)' }}>
                                 {project.description}
                             </p>
 
@@ -56,7 +62,12 @@ export function ProjectsSection() {
                                 {project.techStack.map((tech) => (
                                     <span
                                         key={tech}
-                                        className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-[#6667AB]/10 text-[#6667AB]"
+                                        className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium border"
+                                        style={{
+                                            backgroundColor: 'var(--accent)',
+                                            color: 'var(--accent-foreground)',
+                                            borderColor: 'var(--border)'
+                                        }}
                                     >
                                         {tech}
                                     </span>
@@ -65,7 +76,7 @@ export function ProjectsSection() {
 
                             {/* GitHub Links */}
                             {project.links?.githubLinks && project.links.githubLinks.length > 0 && (
-                                <div className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-zinc-200 dark:border-zinc-700">
+                                <div className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-zinc-200 dark:border-zinc-500">
                                     {project.links.githubLinks.map((link) => (
                                         <Link
                                             key={link.url}
@@ -81,7 +92,7 @@ export function ProjectsSection() {
                             )}
 
                             {/* Click hint */}
-                            <div className="text-center text-xs text-zinc-400 mt-3 pt-3 border-t border-zinc-100 dark:border-zinc-800">
+                            <div className="text-center text-xs mt-3 pt-3 border-t border-zinc-100 dark:border-zinc-500" style={{ color: 'var(--muted-foreground)' }}>
                                 클릭하여 상세 보기 →
                             </div>
                         </div>
