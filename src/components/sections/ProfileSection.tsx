@@ -9,11 +9,13 @@ import Image from "next/image";
 
 export function ProfileSection() {
     return (
-        <Section id="about" className="pt-20 md:pt-32 pb-16 flex items-center justify-center relative overflow-hidden">
-            {/* Liquid Background Shapes */}
-            <div className="liquid-shape w-96 h-96 bg-purple-300 top-0 left-[-100px] animate-pulse" style={{ animationDuration: "10s" }} />
-            <div className="liquid-shape w-96 h-96 bg-blue-300 bottom-0 right-[-100px] animate-pulse" style={{ animationDuration: "15s" }} />
-            <div className="liquid-shape w-80 h-80 bg-[#6667AB] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-20" />
+        <Section id="about" className="pt-20 md:pt-32 pb-16 flex items-center justify-center relative">
+            {/* Liquid Background Shapes - positioned to not get clipped */}
+            <div className="absolute inset-0 overflow-visible pointer-events-none" style={{ zIndex: -1 }}>
+                <div className="liquid-shape w-96 h-96 bg-purple-300 dark:bg-violet-500/25 top-0 left-[-50px] animate-pulse" style={{ animationDuration: "10s" }} />
+                <div className="liquid-shape w-96 h-96 bg-blue-300 dark:bg-indigo-500/25 bottom-10 right-10 animate-pulse" style={{ animationDuration: "15s" }} />
+                <div className="liquid-shape w-80 h-80 bg-[#6667AB]/20 dark:bg-[#8283c9]/15 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+            </div>
 
             <div className="flex flex-col gap-6 md:flex-row md:items-center md:gap-0 w-full relative z-10">
                 {/* Text Content */}
@@ -29,10 +31,10 @@ export function ProfileSection() {
                             {PROFILE.name}
                         </h1>
                     </div>
-                    <h2 className="text-2xl md:text-3xl font-semibold text-zinc-700 dark:text-zinc-300">
+                    <h2 className="text-2xl md:text-3xl font-semibold" style={{ color: 'var(--foreground)' }}>
                         {PROFILE.role}
                     </h2>
-                    <p className="text-lg text-zinc-600 dark:text-zinc-300 leading-relaxed glass p-6 rounded-2xl whitespace-pre-wrap break-keep">
+                    <p className="text-lg leading-relaxed glass p-6 rounded-2xl whitespace-pre-wrap break-keep" style={{ color: 'var(--muted-foreground)' }}>
                         {PROFILE.description}
                     </p>
                     <div className="flex gap-4 pt-4">

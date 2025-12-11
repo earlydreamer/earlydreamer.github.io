@@ -11,7 +11,8 @@ export function EducationSection() {
     return (
         <Section id="education" title={education.title} subtitle={education.subtitle} centered className="pb-40">
             <div className="glass max-w-4xl mx-auto rounded-3xl p-8 md:p-12 relative overflow-hidden">
-                <div className="liquid-shape w-64 h-64 bg-yellow-200 bottom-[-50px] right-[-50px] opacity-20 blur-3xl rounded-full" />
+                {/* Lighting effects - 가장 따뜻한톤: amber, orange */}
+                <div className="liquid-shape w-64 h-64 bg-amber-200 dark:bg-amber-500/15 bottom-[-50px] right-[-50px] opacity-25 blur-3xl rounded-full" />
 
                 <div className="space-y-8 relative z-10">
                     {EDUCATION.map((edu, index) => (
@@ -33,10 +34,10 @@ export function EducationSection() {
                             </div>
                             <div className="flex-1 pb-6">
                                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-1">
-                                    <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50">{edu.school}</h3>
-                                    <span className="text-sm font-semibold text-[#6667AB]">{edu.period}</span>
+                                    <h3 className="text-lg font-bold" style={{ color: 'var(--foreground)' }}>{edu.school}</h3>
+                                    <span className="text-sm font-semibold" style={{ color: 'var(--primary)' }}>{edu.period}</span>
                                 </div>
-                                <p className="text-zinc-600 dark:text-zinc-300 font-medium">{edu.course}</p>
+                                <p className="font-medium" style={{ color: 'var(--muted-foreground)' }}>{edu.course}</p>
                             </div>
                         </motion.div>
                     ))}
