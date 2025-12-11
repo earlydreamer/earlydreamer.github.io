@@ -16,7 +16,8 @@ export function CompetencySection() {
             centered
             className="relative"
         >
-            <div className="liquid-shape w-[500px] h-[500px] bg-pink-200 top-1/2 left-0 opacity-30 -translate-x-1/2 blur-3xl p-20" />
+            {/* Lighting effects - 더 따뜻한톤: rose, pink */}
+            <div className="liquid-shape w-[500px] h-[500px] bg-rose-200 dark:bg-rose-500/15 top-1/2 left-0 opacity-30 dark:opacity-20 -translate-x-1/2 blur-3xl p-20" />
 
             <div className="grid md:grid-cols-3 gap-8 pt-8 relative z-10">
                 {COMPETENCIES.map((competency, index) => (
@@ -30,10 +31,10 @@ export function CompetencySection() {
                     >
                         {/* Title + Description 밀착 */}
                         <div className="mb-4">
-                            <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
+                            <h3 className="text-xl font-bold" style={{ color: 'var(--foreground)' }}>
                                 {competency.title}
                             </h3>
-                            <p className="text-sm font-medium text-[#6667AB] dark:text-[#8889CC] mt-1">
+                            <p className="text-sm font-medium mt-1" style={{ color: 'var(--accent)' }}>
                                 {competency.description}
                             </p>
                         </div>
@@ -41,8 +42,8 @@ export function CompetencySection() {
                         {/* Items */}
                         <ul className="space-y-2.5">
                             {competency.items.map((item, i) => (
-                                <li key={i} className="flex gap-2.5 text-sm text-zinc-500 dark:text-zinc-400 items-start leading-relaxed">
-                                    <CheckCircle2 className="w-4 h-4 text-[#6667AB] shrink-0 mt-0.5" />
+                                <li key={i} className="flex gap-2.5 text-sm items-start leading-relaxed" style={{ color: 'var(--muted-foreground)' }}>
+                                    <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" style={{ color: 'var(--accent)' }} />
                                     <span>{item}</span>
                                 </li>
                             ))}
@@ -53,3 +54,4 @@ export function CompetencySection() {
         </Section>
     );
 }
+
