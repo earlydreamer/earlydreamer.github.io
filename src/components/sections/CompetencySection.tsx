@@ -34,7 +34,7 @@ export function CompetencySection() {
                             <h3 className="text-xl font-bold" style={{ color: 'var(--foreground)' }}>
                                 {competency.title}
                             </h3>
-                            <p className="text-sm font-medium mt-1" style={{ color: 'var(--accent)' }}>
+                            <p className="text-sm font-medium mt-1" style={{ color: 'var(--primary)' }}>
                                 {competency.description}
                             </p>
                         </div>
@@ -43,7 +43,7 @@ export function CompetencySection() {
                         <ul className="space-y-2.5">
                             {competency.items.map((item, i) => (
                                 <li key={i} className="flex gap-2.5 text-sm items-start leading-relaxed" style={{ color: 'var(--muted-foreground)' }}>
-                                    <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" style={{ color: 'var(--accent)' }} />
+                                    <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" style={{ color: 'var(--primary)' }} />
                                     <span>{item}</span>
                                 </li>
                             ))}
