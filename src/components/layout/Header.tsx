@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
+import { Sun, Moon } from "lucide-react";
 
 const navItems = [
     { name: "About", href: "#about" },
@@ -16,6 +17,12 @@ const navItems = [
 
 export function Header() {
     const [activeSection, setActiveSection] = useState("");
+    const [mounted, setMounted] = useState(false);
+    const { theme, setTheme } = useTheme();
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -71,7 +78,7 @@ export function Header() {
             <div className="glass container mx-auto flex h-16 items-center justify-between px-6 rounded-full max-w-5xl pointer-events-auto bg-white/40 dark:bg-black/40 backdrop-blur-xl border border-white/20 shadow-lg">
                 <div className="flex items-center gap-2">
                     <Link href="/" className="text-xl font-bold tracking-tighter text-gradient-primary">
-                        박재현's Portfolio
+                        박재현&apos;s Portfolio
                     </Link>
                 </div>
                 <nav className="hidden md:flex gap-6">
@@ -82,12 +89,11 @@ export function Header() {
                                 key={item.href}
                                 href={item.href}
                                 onClick={(e) => scrollToSection(e, item.href)}
-                                className={cn(
-                                    "text-sm font-medium transition-all relative group",
-                                    isActive
-                                        ? "text-[#6667AB] font-bold"
-                                        : "text-zinc-600 hover:text-[#6667AB] dark:text-zinc-400 dark:hover:text-[#6667AB]"
-                                )}
+                                className="text-sm font-medium transition-all relative group"
+                                style={{
+                                    color: isActive ? 'var(--primary)' : 'var(--muted-foreground)',
+                                    fontWeight: isActive ? 700 : 500
+                                }}
                             >
                                 {item.name}
                                 {isActive && (
@@ -103,6 +109,45 @@ export function Header() {
                         )
                     })}
                 </nav>
+
+                {/* Theme Toggle Switch */}
+                <div className="flex items-center gap-2">
+                    <motion.span
+                        key={theme}
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="text-xs font-medium"
+                        style={{ color: 'var(--muted-foreground)' }}
+                    >
+                        {mounted && (theme === 'dark' ? 'Dark' : 'Light')}
+                    </motion.span>
+                    <button
+                        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                        className="relative w-14 h-7 rounded-full bg-slate-200 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 shadow-inner"
+                        aria-label="Toggle theme"
+                    >
+                        {/* Sliding Circle */}
+                        <motion.span
+                            layout
+                            transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                            className="absolute top-0.5 w-6 h-6 rounded-full bg-white dark:bg-slate-900 shadow-md flex items-center justify-center"
+                            style={{ left: mounted && theme === 'dark' ? 28 : 2 }}
+                        >
+                            <motion.div
+                                key={theme}
+                                initial={{ rotate: -90, opacity: 0 }}
+                                animate={{ rotate: 0, opacity: 1 }}
+                                transition={{ duration: 0.2 }}
+                            >
+                                {mounted && (
+                                    theme === 'dark'
+                                        ? <Moon className="w-3.5 h-3.5 text-blue-400" />
+                                        : <Sun className="w-3.5 h-3.5 text-amber-500" />
+                                )}
+                            </motion.div>
+                        </motion.span>
+                    </button>
+                </div>
             </div>
         </motion.header>
     );
