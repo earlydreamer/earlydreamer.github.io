@@ -7,7 +7,7 @@ import { EducationSection } from "@/components/sections/EducationSection";
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-10 pb-20">
+    <div className="flex flex-col gap-10 pb-20 pt-24">
       <ProfileSection />
       <CompetencySection />
       <SkillsSection />
