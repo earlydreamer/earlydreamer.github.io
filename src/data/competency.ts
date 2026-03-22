@@ -13,10 +13,10 @@ export const COMPETENCIES: Competency[] = [
     },
     {
         id: "competency-ai",
-        title: "AI 기반 애자일 개발 및 협업",
+        title: "AI 기반 애자일한 개발 및 협업",
         description: "AI 도구를 적극 활용하여 개발 효율성을 극대화합니다.",
         items: [
-            "Vibe-Coding을 활용한 빠른 프로토타이핑 및 즉각적인 소통",
+            "LLM을 적극 활용한 빠른 프로토타이핑 및 즉각적인 소통",
             "AI 기반 자동 코드 리뷰 프로세스 도입으로 코드 품질 개선",
             "컨텍스트 엔지니어링을 통한 LLM 기반 코드 일관성 유지",
         ],
@@ -27,8 +27,8 @@ export const COMPETENCIES: Competency[] = [
         description: "안정적인 배포 환경과 자동화된 파이프라인을 구축합니다.",
         items: [
             "Docker와 Nginx를 활용한 3-Tier 아키텍처 기반 서비스 구축",
-            "EC2, RDS 등 AWS 인프라를 활용한 프로덕션 환경 구성",
             "GitHub Actions 기반 CI/CD 파이프라인 구축 및 배포 자동화",
+            "AWS, Cloudflare, 온프레미스 등 다양한 배포 환경 구축 경험",
         ],
     },
 ];

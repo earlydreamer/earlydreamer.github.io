@@ -167,6 +167,12 @@
         width: 6px;
     }
 
+    .modal-scrollbar::-webkit-scrollbar-button {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+
     .modal-scrollbar::-webkit-scrollbar-track {
         background: transparent;
     }

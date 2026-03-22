@@ -3,6 +3,17 @@ export interface ModalContent {
     detailDescription?: string;
     gallery?: string[];
     links?: Record<string, string>;
+    metaBadges?: string[];
+    caseStudies?: {
+        title: string;
+        problem: string[];
+        solution: string[];
+        result: string[];
+    }[];
+    sections?: {
+        title: string;
+        items: string[];
+    }[];
 }
 
 export interface ModalExtendable {
@@ -69,7 +80,7 @@ export interface Skill {
 export interface SecondarySkill extends ModalExtendable {
     name: string;
     category: string;
-    level: "실무 경험" | "능숙함" | "개발 가능" | "경험 있음";
+    level: "주력 활용" | "능숙함" | "개발 가능" | "경험 있음";
     description?: string;
     rating: number;
 }

@@ -17,12 +17,8 @@ const navItems = [
 
 export function Header() {
     const [activeSection, setActiveSection] = useState("");
-    const [mounted, setMounted] = useState(false);
     const { resolvedTheme, setTheme } = useTheme();
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
+    const mounted = resolvedTheme !== undefined;
 
     useEffect(() => {
         const handleScroll = () => {

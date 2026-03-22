@@ -16,10 +16,10 @@ export const SECTION_META = {
     },
     skills: {
         title: "Skills",
-        subtitle: "활용 가능한 기술 스택",
+        subtitle: "활용 가능한 주요 기술 스택",
         modalTitle: "경험 기술 목록",
         buttonText: "경험 기술 자세히 보기",
-        categoryOrder: ["백엔드", "프론트엔드", "데이터베이스", "DevOps", "언어", "협업 도구", "AI-Tool", "IDE", "엔진/프레임워크", "CS지식"],
+        categoryOrder: ["백엔드", "프론트엔드", "데이터베이스", "DevOps", "언어", "협업 도구", "AI", "IDE", "엔진/프레임워크", "CS지식"],
     },
     competency: {
         title: "Core Competency",
@@ -27,7 +27,7 @@ export const SECTION_META = {
     },
     projects: {
         title: "Projects",
-        subtitle: "개발 관련 포트폴리오 프로젝트입니다.",
+        subtitle: "개발 관련 주요 포트폴리오 프로젝트입니다.",
     },
     education: {
         title: "Education",

@@ -26,12 +26,12 @@ export function Section({
                 {(title || subtitle) && (
                     <div className={cn("mb-10 space-y-2", centered && "text-center")}>
                         {title && (
-                            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl" style={{ color: 'var(--foreground)' }}>
+                            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl [text-wrap:balance] break-keep" style={{ color: 'var(--foreground)' }}>
                                 {title}
                             </h2>
                         )}
                         {subtitle && (
-                            <p className={cn("max-w-[700px] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed", centered && "mx-auto")} style={{ color: 'var(--muted-foreground)' }}>
+                            <p className={cn("max-w-[700px] break-keep [text-wrap:pretty] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed", centered && "mx-auto")} style={{ color: 'var(--muted-foreground)' }}>
                                 {subtitle}
                             </p>
                         )}
