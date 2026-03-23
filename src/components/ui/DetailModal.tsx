@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -48,6 +48,8 @@ export function DetailModal({
     sections = [],
     links = [],
 }: DetailModalProps) {
+    const restoreBodyStyleRef = useRef<null | (() => void)>(null);
+
     useEffect(() => {
         const handleEsc = (e: KeyboardEvent) => {
             if (e.key === "Escape") onClose();
@@ -55,16 +57,37 @@ export function DetailModal({
 
         if (isOpen) {
             document.addEventListener("keydown", handleEsc);
-            document.documentElement.style.overflow = "hidden";
-            document.body.style.overflow = "hidden";
-            document.body.style.touchAction = "none";
+
+            const htmlStyle = document.documentElement.style;
+            const bodyStyle = document.body.style;
+            const previous = {
+                htmlOverflow: htmlStyle.overflow,
+                bodyOverflow: bodyStyle.overflow,
+                bodyTouchAction: bodyStyle.touchAction,
+                bodyPaddingRight: bodyStyle.paddingRight,
+            };
+            const scrollbarGap = window.innerWidth - document.documentElement.clientWidth;
+
+            htmlStyle.overflow = "hidden";
+            bodyStyle.overflow = "hidden";
+            bodyStyle.touchAction = "none";
+
+            if (scrollbarGap > 0) {
+                bodyStyle.paddingRight = `${scrollbarGap}px`;
+            }
+
+            restoreBodyStyleRef.current = () => {
+                htmlStyle.overflow = previous.htmlOverflow;
+                bodyStyle.overflow = previous.bodyOverflow;
+                bodyStyle.touchAction = previous.bodyTouchAction;
+                bodyStyle.paddingRight = previous.bodyPaddingRight;
+            };
         }
 
         return () => {
             document.removeEventListener("keydown", handleEsc);
-            document.documentElement.style.overflow = "";
-            document.body.style.overflow = "unset";
-            document.body.style.touchAction = "";
+            restoreBodyStyleRef.current?.();
+            restoreBodyStyleRef.current = null;
         };
     }, [isOpen, onClose]);
 
