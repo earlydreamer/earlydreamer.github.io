@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SKILLS, SECONDARY_SKILLS, SecondarySkill, SECTION_META } from "@/data/portfolio";
 import { Section } from "@/components/ui/Section";
@@ -64,6 +64,7 @@ function StarRating({ rating }: { rating: number }) {
 function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [selectedLevel, setSelectedLevel] = useState<SecondarySkill["level"] | null>(null);
+    const restoreBodyStyleRef = useRef<null | (() => void)>(null);
 
     // 카테고리 목록 추출 (순서 지정)
     const categoryOrder = SECTION_META.skills.categoryOrder;
@@ -94,17 +95,40 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
         const handleEsc = (e: KeyboardEvent) => {
             if (e.key === "Escape") onClose();
         };
+
         if (isOpen) {
             document.addEventListener("keydown", handleEsc);
-            document.documentElement.style.overflow = "hidden";
-            document.body.style.overflow = "hidden";
-            document.body.style.touchAction = "none";
+
+            const htmlStyle = document.documentElement.style;
+            const bodyStyle = document.body.style;
+            const previous = {
+                htmlOverflow: htmlStyle.overflow,
+                bodyOverflow: bodyStyle.overflow,
+                bodyTouchAction: bodyStyle.touchAction,
+                bodyPaddingRight: bodyStyle.paddingRight,
+            };
+            const scrollbarGap = window.innerWidth - document.documentElement.clientWidth;
+
+            htmlStyle.overflow = "hidden";
+            bodyStyle.overflow = "hidden";
+            bodyStyle.touchAction = "none";
+
+            if (scrollbarGap > 0) {
+                bodyStyle.paddingRight = `${scrollbarGap}px`;
+            }
+
+            restoreBodyStyleRef.current = () => {
+                htmlStyle.overflow = previous.htmlOverflow;
+                bodyStyle.overflow = previous.bodyOverflow;
+                bodyStyle.touchAction = previous.bodyTouchAction;
+                bodyStyle.paddingRight = previous.bodyPaddingRight;
+            };
         }
+
         return () => {
             document.removeEventListener("keydown", handleEsc);
-            document.documentElement.style.overflow = "";
-            document.body.style.overflow = "unset";
-            document.body.style.touchAction = "";
+            restoreBodyStyleRef.current?.();
+            restoreBodyStyleRef.current = null;
         };
     }, [isOpen, onClose]);
 
