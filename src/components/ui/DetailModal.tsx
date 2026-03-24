@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
+import { useId, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, X } from "lucide-react";
+import { useDialogBehavior } from "@/hooks/useDialogBehavior";
 
 interface DetailModalProps {
     isOpen: boolean;
@@ -48,25 +49,15 @@ export function DetailModal({
     sections = [],
     links = [],
 }: DetailModalProps) {
-    useEffect(() => {
-        const handleEsc = (e: KeyboardEvent) => {
-            if (e.key === "Escape") onClose();
-        };
+    const dialogRef = useRef<HTMLDivElement>(null);
+    const titleId = useId();
+    const descriptionId = useId();
 
-        if (isOpen) {
-            document.addEventListener("keydown", handleEsc);
-            document.documentElement.style.overflow = "hidden";
-            document.body.style.overflow = "hidden";
-            document.body.style.touchAction = "none";
-        }
-
-        return () => {
-            document.removeEventListener("keydown", handleEsc);
-            document.documentElement.style.overflow = "";
-            document.body.style.overflow = "unset";
-            document.body.style.touchAction = "";
-        };
-    }, [isOpen, onClose]);
+    useDialogBehavior({
+        isOpen,
+        onClose,
+        dialogRef,
+    });
 
     return (
         <AnimatePresence>
@@ -87,9 +78,12 @@ export function DetailModal({
                         className="fixed inset-x-0 top-1/2 z-50 mx-auto w-full max-w-4xl -translate-y-1/2 px-4"
                         role="dialog"
                         aria-modal="true"
-                        aria-label={`${title} 상세 정보`}
+                        aria-labelledby={titleId}
+                        aria-describedby={subtitle ? descriptionId : undefined}
                     >
                         <div
+                            ref={dialogRef}
+                            tabIndex={-1}
                             className="overflow-hidden rounded-[28px] border shadow-2xl"
                             style={{
                                 backgroundColor: "color-mix(in srgb, var(--background) 94%, white)",
@@ -126,11 +120,15 @@ export function DetailModal({
                                                     </span>
                                                 )}
                                             </div>
-                                            <h3 className="text-2xl font-bold leading-tight break-keep [text-wrap:balance] md:text-3xl" style={{ color: "var(--foreground)" }}>
+                                            <h3 id={titleId} className="text-2xl font-bold leading-tight break-keep [text-wrap:balance] md:text-3xl" style={{ color: "var(--foreground)" }}>
                                                 {title}
                                             </h3>
                                             {subtitle && (
-                                                <p className="mt-2 text-sm break-keep [text-wrap:pretty] md:text-base" style={{ color: "var(--primary)" }}>
+                                                <p
+                                                    id={descriptionId}
+                                                    className="mt-2 text-sm break-keep [text-wrap:pretty] md:text-base"
+                                                    style={{ color: "color-mix(in srgb, var(--primary) 72%, var(--foreground))" }}
+                                                >
                                                     {subtitle}
                                                 </p>
                                             )}
@@ -146,14 +144,17 @@ export function DetailModal({
                                     </div>
 
                                     {summary && (
-                                        <p className="mb-6 whitespace-pre-line break-keep [text-wrap:pretty] text-sm leading-7 md:text-base" style={{ color: "var(--muted-foreground)" }}>
+                                        <p
+                                            className="mb-6 whitespace-pre-line break-keep [text-wrap:pretty] text-sm leading-7 md:text-base"
+                                            style={{ color: "color-mix(in srgb, var(--muted-foreground) 88%, var(--foreground))" }}
+                                        >
                                             {summary}
                                         </p>
                                     )}
 
                                     {links.length > 0 && (
                                         <div className="mb-8">
-                                            <h4 className="mb-3 text-sm font-semibold" style={{ color: "var(--primary)" }}>
+                                            <h4 className="mb-3 text-sm font-semibold" style={{ color: "color-mix(in srgb, var(--primary) 72%, var(--foreground))" }}>
                                                 관련 링크
                                             </h4>
                                             <div className="flex flex-wrap gap-3">
@@ -163,9 +164,10 @@ export function DetailModal({
                                                             key={`${link.label}-${link.url}`}
                                                             href={link.url}
                                                             target="_blank"
-                                                            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-white no-underline outline-none transition-opacity hover:opacity-85 focus-visible:ring-2 focus-visible:ring-offset-2"
+                                                            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold no-underline outline-none transition-opacity hover:opacity-85 focus-visible:ring-2 focus-visible:ring-offset-2"
                                                             style={{
                                                                 backgroundColor: "var(--primary)",
+                                                                color: "var(--primary-foreground)",
                                                                 WebkitTapHighlightColor: "transparent",
                                                                 textDecoration: "none",
                                                                 boxShadow: "none",
@@ -191,11 +193,11 @@ export function DetailModal({
                                                 <section
                                                     className="rounded-3xl border p-4 md:col-span-2"
                                                     style={{
-                                                        backgroundColor: "color-mix(in srgb, var(--muted) 74%, white)",
+                                                        backgroundColor: "color-mix(in srgb, var(--muted) 82%, var(--card))",
                                                         borderColor: "color-mix(in srgb, var(--primary) 18%, var(--border))",
                                                     }}
                                                 >
-                                                    <h4 className="mb-3 text-sm font-semibold" style={{ color: "var(--primary)" }}>
+                                                    <h4 className="mb-3 text-sm font-semibold" style={{ color: "color-mix(in srgb, var(--primary) 72%, var(--foreground))" }}>
                                                         개요
                                                     </h4>
                                                     <div className="flex flex-wrap gap-2">
@@ -204,7 +206,7 @@ export function DetailModal({
                                                                 key={badge}
                                                                 className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium md:text-sm"
                                                                 style={{
-                                                                    backgroundColor: "color-mix(in srgb, var(--background) 98%, white)",
+                                                                    backgroundColor: "color-mix(in srgb, var(--card) 78%, var(--background))",
                                                                     color: "var(--foreground)",
                                                                     borderColor: "color-mix(in srgb, var(--primary) 24%, var(--border))",
                                                                 }}
@@ -220,11 +222,11 @@ export function DetailModal({
                                                 <section
                                                     className="rounded-3xl border p-4 md:col-span-2"
                                                     style={{
-                                                        backgroundColor: "color-mix(in srgb, var(--muted) 74%, white)",
+                                                        backgroundColor: "color-mix(in srgb, var(--muted) 82%, var(--card))",
                                                         borderColor: "color-mix(in srgb, var(--primary) 18%, var(--border))",
                                                     }}
                                                 >
-                                                    <h4 className="mb-3 text-sm font-semibold" style={{ color: "var(--primary)" }}>
+                                                    <h4 className="mb-3 text-sm font-semibold" style={{ color: "color-mix(in srgb, var(--primary) 72%, var(--foreground))" }}>
                                                         기술 스택
                                                     </h4>
                                                     <div className="flex flex-wrap gap-2">
@@ -233,7 +235,7 @@ export function DetailModal({
                                                                 key={badge}
                                                                 className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium md:text-sm"
                                                                 style={{
-                                                                    backgroundColor: "color-mix(in srgb, var(--background) 97%, white)",
+                                                                    backgroundColor: "color-mix(in srgb, var(--card) 76%, var(--background))",
                                                                     color: "var(--foreground)",
                                                                     borderColor: "color-mix(in srgb, var(--primary) 24%, var(--border))",
                                                                 }}
@@ -254,7 +256,7 @@ export function DetailModal({
                                                     key={caseStudy.title}
                                                     className="rounded-[28px] border p-5 md:p-6"
                                                     style={{
-                                                        backgroundColor: "color-mix(in srgb, white 97%, var(--background))",
+                                                        backgroundColor: "color-mix(in srgb, var(--card) 86%, var(--popover))",
                                                         borderColor: "color-mix(in srgb, var(--primary) 22%, var(--border))",
                                                         boxShadow: "0 18px 30px -24px rgba(17, 24, 39, 0.22), 0 0 0 1px color-mix(in srgb, var(--primary) 8%, transparent)",
                                                     }}
@@ -265,7 +267,7 @@ export function DetailModal({
 
                                                     <div className="space-y-4">
                                                         <div>
-                                                            <h5 className="mb-2 text-sm font-semibold break-keep [text-wrap:balance]" style={{ color: "var(--primary)" }}>
+                                                            <h5 className="mb-2 text-sm font-semibold break-keep [text-wrap:balance]" style={{ color: "color-mix(in srgb, var(--primary) 72%, var(--foreground))" }}>
                                                                 문제
                                                             </h5>
                                                             <ul className="space-y-2">
@@ -274,9 +276,9 @@ export function DetailModal({
                                                                         key={item}
                                                                         className="rounded-2xl border px-4 py-3 text-sm leading-6 break-keep [text-wrap:pretty] md:text-base"
                                                                         style={{
-                                                                            backgroundColor: "color-mix(in srgb, var(--background) 98%, white)",
+                                                                            backgroundColor: "color-mix(in srgb, var(--card) 78%, var(--background))",
                                                                             borderColor: "color-mix(in srgb, var(--primary) 16%, var(--border))",
-                                                                            color: "color-mix(in srgb, var(--foreground) 80%, var(--background))",
+                                                                            color: "color-mix(in srgb, var(--foreground) 92%, var(--background))",
                                                                         }}
                                                                     >
                                                                         {item}
@@ -286,7 +288,7 @@ export function DetailModal({
                                                         </div>
 
                                                         <div>
-                                                            <h5 className="mb-2 text-sm font-semibold break-keep [text-wrap:balance]" style={{ color: "var(--primary)" }}>
+                                                            <h5 className="mb-2 text-sm font-semibold break-keep [text-wrap:balance]" style={{ color: "color-mix(in srgb, var(--primary) 72%, var(--foreground))" }}>
                                                                 해결
                                                             </h5>
                                                             <ul className="space-y-2">
@@ -295,9 +297,9 @@ export function DetailModal({
                                                                         key={item}
                                                                         className="rounded-2xl border px-4 py-3 text-sm leading-6 break-keep [text-wrap:pretty] md:text-base"
                                                                         style={{
-                                                                            backgroundColor: "color-mix(in srgb, var(--background) 98%, white)",
+                                                                            backgroundColor: "color-mix(in srgb, var(--card) 78%, var(--background))",
                                                                             borderColor: "color-mix(in srgb, var(--primary) 16%, var(--border))",
-                                                                            color: "color-mix(in srgb, var(--foreground) 80%, var(--background))",
+                                                                            color: "color-mix(in srgb, var(--foreground) 92%, var(--background))",
                                                                         }}
                                                                     >
                                                                         {item}
@@ -307,7 +309,7 @@ export function DetailModal({
                                                         </div>
 
                                                         <div>
-                                                            <h5 className="mb-2 text-sm font-semibold break-keep [text-wrap:balance]" style={{ color: "var(--primary)" }}>
+                                                            <h5 className="mb-2 text-sm font-semibold break-keep [text-wrap:balance]" style={{ color: "color-mix(in srgb, var(--primary) 72%, var(--foreground))" }}>
                                                                 결과
                                                             </h5>
                                                             <ul className="space-y-2">
@@ -316,9 +318,9 @@ export function DetailModal({
                                                                         key={item}
                                                                         className="rounded-2xl border px-4 py-3 text-sm leading-6 break-keep [text-wrap:pretty] md:text-base"
                                                                         style={{
-                                                                            backgroundColor: "color-mix(in srgb, var(--background) 98%, white)",
+                                                                            backgroundColor: "color-mix(in srgb, var(--card) 78%, var(--background))",
                                                                             borderColor: "color-mix(in srgb, var(--primary) 16%, var(--border))",
-                                                                            color: "color-mix(in srgb, var(--foreground) 80%, var(--background))",
+                                                                            color: "color-mix(in srgb, var(--foreground) 92%, var(--background))",
                                                                         }}
                                                                     >
                                                                         {item}
@@ -337,7 +339,7 @@ export function DetailModal({
                                                     key={section.title}
                                                     className="rounded-[28px] border p-5 md:p-6"
                                                     style={{
-                                                        backgroundColor: "color-mix(in srgb, white 97%, var(--background))",
+                                                        backgroundColor: "color-mix(in srgb, var(--card) 86%, var(--popover))",
                                                         borderColor: "color-mix(in srgb, var(--primary) 22%, var(--border))",
                                                         boxShadow: "0 18px 30px -24px rgba(17, 24, 39, 0.22), 0 0 0 1px color-mix(in srgb, var(--primary) 8%, transparent)",
                                                     }}
@@ -351,9 +353,9 @@ export function DetailModal({
                                                                 key={item}
                                                                 className="rounded-2xl border px-4 py-3 text-sm leading-6 break-keep [text-wrap:pretty] md:text-base"
                                                                 style={{
-                                                                    backgroundColor: "color-mix(in srgb, var(--background) 98%, white)",
+                                                                    backgroundColor: "color-mix(in srgb, var(--card) 78%, var(--background))",
                                                                     borderColor: "color-mix(in srgb, var(--primary) 16%, var(--border))",
-                                                                    color: "color-mix(in srgb, var(--foreground) 80%, var(--background))",
+                                                                    color: "color-mix(in srgb, var(--foreground) 92%, var(--background))",
                                                                 }}
                                                             >
                                                                 {item}

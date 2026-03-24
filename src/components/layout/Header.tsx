@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
 import { Sun, Moon } from "lucide-react";
 
@@ -18,7 +18,11 @@ const navItems = [
 export function Header() {
     const [activeSection, setActiveSection] = useState("");
     const { resolvedTheme, setTheme } = useTheme();
-    const mounted = resolvedTheme !== undefined;
+    const mounted = useSyncExternalStore(
+        () => () => undefined,
+        () => true,
+        () => false,
+    );
 
     useEffect(() => {
         const handleScroll = () => {
@@ -109,7 +113,7 @@ export function Header() {
                 {/* Theme Toggle Switch */}
                 <div className="flex items-center gap-2">
                     <motion.span
-                        key={resolvedTheme}
+                        key={mounted ? resolvedTheme : "unmounted"}
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         className="text-xs font-medium"
@@ -121,6 +125,7 @@ export function Header() {
                         onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
                         className="relative w-14 h-7 rounded-full bg-slate-200 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 shadow-inner"
                         aria-label="Toggle theme"
+                        disabled={!mounted}
                     >
                         {/* Sliding Circle */}
                         <motion.span
@@ -130,7 +135,7 @@ export function Header() {
                             style={{ left: mounted && resolvedTheme === 'dark' ? 28 : 2 }}
                         >
                             <motion.div
-                                key={resolvedTheme}
+                                key={mounted ? resolvedTheme : "unmounted"}
                                 initial={{ rotate: -90, opacity: 0 }}
                                 animate={{ rotate: 0, opacity: 1 }}
                                 transition={{ duration: 0.2 }}

@@ -42,7 +42,11 @@ export function ProfileSection() {
                             <Link
                                 href={PROFILE.github}
                                 target="_blank"
-                                className="flex items-center gap-2 px-6 py-3 bg-[#6667AB] hover:bg-[#5a5b9f] text-white rounded-full transition-all hover:scale-105 font-medium shadow-lg hover:shadow-xl"
+                                className="flex items-center gap-2 px-6 py-3 rounded-full transition-all hover:scale-105 font-medium shadow-lg hover:shadow-xl"
+                                style={{
+                                    backgroundColor: "var(--primary)",
+                                    color: "var(--primary-foreground)",
+                                }}
                             >
                                 <Github className="w-5 h-5" />
                                 <span>GitHub</span>

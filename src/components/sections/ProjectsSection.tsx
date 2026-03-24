@@ -134,8 +134,8 @@ export function ProjectsSection() {
                                             href={project.links.demo}
                                             target="_blank"
                                             onClick={(e) => e.stopPropagation()}
-                                            className="inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold text-white transition-opacity hover:opacity-85"
-                                            style={{ backgroundColor: "var(--primary)" }}
+                                            className="inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold transition-opacity hover:opacity-85"
+                                            style={{ backgroundColor: "var(--primary)", color: "var(--primary-foreground)" }}
                                         >
                                             <ExternalLink className="h-3.5 w-3.5" />
                                             Demo
@@ -174,9 +174,10 @@ export function ProjectsSection() {
                                     <button
                                         type="button"
                                         onClick={() => setSelectedProjectId(project.id)}
-                                        className="group flex w-full items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:shadow-md"
+                                        className="group flex w-full items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold transition-all hover:-translate-y-0.5 hover:shadow-md"
                                         style={{
                                             backgroundColor: "var(--primary)",
+                                            color: "var(--primary-foreground)",
                                         }}
                                     >
                                         <span>프로젝트 상세 보기</span>

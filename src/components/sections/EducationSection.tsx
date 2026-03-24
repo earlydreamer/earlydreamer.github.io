@@ -35,7 +35,16 @@ export function EducationSection() {
                             <div className="flex-1 pb-6">
                                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-1">
                                     <h3 className="text-lg font-bold" style={{ color: 'var(--foreground)' }}>{edu.school}</h3>
-                                    <span className="text-sm font-semibold" style={{ color: 'var(--primary)' }}>{edu.period}</span>
+                                    <span
+                                        className="text-sm font-semibold px-3 py-1 rounded-full border w-fit mt-2 md:mt-0"
+                                        style={{
+                                            color: 'var(--muted-foreground)',
+                                            backgroundColor: 'var(--muted)',
+                                            borderColor: 'color-mix(in srgb, var(--primary) 18%, var(--border))',
+                                        }}
+                                    >
+                                        {edu.period}
+                                    </span>
                                 </div>
                                 <p className="font-medium" style={{ color: 'var(--muted-foreground)' }}>{edu.course}</p>
                             </div>

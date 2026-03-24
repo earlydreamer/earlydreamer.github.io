@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useId, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SKILLS, SECONDARY_SKILLS, SecondarySkill, SECTION_META } from "@/data/portfolio";
 import { Section } from "@/components/ui/Section";
 import Image from "next/image";
 import { X, ChevronRight, Star, StarHalf } from "lucide-react";
+import { useDialogBehavior } from "@/hooks/useDialogBehavior";
 
 const container = {
     hidden: { opacity: 0 },
@@ -30,6 +31,8 @@ const levelColors: Record<SecondarySkill["level"], { bg: string; text: string }>
 };
 
 const levelOrder: SecondarySkill["level"][] = ["주력 활용", "능숙함", "개발 가능", "경험 있음"];
+const cardTextColor = "color-mix(in srgb, var(--foreground) 88%, var(--muted-foreground))";
+const cardSubtleTextColor = "color-mix(in srgb, var(--muted-foreground) 92%, var(--foreground))";
 
 
 
@@ -64,6 +67,8 @@ function StarRating({ rating }: { rating: number }) {
 function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [selectedLevel, setSelectedLevel] = useState<SecondarySkill["level"] | null>(null);
+    const dialogRef = useRef<HTMLDivElement>(null);
+    const titleId = useId();
 
     // 카테고리 목록 추출 (순서 지정)
     const categoryOrder = SECTION_META.skills.categoryOrder;
@@ -89,33 +94,21 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
         return acc;
     }, {} as Record<string, typeof filteredSkills>);
 
-    // ESC 키로 모달 닫기
-    useEffect(() => {
-        const handleEsc = (e: KeyboardEvent) => {
-            if (e.key === "Escape") onClose();
-        };
-        if (isOpen) {
-            document.addEventListener("keydown", handleEsc);
-            document.documentElement.style.overflow = "hidden";
-            document.body.style.overflow = "hidden";
-            document.body.style.touchAction = "none";
-        }
-        return () => {
-            document.removeEventListener("keydown", handleEsc);
-            document.documentElement.style.overflow = "";
-            document.body.style.overflow = "unset";
-            document.body.style.touchAction = "";
-        };
-    }, [isOpen, onClose]);
-
-    // 모달이 닫힐 때 필터 초기화
-    useEffect(() => {
-        if (!isOpen) {
-            // eslint-disable-next-line react-hooks/set-state-in-effect
+    useDialogBehavior({
+        isOpen,
+        onClose: () => {
             setSelectedCategory(null);
             setSelectedLevel(null);
-        }
-    }, [isOpen]);
+            onClose();
+        },
+        dialogRef,
+    });
+
+    const handleClose = () => {
+        setSelectedCategory(null);
+        setSelectedLevel(null);
+        onClose();
+    };
 
     return (
         <AnimatePresence>
@@ -136,11 +129,16 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
                         transition={{ type: "spring", damping: 25, stiffness: 300 }}
                         className="fixed left-1/2 top-1/2 z-50 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 overflow-hidden"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby={titleId}
                     >
                         <div
+                            ref={dialogRef}
+                            tabIndex={-1}
                             className="mx-4 flex max-h-[80vh] flex-col overflow-hidden rounded-[28px] border shadow-2xl"
                             style={{
-                                backgroundColor: "color-mix(in srgb, var(--background) 93%, white)",
+                                backgroundColor: "var(--popover)",
                                 borderColor: "color-mix(in srgb, var(--primary) 24%, var(--border))",
                             }}
                         >
@@ -149,15 +147,15 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                 className="border-b p-6 pb-4"
                                 style={{
                                     borderColor: "color-mix(in srgb, var(--primary) 18%, var(--border))",
-                                    background: "linear-gradient(180deg, color-mix(in srgb, white 94%, var(--background)), color-mix(in srgb, var(--muted) 92%, white))",
+                                    background: "linear-gradient(180deg, color-mix(in srgb, var(--card) 92%, var(--popover)), color-mix(in srgb, var(--muted) 88%, var(--card)))",
                                 }}
                             >
                                 <div className="flex items-center justify-between mb-4">
-                                    <h3 className="text-xl font-bold" style={{ color: "var(--foreground)" }}>
+                                    <h3 id={titleId} className="text-xl font-bold" style={{ color: cardTextColor }}>
                                         {SECTION_META.skills.modalTitle}
                                     </h3>
                                     <button
-                                        onClick={onClose}
+                                        onClick={handleClose}
                                         className="rounded-full p-2 transition-colors"
                                         style={{ color: "var(--muted-foreground)" }}
                                         aria-label="닫기"
@@ -176,7 +174,7 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
 
                                 {/* 카테고리 필터 */}
                                 <div className="mb-3">
-                                    <div className="mb-2 text-xs font-semibold" style={{ color: "var(--foreground)" }}>카테고리</div>
+                                    <div className="mb-2 text-xs font-semibold" style={{ color: cardTextColor }}>카테고리</div>
                                     <div className="flex flex-wrap gap-2">
                                         <button
                                             onClick={() => setSelectedCategory(null)}
@@ -184,8 +182,8 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                             style={selectedCategory === null
                                                 ? { backgroundColor: "var(--primary)", color: "var(--primary-foreground)" }
                                                 : {
-                                                    backgroundColor: "var(--muted)",
-                                                    color: "var(--foreground)",
+                                                    backgroundColor: "color-mix(in srgb, var(--muted) 82%, var(--card))",
+                                                    color: cardTextColor,
                                                     border: "1px solid color-mix(in srgb, var(--primary) 14%, var(--border))",
                                                 }}
                                         >
@@ -199,8 +197,8 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                                 style={selectedCategory === category
                                                     ? { backgroundColor: "var(--primary)", color: "var(--primary-foreground)" }
                                                     : {
-                                                        backgroundColor: "var(--muted)",
-                                                        color: "var(--foreground)",
+                                                        backgroundColor: "color-mix(in srgb, var(--muted) 82%, var(--card))",
+                                                        color: cardTextColor,
                                                         border: "1px solid color-mix(in srgb, var(--primary) 14%, var(--border))",
                                                     }}
                                             >
@@ -214,11 +212,11 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                 <div
                                     className="rounded-2xl p-3 text-sm"
                                     style={{
-                                        backgroundColor: "color-mix(in srgb, var(--muted) 72%, white)",
+                                        backgroundColor: "color-mix(in srgb, var(--muted) 84%, var(--card))",
                                         border: "1px solid color-mix(in srgb, var(--primary) 22%, var(--border))",
                                     }}
                                 >
-                                    <div className="mb-2 text-xs font-semibold" style={{ color: "var(--foreground)" }}>숙련도</div>
+                                    <div className="mb-2 text-xs font-semibold" style={{ color: cardTextColor }}>숙련도</div>
                                     <div className="flex flex-wrap gap-2">
                                         <button
                                             onClick={() => setSelectedLevel(null)}
@@ -226,8 +224,8 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                             style={selectedLevel === null
                                                 ? { backgroundColor: "var(--primary)", color: "var(--primary-foreground)" }
                                                 : {
-                                                    backgroundColor: "color-mix(in srgb, var(--background) 96%, white)",
-                                                    color: "var(--foreground)",
+                                                    backgroundColor: "color-mix(in srgb, var(--card) 82%, var(--background))",
+                                                    color: cardTextColor,
                                                     border: "1px solid color-mix(in srgb, var(--primary) 14%, var(--border))",
                                                 }}
                                         >
@@ -258,7 +256,7 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                         if (!skills || skills.length === 0) return null;
                                         return (
                                             <div key={category}>
-                                                <h4 className="mb-3 text-sm font-semibold" style={{ color: "var(--primary)" }}>
+                                                <h4 className="mb-3 text-sm font-semibold" style={{ color: "color-mix(in srgb, var(--primary) 72%, var(--foreground))" }}>
                                                     {category}
                                                 </h4>
                                                 <div className="grid grid-cols-1 gap-3">
@@ -267,21 +265,21 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                                             key={skill.name}
                                                             className="rounded-[22px] border p-4 transition-all"
                                                             style={{
-                                                                backgroundColor: "color-mix(in srgb, white 97%, var(--background))",
+                                                                backgroundColor: "color-mix(in srgb, var(--card) 86%, var(--popover))",
                                                                 borderColor: "color-mix(in srgb, var(--primary) 24%, var(--border))",
                                                                 boxShadow: "0 18px 30px -24px rgba(17, 24, 39, 0.24), 0 0 0 1px color-mix(in srgb, var(--primary) 8%, transparent)",
                                                             }}
                                                         >
                                                             <div className="flex items-center justify-between mb-2">
-                                                                <span className="text-base font-bold" style={{ color: "var(--foreground)" }}>
+                                                                <span className="text-base font-bold" style={{ color: cardTextColor }}>
                                                                     {skill.name}
                                                                 </span>
                                                                 <div className="flex items-center gap-2">
                                                                     <span
                                                                         className="rounded-full px-2 py-1 text-xs font-medium"
                                                                         style={{
-                                                                            backgroundColor: "color-mix(in srgb, var(--primary) 10%, white)",
-                                                                            color: "var(--foreground)",
+                                                                            backgroundColor: "color-mix(in srgb, var(--card) 74%, var(--background))",
+                                                                            color: cardTextColor,
                                                                             border: "1px solid color-mix(in srgb, var(--primary) 16%, var(--border))",
                                                                         }}
                                                                     >
@@ -293,7 +291,7 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                                                 </div>
                                                             </div>
                                                             {skill.description && (
-                                                                <p className="text-sm leading-relaxed" style={{ color: "color-mix(in srgb, var(--foreground) 78%, var(--background))" }}>
+                                                                <p className="text-sm leading-relaxed" style={{ color: cardSubtleTextColor }}>
                                                                     {skill.description}
                                                                 </p>
                                                             )}
@@ -301,7 +299,7 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                                                 className="mt-3 flex items-center gap-2 border-t pt-2"
                                                                 style={{ borderColor: "color-mix(in srgb, var(--primary) 12%, var(--border))" }}
                                                             >
-                                                                <span className="text-xs font-medium" style={{ color: "var(--foreground)" }}>숙련도</span>
+                                                                <span className="text-xs font-medium" style={{ color: cardTextColor }}>숙련도</span>
                                                                 <StarRating rating={skill.rating} />
                                                             </div>
                                                         </div>
@@ -388,9 +386,10 @@ export function SkillsSection() {
                 >
                     <button
                         onClick={() => setIsModalOpen(true)}
-                        className="group flex items-center gap-2 rounded-full px-6 py-3 text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl"
+                        className="group flex items-center gap-2 rounded-full px-6 py-3 shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl"
                         style={{
                             backgroundColor: "var(--primary)",
+                            color: "var(--primary-foreground)",
                             boxShadow: "0 14px 30px -18px color-mix(in srgb, var(--primary) 75%, transparent)",
                         }}
                     >

@@ -32,7 +32,12 @@ function ExperienceList({ experiences, icon, title, colorClass, intro }: { exper
 
                         <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2">
                             <h4 className="text-xl font-bold" style={{ color: 'var(--foreground)' }}>{exp.company}</h4>
-                            <span className="text-sm font-semibold px-3 py-1 rounded-full border border-slate-300 dark:border-white/20" style={{ backgroundColor: 'var(--muted)', color: 'var(--muted-foreground)' }}>{exp.period}</span>
+                            <span
+                                className="shrink-0 whitespace-nowrap text-sm font-semibold px-3 py-1 rounded-full border border-slate-300 dark:border-white/20"
+                                style={{ backgroundColor: 'var(--muted)', color: 'var(--muted-foreground)' }}
+                            >
+                                {exp.period}
+                            </span>
                         </div>
 
                         <div className={cn("text-lg font-medium mb-1", colorClass)}>
@@ -95,4 +100,3 @@ export function ExperienceSection() {
         </Section>
     );
 }
-
