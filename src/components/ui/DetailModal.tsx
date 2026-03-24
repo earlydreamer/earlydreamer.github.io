@@ -84,19 +84,24 @@ export function DetailModal({
         bodyStyle.top = `-${scrollY}px`;
         bodyStyle.width = "100%";
 
-        if (scrollbarGap > 0) {
-            bodyStyle.paddingRight = `${scrollbarGap}px`;
-        }
+            const htmlStyle = document.documentElement.style;
+            const bodyStyle = document.body.style;
+            const scrollY = window.scrollY;
+            const previous = {
+                htmlOverflow: htmlStyle.overflow,
+                bodyOverflow: bodyStyle.overflow,
+                bodyPosition: bodyStyle.position,
+                bodyTop: bodyStyle.top,
+                bodyWidth: bodyStyle.width,
+                bodyPaddingRight: bodyStyle.paddingRight,
+            };
+            const scrollbarGap = window.innerWidth - document.documentElement.clientWidth;
 
-        restoreBodyStyleRef.current = () => {
-            htmlStyle.overflow = previous.htmlOverflow;
-            bodyStyle.overflow = previous.bodyOverflow;
-            bodyStyle.position = previous.bodyPosition;
-            bodyStyle.top = previous.bodyTop;
-            bodyStyle.width = previous.bodyWidth;
-            bodyStyle.paddingRight = previous.bodyPaddingRight;
-            window.scrollTo(0, scrollY);
-        };
+            htmlStyle.overflow = "hidden";
+            bodyStyle.overflow = "hidden";
+            bodyStyle.position = "fixed";
+            bodyStyle.top = `-${scrollY}px`;
+            bodyStyle.width = "100%";
 
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === "Escape") {
@@ -104,45 +109,16 @@ export function DetailModal({
                 return;
             }
 
-            if (e.key !== "Tab") return;
-
-            const container = modalRef.current;
-            if (!container) return;
-
-            const focusableElements = Array.from(
-                container.querySelectorAll<HTMLElement>(
-                    'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
-                )
-            ).filter((el) => !el.hasAttribute("hidden"));
-
-            if (focusableElements.length === 0) {
-                e.preventDefault();
-                container.focus();
-                return;
-            }
-
-            const first = focusableElements[0];
-            const last = focusableElements[focusableElements.length - 1];
-            const active = document.activeElement;
-
-            if (e.shiftKey && active === first) {
-                e.preventDefault();
-                last.focus();
-            } else if (!e.shiftKey && active === last) {
-                e.preventDefault();
-                first.focus();
-            }
-        };
-
-        document.addEventListener("keydown", handleKeyDown);
-        requestAnimationFrame(() => {
-            const container = modalRef.current;
-            if (!container) return;
-            const firstFocusable = container.querySelector<HTMLElement>(
-                'button, a[href], textarea, input, select, [tabindex]:not([tabindex="-1"])'
-            );
-            (firstFocusable ?? container).focus();
-        });
+            restoreBodyStyleRef.current = () => {
+                htmlStyle.overflow = previous.htmlOverflow;
+                bodyStyle.overflow = previous.bodyOverflow;
+                bodyStyle.position = previous.bodyPosition;
+                bodyStyle.top = previous.bodyTop;
+                bodyStyle.width = previous.bodyWidth;
+                bodyStyle.paddingRight = previous.bodyPaddingRight;
+                window.scrollTo(0, scrollY);
+            };
+        }
 
         return () => {
             document.removeEventListener("keydown", handleKeyDown);
@@ -172,13 +148,11 @@ export function DetailModal({
                         exit={{ opacity: 0, y: 24, scale: 0.98 }}
                         transition={{ type: "spring", damping: 24, stiffness: 260 }}
                         className="fixed inset-x-0 top-1/2 z-[70] mx-auto w-full max-w-4xl -translate-y-1/2 px-4 pointer-events-none"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-label={`${title} 상세 정보`}
                     >
                         <div
-                            ref={modalRef}
-                            tabIndex={-1}
-                            role="dialog"
-                            aria-modal="true"
-                            aria-labelledby={titleId}
                             className="pointer-events-auto overflow-hidden rounded-[28px] border shadow-2xl"
                             style={{
                                 backgroundColor: "var(--popover)",

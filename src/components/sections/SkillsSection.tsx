@@ -118,14 +118,41 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
         };
         const scrollbarGap = window.innerWidth - document.documentElement.clientWidth;
 
-        htmlStyle.overflow = "hidden";
-        bodyStyle.overflow = "hidden";
-        bodyStyle.position = "fixed";
-        bodyStyle.top = `-${scrollY}px`;
-        bodyStyle.width = "100%";
+        if (isOpen) {
+            document.addEventListener("keydown", handleEsc);
 
-        if (scrollbarGap > 0) {
-            bodyStyle.paddingRight = `${scrollbarGap}px`;
+            const htmlStyle = document.documentElement.style;
+            const bodyStyle = document.body.style;
+            const scrollY = window.scrollY;
+            const previous = {
+                htmlOverflow: htmlStyle.overflow,
+                bodyOverflow: bodyStyle.overflow,
+                bodyPosition: bodyStyle.position,
+                bodyTop: bodyStyle.top,
+                bodyWidth: bodyStyle.width,
+                bodyPaddingRight: bodyStyle.paddingRight,
+            };
+            const scrollbarGap = window.innerWidth - document.documentElement.clientWidth;
+
+            htmlStyle.overflow = "hidden";
+            bodyStyle.overflow = "hidden";
+            bodyStyle.position = "fixed";
+            bodyStyle.top = `-${scrollY}px`;
+            bodyStyle.width = "100%";
+
+            if (scrollbarGap > 0) {
+                bodyStyle.paddingRight = `${scrollbarGap}px`;
+            }
+
+            restoreBodyStyleRef.current = () => {
+                htmlStyle.overflow = previous.htmlOverflow;
+                bodyStyle.overflow = previous.bodyOverflow;
+                bodyStyle.position = previous.bodyPosition;
+                bodyStyle.top = previous.bodyTop;
+                bodyStyle.width = previous.bodyWidth;
+                bodyStyle.paddingRight = previous.bodyPaddingRight;
+                window.scrollTo(0, scrollY);
+            };
         }
 
         restoreBodyStyleRef.current = () => {
@@ -225,11 +252,6 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                         className="fixed left-1/2 top-1/2 z-[70] w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 overflow-hidden pointer-events-none"
                     >
                         <div
-                            ref={modalRef}
-                            tabIndex={-1}
-                            role="dialog"
-                            aria-modal="true"
-                            aria-labelledby={titleId}
                             className="pointer-events-auto mx-4 flex max-h-[80vh] flex-col overflow-hidden rounded-[28px] border shadow-2xl"
                             style={{
                                 backgroundColor: "color-mix(in srgb, var(--background) 93%, white)",
