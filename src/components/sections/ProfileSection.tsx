@@ -68,7 +68,7 @@ export function ProfileSection() {
                     className="relative flex-1 flex justify-end -ml-20"
                 >
                     {/* Background Glow */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#6667AB]/30 to-transparent blur-3xl rounded-full opacity-50 scale-110" />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#6667AB]/30 to-transparent blur-3xl rounded-full opacity-50 scale-110" />
 
                     {/* Image with natural aspect ratio */}
                     <Image

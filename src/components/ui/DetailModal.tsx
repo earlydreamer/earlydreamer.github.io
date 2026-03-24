@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useId, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -49,50 +49,114 @@ export function DetailModal({
     links = [],
 }: DetailModalProps) {
     const restoreBodyStyleRef = useRef<null | (() => void)>(null);
+    const modalRef = useRef<HTMLDivElement | null>(null);
+    const previousActiveElementRef = useRef<HTMLElement | null>(null);
+    const titleId = useId();
+
+    const restoreModalEnvironment = useCallback(() => {
+        restoreBodyStyleRef.current?.();
+        restoreBodyStyleRef.current = null;
+        previousActiveElementRef.current?.focus();
+        previousActiveElementRef.current = null;
+    }, []);
 
     useEffect(() => {
-        const handleEsc = (e: KeyboardEvent) => {
-            if (e.key === "Escape") onClose();
+        if (!isOpen) return;
+
+        previousActiveElementRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+
+        const htmlStyle = document.documentElement.style;
+        const bodyStyle = document.body.style;
+        const scrollY = window.scrollY;
+        const previous = {
+            htmlOverflow: htmlStyle.overflow,
+            bodyOverflow: bodyStyle.overflow,
+            bodyPosition: bodyStyle.position,
+            bodyTop: bodyStyle.top,
+            bodyWidth: bodyStyle.width,
+            bodyPaddingRight: bodyStyle.paddingRight,
         };
+        const scrollbarGap = window.innerWidth - document.documentElement.clientWidth;
 
-        if (isOpen) {
-            document.addEventListener("keydown", handleEsc);
+        htmlStyle.overflow = "hidden";
+        bodyStyle.overflow = "hidden";
+        bodyStyle.position = "fixed";
+        bodyStyle.top = `-${scrollY}px`;
+        bodyStyle.width = "100%";
 
-            const htmlStyle = document.documentElement.style;
-            const bodyStyle = document.body.style;
-            const previous = {
-                htmlOverflow: htmlStyle.overflow,
-                bodyOverflow: bodyStyle.overflow,
-                bodyTouchAction: bodyStyle.touchAction,
-                bodyPaddingRight: bodyStyle.paddingRight,
-            };
-            const scrollbarGap = window.innerWidth - document.documentElement.clientWidth;
-
-            htmlStyle.overflow = "hidden";
-            bodyStyle.overflow = "hidden";
-            bodyStyle.touchAction = "none";
-
-            if (scrollbarGap > 0) {
-                bodyStyle.paddingRight = `${scrollbarGap}px`;
-            }
-
-            restoreBodyStyleRef.current = () => {
-                htmlStyle.overflow = previous.htmlOverflow;
-                bodyStyle.overflow = previous.bodyOverflow;
-                bodyStyle.touchAction = previous.bodyTouchAction;
-                bodyStyle.paddingRight = previous.bodyPaddingRight;
-            };
+        if (scrollbarGap > 0) {
+            bodyStyle.paddingRight = `${scrollbarGap}px`;
         }
 
+        restoreBodyStyleRef.current = () => {
+            htmlStyle.overflow = previous.htmlOverflow;
+            bodyStyle.overflow = previous.bodyOverflow;
+            bodyStyle.position = previous.bodyPosition;
+            bodyStyle.top = previous.bodyTop;
+            bodyStyle.width = previous.bodyWidth;
+            bodyStyle.paddingRight = previous.bodyPaddingRight;
+            window.scrollTo(0, scrollY);
+        };
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === "Escape") {
+                onClose();
+                return;
+            }
+
+            if (e.key !== "Tab") return;
+
+            const container = modalRef.current;
+            if (!container) return;
+
+            const focusableElements = Array.from(
+                container.querySelectorAll<HTMLElement>(
+                    'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+                )
+            ).filter((el) => !el.hasAttribute("hidden"));
+
+            if (focusableElements.length === 0) {
+                e.preventDefault();
+                container.focus();
+                return;
+            }
+
+            const first = focusableElements[0];
+            const last = focusableElements[focusableElements.length - 1];
+            const active = document.activeElement;
+
+            if (e.shiftKey && active === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && active === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        };
+
+        document.addEventListener("keydown", handleKeyDown);
+        requestAnimationFrame(() => {
+            const container = modalRef.current;
+            if (!container) return;
+            const firstFocusable = container.querySelector<HTMLElement>(
+                'button, a[href], textarea, input, select, [tabindex]:not([tabindex="-1"])'
+            );
+            (firstFocusable ?? container).focus();
+        });
+
         return () => {
-            document.removeEventListener("keydown", handleEsc);
-            restoreBodyStyleRef.current?.();
-            restoreBodyStyleRef.current = null;
+            document.removeEventListener("keydown", handleKeyDown);
         };
     }, [isOpen, onClose]);
 
+    useEffect(() => {
+        return () => {
+            restoreModalEnvironment();
+        };
+    }, [restoreModalEnvironment]);
+
     return (
-        <AnimatePresence>
+        <AnimatePresence onExitComplete={restoreModalEnvironment}>
             {isOpen && (
                 <>
                     <motion.div
@@ -100,22 +164,24 @@ export function DetailModal({
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="fixed inset-0 z-50 bg-[radial-gradient(circle_at_top,_rgba(102,103,171,0.16),_transparent_36%),linear-gradient(to_bottom,_rgba(15,15,20,0.42),_rgba(15,15,20,0.62))]"
+                        className="fixed inset-0 z-[60] bg-[radial-gradient(circle_at_top,_rgba(102,103,171,0.16),_transparent_36%),linear-gradient(to_bottom,_rgba(15,15,20,0.42),_rgba(15,15,20,0.62))]"
                     />
                     <motion.div
                         initial={{ opacity: 0, y: 24, scale: 0.98 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 24, scale: 0.98 }}
                         transition={{ type: "spring", damping: 24, stiffness: 260 }}
-                        className="fixed inset-x-0 top-1/2 z-50 mx-auto w-full max-w-4xl -translate-y-1/2 px-4"
-                        role="dialog"
-                        aria-modal="true"
-                        aria-label={`${title} 상세 정보`}
+                        className="fixed inset-x-0 top-1/2 z-[70] mx-auto w-full max-w-4xl -translate-y-1/2 px-4 pointer-events-none"
                     >
                         <div
-                            className="overflow-hidden rounded-[28px] border shadow-2xl"
+                            ref={modalRef}
+                            tabIndex={-1}
+                            role="dialog"
+                            aria-modal="true"
+                            aria-labelledby={titleId}
+                            className="pointer-events-auto overflow-hidden rounded-[28px] border shadow-2xl"
                             style={{
-                                backgroundColor: "color-mix(in srgb, var(--background) 94%, white)",
+                                backgroundColor: "var(--popover)",
                                 borderColor: "color-mix(in srgb, var(--primary) 22%, var(--border))",
                             }}
                         >
@@ -149,7 +215,7 @@ export function DetailModal({
                                                     </span>
                                                 )}
                                             </div>
-                                            <h3 className="text-2xl font-bold leading-tight break-keep [text-wrap:balance] md:text-3xl" style={{ color: "var(--foreground)" }}>
+                                            <h3 id={titleId} className="text-2xl font-bold leading-tight break-keep [text-wrap:balance] md:text-3xl" style={{ color: "var(--foreground)" }}>
                                                 {title}
                                             </h3>
                                             {subtitle && (
@@ -214,7 +280,7 @@ export function DetailModal({
                                                 <section
                                                     className="rounded-3xl border p-4 md:col-span-2"
                                                     style={{
-                                                        backgroundColor: "color-mix(in srgb, var(--muted) 74%, white)",
+                                                        backgroundColor: "color-mix(in srgb, var(--muted) 84%, var(--card))",
                                                         borderColor: "color-mix(in srgb, var(--primary) 18%, var(--border))",
                                                     }}
                                                 >
@@ -227,7 +293,7 @@ export function DetailModal({
                                                                 key={badge}
                                                                 className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium md:text-sm"
                                                                 style={{
-                                                                    backgroundColor: "color-mix(in srgb, var(--background) 98%, white)",
+                                                                    backgroundColor: "color-mix(in srgb, var(--card) 72%, var(--background))",
                                                                     color: "var(--foreground)",
                                                                     borderColor: "color-mix(in srgb, var(--primary) 24%, var(--border))",
                                                                 }}
@@ -243,7 +309,7 @@ export function DetailModal({
                                                 <section
                                                     className="rounded-3xl border p-4 md:col-span-2"
                                                     style={{
-                                                        backgroundColor: "color-mix(in srgb, var(--muted) 74%, white)",
+                                                        backgroundColor: "color-mix(in srgb, var(--muted) 84%, var(--card))",
                                                         borderColor: "color-mix(in srgb, var(--primary) 18%, var(--border))",
                                                     }}
                                                 >
@@ -256,7 +322,7 @@ export function DetailModal({
                                                                 key={badge}
                                                                 className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium md:text-sm"
                                                                 style={{
-                                                                    backgroundColor: "color-mix(in srgb, var(--background) 97%, white)",
+                                                                    backgroundColor: "color-mix(in srgb, var(--card) 70%, var(--background))",
                                                                     color: "var(--foreground)",
                                                                     borderColor: "color-mix(in srgb, var(--primary) 24%, var(--border))",
                                                                 }}
@@ -277,7 +343,7 @@ export function DetailModal({
                                                     key={caseStudy.title}
                                                     className="rounded-[28px] border p-5 md:p-6"
                                                     style={{
-                                                        backgroundColor: "color-mix(in srgb, white 97%, var(--background))",
+                                                        backgroundColor: "color-mix(in srgb, var(--card) 82%, var(--background))",
                                                         borderColor: "color-mix(in srgb, var(--primary) 22%, var(--border))",
                                                         boxShadow: "0 18px 30px -24px rgba(17, 24, 39, 0.22), 0 0 0 1px color-mix(in srgb, var(--primary) 8%, transparent)",
                                                     }}
@@ -297,7 +363,7 @@ export function DetailModal({
                                                                         key={item}
                                                                         className="rounded-2xl border px-4 py-3 text-sm leading-6 break-keep [text-wrap:pretty] md:text-base"
                                                                         style={{
-                                                                            backgroundColor: "color-mix(in srgb, var(--background) 98%, white)",
+                                                                            backgroundColor: "color-mix(in srgb, var(--card) 72%, var(--background))",
                                                                             borderColor: "color-mix(in srgb, var(--primary) 16%, var(--border))",
                                                                             color: "color-mix(in srgb, var(--foreground) 80%, var(--background))",
                                                                         }}
@@ -318,7 +384,7 @@ export function DetailModal({
                                                                         key={item}
                                                                         className="rounded-2xl border px-4 py-3 text-sm leading-6 break-keep [text-wrap:pretty] md:text-base"
                                                                         style={{
-                                                                            backgroundColor: "color-mix(in srgb, var(--background) 98%, white)",
+                                                                            backgroundColor: "color-mix(in srgb, var(--card) 72%, var(--background))",
                                                                             borderColor: "color-mix(in srgb, var(--primary) 16%, var(--border))",
                                                                             color: "color-mix(in srgb, var(--foreground) 80%, var(--background))",
                                                                         }}
@@ -339,7 +405,7 @@ export function DetailModal({
                                                                         key={item}
                                                                         className="rounded-2xl border px-4 py-3 text-sm leading-6 break-keep [text-wrap:pretty] md:text-base"
                                                                         style={{
-                                                                            backgroundColor: "color-mix(in srgb, var(--background) 98%, white)",
+                                                                            backgroundColor: "color-mix(in srgb, var(--card) 72%, var(--background))",
                                                                             borderColor: "color-mix(in srgb, var(--primary) 16%, var(--border))",
                                                                             color: "color-mix(in srgb, var(--foreground) 80%, var(--background))",
                                                                         }}
@@ -360,7 +426,7 @@ export function DetailModal({
                                                     key={section.title}
                                                     className="rounded-[28px] border p-5 md:p-6"
                                                     style={{
-                                                        backgroundColor: "color-mix(in srgb, white 97%, var(--background))",
+                                                        backgroundColor: "color-mix(in srgb, var(--card) 82%, var(--background))",
                                                         borderColor: "color-mix(in srgb, var(--primary) 22%, var(--border))",
                                                         boxShadow: "0 18px 30px -24px rgba(17, 24, 39, 0.22), 0 0 0 1px color-mix(in srgb, var(--primary) 8%, transparent)",
                                                     }}
@@ -374,7 +440,7 @@ export function DetailModal({
                                                                 key={item}
                                                                 className="rounded-2xl border px-4 py-3 text-sm leading-6 break-keep [text-wrap:pretty] md:text-base"
                                                                 style={{
-                                                                    backgroundColor: "color-mix(in srgb, var(--background) 98%, white)",
+                                                                    backgroundColor: "color-mix(in srgb, var(--card) 72%, var(--background))",
                                                                     borderColor: "color-mix(in srgb, var(--primary) 16%, var(--border))",
                                                                     color: "color-mix(in srgb, var(--foreground) 80%, var(--background))",
                                                                 }}

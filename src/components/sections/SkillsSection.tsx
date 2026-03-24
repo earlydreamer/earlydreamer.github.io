@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useId, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SKILLS, SECONDARY_SKILLS, SecondarySkill, SECTION_META } from "@/data/portfolio";
 import { Section } from "@/components/ui/Section";
@@ -65,6 +65,16 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [selectedLevel, setSelectedLevel] = useState<SecondarySkill["level"] | null>(null);
     const restoreBodyStyleRef = useRef<null | (() => void)>(null);
+    const modalRef = useRef<HTMLDivElement | null>(null);
+    const previousActiveElementRef = useRef<HTMLElement | null>(null);
+    const titleId = useId();
+
+    const restoreModalEnvironment = useCallback(() => {
+        restoreBodyStyleRef.current?.();
+        restoreBodyStyleRef.current = null;
+        previousActiveElementRef.current?.focus();
+        previousActiveElementRef.current = null;
+    }, []);
 
     // 카테고리 목록 추출 (순서 지정)
     const categoryOrder = SECTION_META.skills.categoryOrder;
@@ -90,47 +100,100 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
         return acc;
     }, {} as Record<string, typeof filteredSkills>);
 
-    // ESC 키로 모달 닫기
     useEffect(() => {
-        const handleEsc = (e: KeyboardEvent) => {
-            if (e.key === "Escape") onClose();
+        if (!isOpen) return;
+
+        previousActiveElementRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+
+        const htmlStyle = document.documentElement.style;
+        const bodyStyle = document.body.style;
+        const scrollY = window.scrollY;
+        const previous = {
+            htmlOverflow: htmlStyle.overflow,
+            bodyOverflow: bodyStyle.overflow,
+            bodyPosition: bodyStyle.position,
+            bodyTop: bodyStyle.top,
+            bodyWidth: bodyStyle.width,
+            bodyPaddingRight: bodyStyle.paddingRight,
         };
+        const scrollbarGap = window.innerWidth - document.documentElement.clientWidth;
 
-        if (isOpen) {
-            document.addEventListener("keydown", handleEsc);
+        htmlStyle.overflow = "hidden";
+        bodyStyle.overflow = "hidden";
+        bodyStyle.position = "fixed";
+        bodyStyle.top = `-${scrollY}px`;
+        bodyStyle.width = "100%";
 
-            const htmlStyle = document.documentElement.style;
-            const bodyStyle = document.body.style;
-            const previous = {
-                htmlOverflow: htmlStyle.overflow,
-                bodyOverflow: bodyStyle.overflow,
-                bodyTouchAction: bodyStyle.touchAction,
-                bodyPaddingRight: bodyStyle.paddingRight,
-            };
-            const scrollbarGap = window.innerWidth - document.documentElement.clientWidth;
-
-            htmlStyle.overflow = "hidden";
-            bodyStyle.overflow = "hidden";
-            bodyStyle.touchAction = "none";
-
-            if (scrollbarGap > 0) {
-                bodyStyle.paddingRight = `${scrollbarGap}px`;
-            }
-
-            restoreBodyStyleRef.current = () => {
-                htmlStyle.overflow = previous.htmlOverflow;
-                bodyStyle.overflow = previous.bodyOverflow;
-                bodyStyle.touchAction = previous.bodyTouchAction;
-                bodyStyle.paddingRight = previous.bodyPaddingRight;
-            };
+        if (scrollbarGap > 0) {
+            bodyStyle.paddingRight = `${scrollbarGap}px`;
         }
 
+        restoreBodyStyleRef.current = () => {
+            htmlStyle.overflow = previous.htmlOverflow;
+            bodyStyle.overflow = previous.bodyOverflow;
+            bodyStyle.position = previous.bodyPosition;
+            bodyStyle.top = previous.bodyTop;
+            bodyStyle.width = previous.bodyWidth;
+            bodyStyle.paddingRight = previous.bodyPaddingRight;
+            window.scrollTo(0, scrollY);
+        };
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === "Escape") {
+                onClose();
+                return;
+            }
+
+            if (e.key !== "Tab") return;
+
+            const container = modalRef.current;
+            if (!container) return;
+
+            const focusableElements = Array.from(
+                container.querySelectorAll<HTMLElement>(
+                    'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+                )
+            ).filter((el) => !el.hasAttribute("hidden"));
+
+            if (focusableElements.length === 0) {
+                e.preventDefault();
+                container.focus();
+                return;
+            }
+
+            const first = focusableElements[0];
+            const last = focusableElements[focusableElements.length - 1];
+            const active = document.activeElement;
+
+            if (e.shiftKey && active === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && active === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        };
+
+        document.addEventListener("keydown", handleKeyDown);
+        requestAnimationFrame(() => {
+            const container = modalRef.current;
+            if (!container) return;
+            const firstFocusable = container.querySelector<HTMLElement>(
+                'button, a[href], textarea, input, select, [tabindex]:not([tabindex="-1"])'
+            );
+            (firstFocusable ?? container).focus();
+        });
+
         return () => {
-            document.removeEventListener("keydown", handleEsc);
-            restoreBodyStyleRef.current?.();
-            restoreBodyStyleRef.current = null;
+            document.removeEventListener("keydown", handleKeyDown);
         };
     }, [isOpen, onClose]);
+
+    useEffect(() => {
+        return () => {
+            restoreModalEnvironment();
+        };
+    }, [restoreModalEnvironment]);
 
     // 모달이 닫힐 때 필터 초기화
     useEffect(() => {
@@ -142,7 +205,7 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
     }, [isOpen]);
 
     return (
-        <AnimatePresence>
+        <AnimatePresence onExitComplete={restoreModalEnvironment}>
             {isOpen && (
                 <>
                     {/* Backdrop */}
@@ -151,7 +214,7 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="fixed inset-0 z-50 bg-[radial-gradient(circle_at_top,_rgba(102,103,171,0.16),_transparent_36%),linear-gradient(to_bottom,_rgba(15,15,20,0.42),_rgba(15,15,20,0.62))]"
+                        className="fixed inset-0 z-[60] bg-[radial-gradient(circle_at_top,_rgba(102,103,171,0.16),_transparent_36%),linear-gradient(to_bottom,_rgba(15,15,20,0.42),_rgba(15,15,20,0.62))]"
                     />
                     {/* Modal */}
                     <motion.div
@@ -159,10 +222,15 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
                         transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                        className="fixed left-1/2 top-1/2 z-50 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 overflow-hidden"
+                        className="fixed left-1/2 top-1/2 z-[70] w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 overflow-hidden pointer-events-none"
                     >
                         <div
-                            className="mx-4 flex max-h-[80vh] flex-col overflow-hidden rounded-[28px] border shadow-2xl"
+                            ref={modalRef}
+                            tabIndex={-1}
+                            role="dialog"
+                            aria-modal="true"
+                            aria-labelledby={titleId}
+                            className="pointer-events-auto mx-4 flex max-h-[80vh] flex-col overflow-hidden rounded-[28px] border shadow-2xl"
                             style={{
                                 backgroundColor: "color-mix(in srgb, var(--background) 93%, white)",
                                 borderColor: "color-mix(in srgb, var(--primary) 24%, var(--border))",
@@ -177,7 +245,7 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                 }}
                             >
                                 <div className="flex items-center justify-between mb-4">
-                                    <h3 className="text-xl font-bold" style={{ color: "var(--foreground)" }}>
+                                    <h3 id={titleId} className="text-xl font-bold" style={{ color: "var(--foreground)" }}>
                                         {SECTION_META.skills.modalTitle}
                                     </h3>
                                     <button
