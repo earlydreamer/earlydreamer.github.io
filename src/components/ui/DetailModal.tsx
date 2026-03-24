@@ -60,17 +60,22 @@ export function DetailModal({
 
             const htmlStyle = document.documentElement.style;
             const bodyStyle = document.body.style;
+            const scrollY = window.scrollY;
             const previous = {
                 htmlOverflow: htmlStyle.overflow,
                 bodyOverflow: bodyStyle.overflow,
-                bodyTouchAction: bodyStyle.touchAction,
+                bodyPosition: bodyStyle.position,
+                bodyTop: bodyStyle.top,
+                bodyWidth: bodyStyle.width,
                 bodyPaddingRight: bodyStyle.paddingRight,
             };
             const scrollbarGap = window.innerWidth - document.documentElement.clientWidth;
 
             htmlStyle.overflow = "hidden";
             bodyStyle.overflow = "hidden";
-            bodyStyle.touchAction = "none";
+            bodyStyle.position = "fixed";
+            bodyStyle.top = `-${scrollY}px`;
+            bodyStyle.width = "100%";
 
             if (scrollbarGap > 0) {
                 bodyStyle.paddingRight = `${scrollbarGap}px`;
@@ -79,8 +84,11 @@ export function DetailModal({
             restoreBodyStyleRef.current = () => {
                 htmlStyle.overflow = previous.htmlOverflow;
                 bodyStyle.overflow = previous.bodyOverflow;
-                bodyStyle.touchAction = previous.bodyTouchAction;
+                bodyStyle.position = previous.bodyPosition;
+                bodyStyle.top = previous.bodyTop;
+                bodyStyle.width = previous.bodyWidth;
                 bodyStyle.paddingRight = previous.bodyPaddingRight;
+                window.scrollTo(0, scrollY);
             };
         }
 
@@ -100,22 +108,22 @@ export function DetailModal({
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="fixed inset-0 z-50 bg-[radial-gradient(circle_at_top,_rgba(102,103,171,0.16),_transparent_36%),linear-gradient(to_bottom,_rgba(15,15,20,0.42),_rgba(15,15,20,0.62))]"
+                        className="fixed inset-0 z-[60] bg-[radial-gradient(circle_at_top,_rgba(102,103,171,0.16),_transparent_36%),linear-gradient(to_bottom,_rgba(15,15,20,0.42),_rgba(15,15,20,0.62))]"
                     />
                     <motion.div
                         initial={{ opacity: 0, y: 24, scale: 0.98 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 24, scale: 0.98 }}
                         transition={{ type: "spring", damping: 24, stiffness: 260 }}
-                        className="fixed inset-x-0 top-1/2 z-50 mx-auto w-full max-w-4xl -translate-y-1/2 px-4"
+                        className="fixed inset-x-0 top-1/2 z-[70] mx-auto w-full max-w-4xl -translate-y-1/2 px-4 pointer-events-none"
                         role="dialog"
                         aria-modal="true"
                         aria-label={`${title} 상세 정보`}
                     >
                         <div
-                            className="overflow-hidden rounded-[28px] border shadow-2xl"
+                            className="pointer-events-auto overflow-hidden rounded-[28px] border shadow-2xl"
                             style={{
-                                backgroundColor: "color-mix(in srgb, var(--background) 94%, white)",
+                                backgroundColor: "var(--popover)",
                                 borderColor: "color-mix(in srgb, var(--primary) 22%, var(--border))",
                             }}
                         >
@@ -214,7 +222,7 @@ export function DetailModal({
                                                 <section
                                                     className="rounded-3xl border p-4 md:col-span-2"
                                                     style={{
-                                                        backgroundColor: "color-mix(in srgb, var(--muted) 74%, white)",
+                                                        backgroundColor: "color-mix(in srgb, var(--muted) 84%, var(--card))",
                                                         borderColor: "color-mix(in srgb, var(--primary) 18%, var(--border))",
                                                     }}
                                                 >
@@ -227,7 +235,7 @@ export function DetailModal({
                                                                 key={badge}
                                                                 className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium md:text-sm"
                                                                 style={{
-                                                                    backgroundColor: "color-mix(in srgb, var(--background) 98%, white)",
+                                                                    backgroundColor: "color-mix(in srgb, var(--card) 72%, var(--background))",
                                                                     color: "var(--foreground)",
                                                                     borderColor: "color-mix(in srgb, var(--primary) 24%, var(--border))",
                                                                 }}
@@ -243,7 +251,7 @@ export function DetailModal({
                                                 <section
                                                     className="rounded-3xl border p-4 md:col-span-2"
                                                     style={{
-                                                        backgroundColor: "color-mix(in srgb, var(--muted) 74%, white)",
+                                                        backgroundColor: "color-mix(in srgb, var(--muted) 84%, var(--card))",
                                                         borderColor: "color-mix(in srgb, var(--primary) 18%, var(--border))",
                                                     }}
                                                 >
@@ -256,7 +264,7 @@ export function DetailModal({
                                                                 key={badge}
                                                                 className="inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium md:text-sm"
                                                                 style={{
-                                                                    backgroundColor: "color-mix(in srgb, var(--background) 97%, white)",
+                                                                    backgroundColor: "color-mix(in srgb, var(--card) 70%, var(--background))",
                                                                     color: "var(--foreground)",
                                                                     borderColor: "color-mix(in srgb, var(--primary) 24%, var(--border))",
                                                                 }}
@@ -277,7 +285,7 @@ export function DetailModal({
                                                     key={caseStudy.title}
                                                     className="rounded-[28px] border p-5 md:p-6"
                                                     style={{
-                                                        backgroundColor: "color-mix(in srgb, white 97%, var(--background))",
+                                                        backgroundColor: "color-mix(in srgb, var(--card) 82%, var(--background))",
                                                         borderColor: "color-mix(in srgb, var(--primary) 22%, var(--border))",
                                                         boxShadow: "0 18px 30px -24px rgba(17, 24, 39, 0.22), 0 0 0 1px color-mix(in srgb, var(--primary) 8%, transparent)",
                                                     }}
@@ -297,7 +305,7 @@ export function DetailModal({
                                                                         key={item}
                                                                         className="rounded-2xl border px-4 py-3 text-sm leading-6 break-keep [text-wrap:pretty] md:text-base"
                                                                         style={{
-                                                                            backgroundColor: "color-mix(in srgb, var(--background) 98%, white)",
+                                                                            backgroundColor: "color-mix(in srgb, var(--card) 72%, var(--background))",
                                                                             borderColor: "color-mix(in srgb, var(--primary) 16%, var(--border))",
                                                                             color: "color-mix(in srgb, var(--foreground) 80%, var(--background))",
                                                                         }}
@@ -318,7 +326,7 @@ export function DetailModal({
                                                                         key={item}
                                                                         className="rounded-2xl border px-4 py-3 text-sm leading-6 break-keep [text-wrap:pretty] md:text-base"
                                                                         style={{
-                                                                            backgroundColor: "color-mix(in srgb, var(--background) 98%, white)",
+                                                                            backgroundColor: "color-mix(in srgb, var(--card) 72%, var(--background))",
                                                                             borderColor: "color-mix(in srgb, var(--primary) 16%, var(--border))",
                                                                             color: "color-mix(in srgb, var(--foreground) 80%, var(--background))",
                                                                         }}
@@ -339,7 +347,7 @@ export function DetailModal({
                                                                         key={item}
                                                                         className="rounded-2xl border px-4 py-3 text-sm leading-6 break-keep [text-wrap:pretty] md:text-base"
                                                                         style={{
-                                                                            backgroundColor: "color-mix(in srgb, var(--background) 98%, white)",
+                                                                            backgroundColor: "color-mix(in srgb, var(--card) 72%, var(--background))",
                                                                             borderColor: "color-mix(in srgb, var(--primary) 16%, var(--border))",
                                                                             color: "color-mix(in srgb, var(--foreground) 80%, var(--background))",
                                                                         }}
@@ -360,7 +368,7 @@ export function DetailModal({
                                                     key={section.title}
                                                     className="rounded-[28px] border p-5 md:p-6"
                                                     style={{
-                                                        backgroundColor: "color-mix(in srgb, white 97%, var(--background))",
+                                                        backgroundColor: "color-mix(in srgb, var(--card) 82%, var(--background))",
                                                         borderColor: "color-mix(in srgb, var(--primary) 22%, var(--border))",
                                                         boxShadow: "0 18px 30px -24px rgba(17, 24, 39, 0.22), 0 0 0 1px color-mix(in srgb, var(--primary) 8%, transparent)",
                                                     }}
@@ -374,7 +382,7 @@ export function DetailModal({
                                                                 key={item}
                                                                 className="rounded-2xl border px-4 py-3 text-sm leading-6 break-keep [text-wrap:pretty] md:text-base"
                                                                 style={{
-                                                                    backgroundColor: "color-mix(in srgb, var(--background) 98%, white)",
+                                                                    backgroundColor: "color-mix(in srgb, var(--card) 72%, var(--background))",
                                                                     borderColor: "color-mix(in srgb, var(--primary) 16%, var(--border))",
                                                                     color: "color-mix(in srgb, var(--foreground) 80%, var(--background))",
                                                                 }}

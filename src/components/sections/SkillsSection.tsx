@@ -101,17 +101,22 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
 
             const htmlStyle = document.documentElement.style;
             const bodyStyle = document.body.style;
+            const scrollY = window.scrollY;
             const previous = {
                 htmlOverflow: htmlStyle.overflow,
                 bodyOverflow: bodyStyle.overflow,
-                bodyTouchAction: bodyStyle.touchAction,
+                bodyPosition: bodyStyle.position,
+                bodyTop: bodyStyle.top,
+                bodyWidth: bodyStyle.width,
                 bodyPaddingRight: bodyStyle.paddingRight,
             };
             const scrollbarGap = window.innerWidth - document.documentElement.clientWidth;
 
             htmlStyle.overflow = "hidden";
             bodyStyle.overflow = "hidden";
-            bodyStyle.touchAction = "none";
+            bodyStyle.position = "fixed";
+            bodyStyle.top = `-${scrollY}px`;
+            bodyStyle.width = "100%";
 
             if (scrollbarGap > 0) {
                 bodyStyle.paddingRight = `${scrollbarGap}px`;
@@ -120,8 +125,11 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
             restoreBodyStyleRef.current = () => {
                 htmlStyle.overflow = previous.htmlOverflow;
                 bodyStyle.overflow = previous.bodyOverflow;
-                bodyStyle.touchAction = previous.bodyTouchAction;
+                bodyStyle.position = previous.bodyPosition;
+                bodyStyle.top = previous.bodyTop;
+                bodyStyle.width = previous.bodyWidth;
                 bodyStyle.paddingRight = previous.bodyPaddingRight;
+                window.scrollTo(0, scrollY);
             };
         }
 
@@ -151,7 +159,7 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="fixed inset-0 z-50 bg-[radial-gradient(circle_at_top,_rgba(102,103,171,0.16),_transparent_36%),linear-gradient(to_bottom,_rgba(15,15,20,0.42),_rgba(15,15,20,0.62))]"
+                        className="fixed inset-0 z-[60] bg-[radial-gradient(circle_at_top,_rgba(102,103,171,0.16),_transparent_36%),linear-gradient(to_bottom,_rgba(15,15,20,0.42),_rgba(15,15,20,0.62))]"
                     />
                     {/* Modal */}
                     <motion.div
@@ -159,10 +167,10 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
                         transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                        className="fixed left-1/2 top-1/2 z-50 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 overflow-hidden"
+                        className="fixed left-1/2 top-1/2 z-[70] w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 overflow-hidden pointer-events-none"
                     >
                         <div
-                            className="mx-4 flex max-h-[80vh] flex-col overflow-hidden rounded-[28px] border shadow-2xl"
+                            className="pointer-events-auto mx-4 flex max-h-[80vh] flex-col overflow-hidden rounded-[28px] border shadow-2xl"
                             style={{
                                 backgroundColor: "color-mix(in srgb, var(--background) 93%, white)",
                                 borderColor: "color-mix(in srgb, var(--primary) 24%, var(--border))",
