@@ -12,10 +12,10 @@ export const PROJECTS: Project[] = [
         projectType: "team",
         links: {
             demo: "https://dukku.earlydreamer.dev",
-            ppt: "https://jakepark-dev.notion.site/DUKKU-31433611c09f80fabb72c3a64c2ff759",
-            githubLinks: [
+            references: [
                 { url: "https://github.com/earlydreamer/semicolon-front-prototype", label: "Frontend" },
                 { url: "https://github.com/earlydreamer/semicolon-backend-forked", label: "Backend" },
+                { url: "https://jakepark-dev.notion.site/DUKKU-31433611c09f80fabb72c3a64c2ff759", label: "Notion" },
             ],
         },
         modalContent: {
@@ -94,7 +94,7 @@ export const PROJECTS: Project[] = [
         projectType: "team",
         links: {
             demo: "https://softwarecampus.earlydreamer.dev",
-            githubLinks: [
+            references: [
                 { url: "https://github.com/KOSTA-SoftwareCampus-Bundang/softwarecampus-frontend", label: "Frontend" },
                 { url: "https://github.com/KOSTA-SoftwareCampus-Bundang/softwarecampus-backend", label: "Backend" },
             ],
@@ -167,9 +167,13 @@ export const PROJECTS: Project[] = [
         projectType: "team",
         links: {
             demo: "https://pickteam.site",
-            githubLinks: [
+            references: [
                 { url: "https://github.com/KOSTA-295-pick-team/pick-team-frontend", label: "Frontend" },
                 { url: "https://github.com/KOSTA-295-pick-team/pick-team", label: "Backend" },
+                {
+                    url: "https://jakepark-dev.notion.site/FINAL-PROJECT-Pick-Team-e3333611c09f8299818c811cdb2364ae",
+                    label: "Notion",
+                },
             ],
         },
         modalContent: {

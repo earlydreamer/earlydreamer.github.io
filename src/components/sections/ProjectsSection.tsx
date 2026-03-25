@@ -152,10 +152,10 @@ export function ProjectsSection() {
                                     <ProjectTechStack techStack={project.techStack} projectId={project.id} />
                                 </div>
 
-                                {/* GitHub Links */}
-                                {(!project.links?.demo && project.links?.githubLinks && project.links.githubLinks.length > 0) && (
+                                {/* Reference Links */}
+                                {(!project.links?.demo && project.links?.references && project.links.references.length > 0) && (
                                     <div className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-zinc-200 dark:border-zinc-500">
-                                        {(project.links?.githubLinks ?? []).slice(0, 1).map((link) => (
+                                        {(project.links?.references ?? []).slice(0, 1).map((link) => (
                                             <Link
                                                 key={link.url}
                                                 href={link.url}
@@ -208,10 +208,7 @@ export function ProjectsSection() {
                         ...(selectedProject.links?.demo
                             ? [{ url: selectedProject.links.demo, label: "Demo" }]
                             : []),
-                        ...(selectedProject.links?.githubLinks ?? []),
-                        ...(selectedProject.links?.ppt
-                            ? [{ url: selectedProject.links.ppt, label: "Postmortem" }]
-                            : []),
+                        ...(selectedProject.links?.references ?? []),
                     ]}
                 />
             )}

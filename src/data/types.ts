@@ -32,9 +32,8 @@ export interface Project extends ModalExtendable {
     projectType: "team" | "personal";
     links?: {
         github?: string;
-        githubLinks?: { url: string; label: string }[];
         demo?: string;
-        ppt?: string;
+        references?: { url: string; label: string }[];
     };
 }
 
