@@ -28,7 +28,13 @@ function ExperienceList({ experiences, icon, title, colorClass, intro }: { exper
                         viewport={{ once: true }}
                         className="relative pl-8 md:pl-12"
                     >
-                        <span className={cn("absolute -left-[7px] top-2 h-3.5 w-3.5 rounded-full ring-4 ring-slate-200 dark:ring-slate-700", colorClass.replace('text-', 'bg-'))} />
+                        <span
+                            className="absolute -left-[10px] top-1.5 z-10 h-5 w-5 rounded-full border-4"
+                            style={{
+                                backgroundColor: "#6667AB",
+                                borderColor: "color-mix(in srgb, #6667AB 28%, white)",
+                            }}
+                        />
 
                         <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2">
                             <h4 className="text-xl font-bold" style={{ color: 'var(--foreground)' }}>{exp.company}</h4>
