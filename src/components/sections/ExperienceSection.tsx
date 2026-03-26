@@ -7,18 +7,19 @@ import { cn } from "@/lib/utils";
 
 function ExperienceList({ experiences, icon, title, colorClass, intro }: { experiences: Experience[], icon: string, title: string, colorClass: string, intro?: string }) {
     return (
-        <div className="glass p-8 rounded-3xl">
-            <h3 className={cn("text-2xl font-bold mb-4 flex items-center gap-3", colorClass)}>
+        <div className="section-shell overflow-hidden p-6 md:p-8">
+            <div className="section-shell-inner">
+            <h3 className={cn("mb-4 flex items-center gap-3 text-2xl font-bold", colorClass)}>
                 <span className="text-3xl">{icon}</span> {title}
             </h3>
 
             {intro && (
-                <p className="mb-8 leading-relaxed whitespace-pre-wrap" style={{ color: 'var(--muted-foreground)' }}>
+                <p className="mb-8 whitespace-pre-wrap text-sm leading-7 md:text-base" style={{ color: 'var(--muted-foreground)' }}>
                     {intro}
                 </p>
             )}
 
-            <div className={cn("relative border-l-2 border-zinc-200 dark:border-zinc-700 ml-3 md:ml-4 space-y-12", !intro && "mt-8")}>
+            <div className={cn("relative ml-3 space-y-12 border-l md:ml-4", !intro && "mt-8")} style={{ borderColor: "color-mix(in srgb, var(--primary) 16%, var(--border))" }}>
                 {experiences.map((exp, index) => (
                     <motion.div
                         key={exp.id}
@@ -56,7 +57,7 @@ function ExperienceList({ experiences, icon, title, colorClass, intro }: { exper
 
                         <div className="space-y-4">
                             {exp.projects.map((project, pIndex) => (
-                                <div key={pIndex} className="rounded-xl p-5 border shadow-sm hover:shadow-md transition-shadow" style={{ backgroundColor: 'var(--card)', borderColor: 'var(--border)' }}>
+                                <div key={pIndex} className="rounded-[1.25rem] border p-5 transition-shadow hover:shadow-md" style={{ backgroundColor: 'color-mix(in srgb, var(--surface-soft) 92%, white)', borderColor: 'color-mix(in srgb, var(--primary) 14%, var(--border))' }}>
                                     <h5 className="font-bold text-lg mb-1" style={{ color: 'var(--foreground)' }}>{project.title}</h5>
                                     <p className="text-sm font-medium mb-3" style={{ color: 'var(--primary)' }}>{project.description}</p>
                                     <ul className="list-disc list-outside ml-4 space-y-1.5">
@@ -72,6 +73,7 @@ function ExperienceList({ experiences, icon, title, colorClass, intro }: { exper
                     </motion.div>
                 ))}
             </div>
+            </div>
         </div>
     );
 }
@@ -81,12 +83,6 @@ export function ExperienceSection() {
 
     return (
         <Section id="experience" title={experience.title} subtitle={experience.subtitle} centered>
-            {/* Lighting effects - 중간톤: violet, purple */}
-            <div className="absolute inset-0 overflow-visible pointer-events-none" style={{ zIndex: -1 }}>
-                <div className="liquid-shape w-[550px] h-[550px] bg-violet-100 dark:bg-violet-500/15 top-[-80px] right-[-250px] opacity-60 animate-pulse" style={{ animationDuration: "13s" }} />
-                <div className="liquid-shape w-64 h-64 bg-purple-100 dark:bg-purple-500/15 top-1/3 left-[-100px] opacity-50 animate-pulse" style={{ animationDuration: "9s" }} />
-                <div className="liquid-shape w-48 h-48 bg-fuchsia-100 dark:bg-fuchsia-500/15 bottom-10 right-[10%] opacity-40 animate-pulse" style={{ animationDuration: "17s" }} />
-            </div>
             <div className="flex flex-col gap-12 max-w-4xl mx-auto relative z-10">
                 <ExperienceList
                     experiences={FREELANCE_EXPERIENCES}

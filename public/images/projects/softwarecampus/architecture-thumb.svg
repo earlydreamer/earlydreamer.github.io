@@ -1,0 +1,57 @@
+<svg width="1600" height="800" viewBox="0 0 1600 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="800" rx="40" fill="#F6F6F1"/>
+  <rect x="48" y="48" width="1504" height="704" rx="32" fill="url(#bg)"/>
+
+  <rect x="102" y="120" width="286" height="132" rx="28" fill="#FFFDF7" stroke="#D3BC7D" stroke-width="4"/>
+  <text x="245" y="170" text-anchor="middle" fill="#7A6430" font-size="32" font-family="Pretendard, sans-serif" font-weight="700">React Client</text>
+  <text x="245" y="210" text-anchor="middle" fill="#947B44" font-size="24" font-family="Pretendard, sans-serif">Search · Compare · Review</text>
+
+  <rect x="470" y="96" width="336" height="180" rx="30" fill="#FFFFFF" stroke="#A8B9D9" stroke-width="4"/>
+  <text x="638" y="146" text-anchor="middle" fill="#405E8B" font-size="34" font-family="Pretendard, sans-serif" font-weight="700">Spring Boot API</text>
+  <text x="638" y="186" text-anchor="middle" fill="#5E79A2" font-size="24" font-family="Pretendard, sans-serif">Camp · Review · Approval · Admin</text>
+  <text x="638" y="224" text-anchor="middle" fill="#5E79A2" font-size="22" font-family="Pretendard, sans-serif">Service Layer + REST API</text>
+
+  <rect x="900" y="120" width="270" height="132" rx="28" fill="#FBFAFF" stroke="#B6A6D8" stroke-width="4"/>
+  <text x="1035" y="170" text-anchor="middle" fill="#5B4C83" font-size="32" font-family="Pretendard, sans-serif" font-weight="700">Auth / Roles</text>
+  <text x="1035" y="210" text-anchor="middle" fill="#75679B" font-size="24" font-family="Pretendard, sans-serif">JWT · ADMIN · ACADEMY · USER</text>
+
+  <rect x="1240" y="96" width="248" height="180" rx="30" fill="#FCFFFC" stroke="#A4C7AA" stroke-width="4"/>
+  <text x="1364" y="146" text-anchor="middle" fill="#3D6E43" font-size="30" font-family="Pretendard, sans-serif" font-weight="700">Delivery</text>
+  <text x="1364" y="184" text-anchor="middle" fill="#58885E" font-size="22" font-family="Pretendard, sans-serif">EC2 · NGINX · S3 · Redis</text>
+  <text x="1364" y="216" text-anchor="middle" fill="#58885E" font-size="22" font-family="Pretendard, sans-serif">GitHub Actions</text>
+
+  <rect x="332" y="404" width="430" height="162" rx="30" fill="#FFFDFC" stroke="#D9B98F" stroke-width="4"/>
+  <text x="547" y="456" text-anchor="middle" fill="#7D5C30" font-size="32" font-family="Pretendard, sans-serif" font-weight="700">User Experience</text>
+  <text x="547" y="498" text-anchor="middle" fill="#957249" font-size="24" font-family="Pretendard, sans-serif">수강생 후기 기반 탐색과 비교 경험</text>
+  <text x="547" y="534" text-anchor="middle" fill="#957249" font-size="22" font-family="Pretendard, sans-serif">public service flow</text>
+
+  <rect x="846" y="404" width="432" height="162" rx="30" fill="#FFFCFE" stroke="#D4A9C0" stroke-width="4"/>
+  <text x="1062" y="456" text-anchor="middle" fill="#8D4768" font-size="32" font-family="Pretendard, sans-serif" font-weight="700">Operations</text>
+  <text x="1062" y="498" text-anchor="middle" fill="#A86180" font-size="24" font-family="Pretendard, sans-serif">기관 승인, 관리자 대시보드, 권한별 관리</text>
+  <text x="1062" y="534" text-anchor="middle" fill="#A86180" font-size="22" font-family="Pretendard, sans-serif">delivery-ready admin flow</text>
+
+  <path d="M388 186H456" stroke="#C5A45C" stroke-width="8" stroke-linecap="round"/>
+  <path d="M806 186H890" stroke="#7894BE" stroke-width="8" stroke-linecap="round"/>
+  <path d="M1170 186H1230" stroke="#8C7AB3" stroke-width="8" stroke-linecap="round"/>
+  <path d="M638 276V384" stroke="#C5A45C" stroke-width="8" stroke-linecap="round"/>
+  <path d="M1035 252V384" stroke="#B685A0" stroke-width="8" stroke-linecap="round"/>
+  <path d="M762 485H836" stroke="#C5A45C" stroke-width="8" stroke-linecap="round"/>
+
+  <circle cx="456" cy="186" r="10" fill="#C5A45C"/>
+  <circle cx="890" cy="186" r="10" fill="#7894BE"/>
+  <circle cx="1230" cy="186" r="10" fill="#8C7AB3"/>
+  <circle cx="638" cy="384" r="10" fill="#C5A45C"/>
+  <circle cx="1035" cy="384" r="10" fill="#B685A0"/>
+  <circle cx="836" cy="485" r="10" fill="#C5A45C"/>
+
+  <text x="118" y="666" fill="#405E8B" font-size="24" font-family="Pretendard, sans-serif" font-weight="700">SoftwareCampus Architecture</text>
+  <text x="118" y="706" fill="#5E79A2" font-size="22" font-family="Pretendard, sans-serif">사용자 비교 서비스와 운영 기능을 함께 설계한 납품형 제품 구조</text>
+
+  <defs>
+    <linearGradient id="bg" x1="164" y1="116" x2="1438" y2="688" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFDF6"/>
+      <stop offset="0.53" stop-color="#F7FAFF"/>
+      <stop offset="1" stop-color="#FFF8FC"/>
+    </linearGradient>
+  </defs>
+</svg>

@@ -5,63 +5,54 @@
 
 @layer base {
     :root {
-        /* Cloud Dancer (Pantone 11-4201 TCX approx) - Soft warm white */
         --background: #F0EEE9;
         --foreground: #171717;
-
-        /* Very Peri (Pantone 17-3938) */
         --primary: #6667AB;
         --primary-foreground: #ffffff;
-
-        --card: rgba(255, 255, 255, 0.4);
+        --card: rgba(255, 255, 255, 0.72);
         --card-foreground: #171717;
-        --popover: rgba(255, 255, 255, 0.8);
+        --popover: rgba(255, 255, 255, 0.92);
         --popover-foreground: #171717;
-
-        --muted: #F5F5F7;
-        --muted-foreground: #737373;
-
-        --accent: rgba(102, 103, 171, 0.1);
+        --muted: #F5F3EE;
+        --muted-foreground: #67636F;
+        --accent: rgba(102, 103, 171, 0.12);
         --accent-foreground: #171717;
-
         --destructive: #ef4444;
         --destructive-foreground: #fafafa;
-
-        --border: rgba(255, 255, 255, 0.2);
-        --input: rgba(255, 255, 255, 0.2);
+        --border: rgba(59, 46, 99, 0.12);
+        --input: rgba(59, 46, 99, 0.14);
         --ring: rgba(102, 103, 171, 0.5);
-
         --radius: 1rem;
+        --surface-strong: rgba(255, 252, 247, 0.88);
+        --surface-soft: rgba(255, 255, 255, 0.64);
+        --surface-tint: rgba(102, 103, 171, 0.08);
+        --shadow-soft: 0 20px 60px -36px rgba(33, 28, 52, 0.28);
+        --shadow-card: 0 24px 50px -34px rgba(28, 24, 44, 0.24);
     }
 
     .dark {
-        /* Sophisticated dark with blue-gray tint */
         --background: #0f1219;
         --foreground: #ffffff;
-
-        /* Brighter primary for dark mode - lavender tone */
         --primary: #b8b9ff;
         --primary-foreground: #0f1219;
-
-        /* Card backgrounds with good contrast */
         --card: rgba(28, 33, 46, 0.96);
         --card-foreground: #ffffff;
         --popover: rgba(24, 29, 41, 0.99);
         --popover-foreground: #ffffff;
-
         --muted: #202634;
         --muted-foreground: #d7d9e3;
-
         --accent: rgba(165, 166, 240, 0.15);
         --accent-foreground: #ffffff;
-
         --destructive: #f87171;
         --destructive-foreground: #1a0505;
-
-        /* Visible borders */
         --border: rgba(255, 255, 255, 0.15);
         --input: rgba(255, 255, 255, 0.15);
         --ring: rgba(165, 166, 240, 0.5);
+        --surface-strong: rgba(19, 24, 34, 0.9);
+        --surface-soft: rgba(24, 30, 42, 0.82);
+        --surface-tint: rgba(184, 185, 255, 0.1);
+        --shadow-soft: 0 24px 60px -34px rgba(0, 0, 0, 0.5);
+        --shadow-card: 0 24px 50px -34px rgba(0, 0, 0, 0.56);
     }
 }
 
@@ -73,54 +64,93 @@
     html {
         scroll-behavior: smooth;
         scroll-padding-top: 100px;
-        /* Offset for fixed header */
         overflow-x: hidden;
     }
 
     body {
-        background-color: var(--background);
+        min-height: 100vh;
         color: var(--foreground);
+        font-family: var(--font-plus-jakarta-sans), sans-serif;
+        background:
+            radial-gradient(circle at top left, rgba(102, 103, 171, 0.16), transparent 28%),
+            radial-gradient(circle at 82% 12%, rgba(244, 167, 109, 0.12), transparent 22%),
+            linear-gradient(180deg, color-mix(in srgb, var(--background) 92%, white) 0%, var(--background) 36%, color-mix(in srgb, var(--background) 90%, #ece7df) 100%);
         overflow-x: hidden;
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background-image:
+            linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        background-size: 120px 120px;
+        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.45), transparent 88%);
+        opacity: 0.36;
+    }
+
+    .dark body::before {
+        background-image:
+            linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+
+    ::selection {
+        background: color-mix(in srgb, var(--primary) 28%, white);
+        color: var(--foreground);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        letter-spacing: -0.03em;
     }
 }
 
 @layer utilities {
     .glass {
-        background-color: rgba(255, 255, 255, 0.3);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        background:
+            linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 92%, white), color-mix(in srgb, var(--surface-soft) 94%, var(--background)));
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border: 1px solid color-mix(in srgb, var(--primary) 16%, var(--border));
+        box-shadow: var(--shadow-soft);
     }
 
     .dark .glass {
-        background-color: rgba(24, 30, 42, 0.9);
-        border-color: rgba(255, 255, 255, 0.16);
+        background:
+            linear-gradient(180deg, rgba(20, 25, 35, 0.92), rgba(26, 32, 44, 0.84));
+        border-color: rgba(255, 255, 255, 0.12);
     }
 
     .glass-card {
-        background-color: rgba(255, 255, 255, 0.4);
-        backdrop-filter: blur(24px);
-        -webkit-backdrop-filter: blur(24px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        border-radius: 1rem;
-        transition: all 0.3s ease;
+        background:
+            linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 96%, white), color-mix(in srgb, var(--surface-soft) 92%, var(--background)));
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid color-mix(in srgb, var(--primary) 18%, var(--border));
+        box-shadow: var(--shadow-card);
+        border-radius: 1.5rem;
+        transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease, background-color 0.35s ease;
     }
 
     .dark .glass-card {
-        background-color: rgba(24, 30, 42, 0.94);
-        border-color: rgba(255, 255, 255, 0.18);
+        background:
+            linear-gradient(180deg, rgba(22, 27, 39, 0.96), rgba(28, 34, 48, 0.88));
+        border-color: rgba(255, 255, 255, 0.14);
     }
 
     .glass-card:hover {
-        background-color: rgba(255, 255, 255, 0.5);
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        transform: translateY(-4px);
+        background-color: color-mix(in srgb, var(--surface-strong) 96%, white);
+        box-shadow: 0 30px 60px -34px rgba(28, 24, 44, 0.34);
+        transform: translateY(-6px);
     }
 
     .dark .glass-card:hover {
-        background-color: rgba(31, 38, 52, 0.98);
+        background-color: rgba(30, 37, 52, 0.98);
     }
 
     .text-gradient-rainbow {
@@ -145,16 +175,74 @@
         position: absolute;
         z-index: -10;
         border-radius: 9999px;
-        mix-blend-mode: soft-light;
-        filter: blur(80px);
-        opacity: 0.5;
-        animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        mix-blend-mode: multiply;
+        filter: blur(92px);
+        opacity: 0.45;
+        animation: pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     }
 
     .dark .liquid-shape {
         mix-blend-mode: screen;
-        filter: blur(64px);
-        opacity: 0.25;
+        filter: blur(72px);
+        opacity: 0.2;
+    }
+
+    .display-title {
+        font-family: var(--font-plus-jakarta-sans), sans-serif;
+        letter-spacing: -0.05em;
+        font-weight: 800;
+    }
+
+    .section-shell {
+        position: relative;
+        border-radius: 2rem;
+        border: 1px solid color-mix(in srgb, var(--primary) 14%, var(--border));
+        background:
+            linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 98%, white), color-mix(in srgb, var(--surface-soft) 92%, var(--background)));
+        box-shadow: var(--shadow-soft);
+    }
+
+    .section-shell::before {
+        content: "";
+        position: absolute;
+        inset: 1px;
+        border-radius: calc(2rem - 1px);
+        pointer-events: none;
+        border: 1px solid color-mix(in srgb, white 55%, transparent);
+        opacity: 0.5;
+    }
+
+    .dark .section-shell::before {
+        border-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .section-shell-inner {
+        position: relative;
+        z-index: 1;
+    }
+
+    .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--primary);
+    }
+
+    .eyebrow::before {
+        content: "";
+        width: 2.5rem;
+        height: 1px;
+        background: color-mix(in srgb, var(--primary) 46%, transparent);
+    }
+
+    .editorial-rule {
+        height: 1px;
+        width: 100%;
+        background: linear-gradient(90deg, color-mix(in srgb, var(--primary) 0%, transparent), color-mix(in srgb, var(--primary) 30%, var(--border)), color-mix(in srgb, var(--primary) 0%, transparent));
     }
 
     /* Custom scrollbar for modals */

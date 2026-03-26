@@ -138,7 +138,7 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                             tabIndex={-1}
                             className="mx-4 flex max-h-[80vh] flex-col overflow-hidden rounded-[28px] border shadow-2xl"
                             style={{
-                                backgroundColor: "var(--popover)",
+                                backgroundColor: "color-mix(in srgb, var(--background) 97%, white)",
                                 borderColor: "color-mix(in srgb, var(--primary) 24%, var(--border))",
                             }}
                         >
@@ -147,7 +147,7 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                 className="border-b p-6 pb-4"
                                 style={{
                                     borderColor: "color-mix(in srgb, var(--primary) 18%, var(--border))",
-                                    background: "linear-gradient(180deg, color-mix(in srgb, var(--card) 92%, var(--popover)), color-mix(in srgb, var(--muted) 88%, var(--card)))",
+                                    background: "linear-gradient(180deg, color-mix(in srgb, var(--background) 98%, white), color-mix(in srgb, var(--muted) 92%, var(--background)))",
                                 }}
                             >
                                 <div className="flex items-center justify-between mb-4">
@@ -212,7 +212,7 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                 <div
                                     className="rounded-2xl p-3 text-sm"
                                     style={{
-                                        backgroundColor: "color-mix(in srgb, var(--muted) 84%, var(--card))",
+                                        backgroundColor: "color-mix(in srgb, var(--muted) 90%, var(--background))",
                                         border: "1px solid color-mix(in srgb, var(--primary) 22%, var(--border))",
                                     }}
                                 >
@@ -265,7 +265,7 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                                             key={skill.name}
                                                             className="rounded-[22px] border p-4 transition-all"
                                                             style={{
-                                                                backgroundColor: "color-mix(in srgb, var(--card) 86%, var(--popover))",
+                                                                backgroundColor: "color-mix(in srgb, var(--background) 96%, white)",
                                                                 borderColor: "color-mix(in srgb, var(--primary) 24%, var(--border))",
                                                                 boxShadow: "0 18px 30px -24px rgba(17, 24, 39, 0.24), 0 0 0 1px color-mix(in srgb, var(--primary) 8%, transparent)",
                                                             }}
@@ -325,80 +325,83 @@ export function SkillsSection() {
     return (
         <>
             <Section id="skills" title={skills.title} subtitle={skills.subtitle} centered>
-                <motion.div
-                    variants={container}
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={{ once: true }}
-                    className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6 pt-8"
-                >
-                    {SKILLS.map((skill) => (
+                <div className="section-shell overflow-hidden px-5 py-6 md:px-6 md:py-8">
+                    <div className="section-shell-inner">
                         <motion.div
-                            key={skill.name}
-                            variants={item}
-                            className="glass-card flex flex-col items-center justify-center p-6 gap-4 group hover:border-[#6667AB]/50 transition-colors"
+                            variants={container}
+                            initial="hidden"
+                            whileInView="show"
+                            viewport={{ once: true }}
+                            className="grid grid-cols-2 gap-4 pt-1 md:grid-cols-4 md:gap-5"
                         >
-                            <div className="relative w-16 h-16 flex items-center justify-center p-2 bg-white dark:bg-slate-200 rounded-2xl shadow-inner">
-                                {skill.icon ? (
-                                    <Image
-                                        src={skill.icon}
-                                        alt={skill.name}
-                                        width={48}
-                                        height={48}
-                                        className="object-contain"
-                                        onError={(e) => {
-                                            (e.target as HTMLImageElement).style.display = 'none';
-                                        }}
-                                    />
-                                ) : (
-                                    <span className="text-2xl font-bold">{skill.name[0]}</span>
-                                )}
-                            </div>
-                            <div className="text-center min-h-[52px]">
-                                <h3
-                                    className="font-semibold leading-snug break-keep group-hover:text-[#6667AB] transition-colors"
-                                    style={{ color: 'var(--foreground)' }}
+                            {SKILLS.map((skill) => (
+                                <motion.div
+                                    key={skill.name}
+                                    variants={item}
+                                    className="glass-card flex flex-col items-center justify-center gap-4 p-5 text-center group hover:border-[#6667AB]/50 transition-colors"
                                 >
-                                    {skill.name}
-                                </h3>
-                                <span
-                                    className="text-xs px-2 py-1 rounded-full mt-2 inline-block border"
-                                    style={{
-                                        backgroundColor: 'var(--accent)',
-                                        color: 'var(--accent-foreground)',
-                                        borderColor: 'var(--border)'
-                                    }}
-                                >
-                                    {skill.category}
-                                </span>
-                            </div>
+                                    <div className="relative flex h-16 w-16 items-center justify-center rounded-[1.25rem] border p-2 shadow-inner" style={{ backgroundColor: "color-mix(in srgb, var(--surface-strong) 96%, white)", borderColor: "color-mix(in srgb, var(--primary) 12%, var(--border))" }}>
+                                        {skill.icon ? (
+                                            <Image
+                                                src={skill.icon}
+                                                alt={skill.name}
+                                                width={48}
+                                                height={48}
+                                                className="object-contain"
+                                                onError={(e) => {
+                                                    (e.target as HTMLImageElement).style.display = 'none';
+                                                }}
+                                            />
+                                        ) : (
+                                            <span className="text-2xl font-bold">{skill.name[0]}</span>
+                                        )}
+                                    </div>
+                                    <div className="min-h-[52px]">
+                                        <h3
+                                            className="font-semibold leading-snug break-keep group-hover:text-[#6667AB] transition-colors"
+                                            style={{ color: 'var(--foreground)' }}
+                                        >
+                                            {skill.name}
+                                        </h3>
+                                        <span
+                                            className="mt-2 inline-block rounded-full border px-2 py-1 text-xs"
+                                            style={{
+                                                backgroundColor: 'var(--accent)',
+                                                color: 'var(--accent-foreground)',
+                                                borderColor: 'color-mix(in srgb, var(--primary) 10%, var(--border))'
+                                            }}
+                                        >
+                                            {skill.category}
+                                        </span>
+                                    </div>
+                                </motion.div>
+                            ))}
                         </motion.div>
-                    ))}
-                </motion.div>
 
-                {/* 기타 스킬 버튼 */}
-                <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.5 }}
-                    className="flex justify-center mt-8"
-                >
-                    <button
-                        onClick={() => setIsModalOpen(true)}
-                        className="group flex items-center gap-2 rounded-full px-6 py-3 shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl"
-                        style={{
-                            backgroundColor: "var(--primary)",
-                            color: "var(--primary-foreground)",
-                            boxShadow: "0 14px 30px -18px color-mix(in srgb, var(--primary) 75%, transparent)",
-                        }}
-                    >
-                        <span className="text-sm font-semibold">
-                            {skills.buttonText}
-                        </span>
-                        <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                    </button>
-                </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.5 }}
+                            className="mt-8 flex justify-center"
+                        >
+                            <button
+                                onClick={() => setIsModalOpen(true)}
+                                className="group flex items-center gap-2 rounded-full px-6 py-3 shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl"
+                                style={{
+                                    backgroundColor: "var(--primary)",
+                                    color: "var(--primary-foreground)",
+                                    boxShadow: "0 14px 30px -18px color-mix(in srgb, var(--primary) 75%, transparent)",
+                                }}
+                            >
+                                <span className="text-sm font-semibold">
+                                    {skills.buttonText}
+                                </span>
+                                <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                            </button>
+                        </motion.div>
+                    </div>
+                </div>
             </Section>
 
             {/* Modal */}

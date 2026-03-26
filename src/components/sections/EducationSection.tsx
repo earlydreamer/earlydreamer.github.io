@@ -10,11 +10,10 @@ export function EducationSection() {
 
     return (
         <Section id="education" title={education.title} subtitle={education.subtitle} centered className="pb-40">
-            <div className="glass max-w-4xl mx-auto rounded-3xl p-8 md:p-12 relative overflow-hidden">
-                {/* Lighting effects - 가장 따뜻한톤: amber, orange */}
-                <div className="liquid-shape w-64 h-64 bg-amber-200 dark:bg-amber-500/15 bottom-[-50px] right-[-50px] opacity-25 blur-3xl rounded-full" />
+            <div className="section-shell max-w-4xl mx-auto overflow-hidden p-8 md:p-12 relative">
+                <div className="liquid-shape h-64 w-64 bg-amber-200 dark:bg-amber-500/15 bottom-[-50px] right-[-50px] opacity-25 rounded-full" />
 
-                <div className="space-y-8 relative z-10">
+                <div className="section-shell-inner space-y-8 relative z-10">
                     {EDUCATION.map((edu, index) => (
                         <motion.div
                             key={index}
@@ -25,7 +24,7 @@ export function EducationSection() {
                             className="flex gap-4 md:gap-6"
                         >
                             <div className="flex flex-col items-center">
-                                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#6667AB]/10 text-[#6667AB] shadow-sm">
+                                <div className="flex h-12 w-12 items-center justify-center rounded-2xl text-[#6667AB] shadow-sm" style={{ backgroundColor: "color-mix(in srgb, var(--primary) 12%, white)" }}>
                                     <GraduationCap className="h-6 w-6" />
                                 </div>
                                 {index !== EDUCATION.length - 1 && (

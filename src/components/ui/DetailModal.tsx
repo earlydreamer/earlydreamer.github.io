@@ -4,7 +4,7 @@ import { useId, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ExternalLink, X } from "lucide-react";
+import { ChevronDown, ExternalLink, X } from "lucide-react";
 import { useDialogBehavior } from "@/hooks/useDialogBehavior";
 
 interface DetailModalProps {
@@ -18,6 +18,17 @@ interface DetailModalProps {
     metaBadges?: string[];
     techBadges?: string[];
     summary?: string;
+    architecture?: {
+        title: string;
+        summary?: string;
+        imageSrc?: string;
+        imageAlt?: string;
+        diagram: {
+            label: string;
+            description: string;
+        }[];
+        highlights?: string[];
+    };
     caseStudies?: {
         title: string;
         problem: string[];
@@ -45,6 +56,7 @@ export function DetailModal({
     metaBadges = [],
     techBadges = [],
     summary,
+    architecture,
     caseStudies = [],
     sections = [],
     links = [],
@@ -52,6 +64,8 @@ export function DetailModal({
     const dialogRef = useRef<HTMLDivElement>(null);
     const titleId = useId();
     const descriptionId = useId();
+    const sectionSurfaceColor = "color-mix(in srgb, var(--background) 95%, white)";
+    const sectionBorderColor = "color-mix(in srgb, var(--primary) 18%, var(--border))";
 
     useDialogBehavior({
         isOpen,
@@ -86,7 +100,7 @@ export function DetailModal({
                             tabIndex={-1}
                             className="overflow-hidden rounded-[28px] border shadow-2xl"
                             style={{
-                                backgroundColor: "color-mix(in srgb, var(--background) 94%, white)",
+                                backgroundColor: "color-mix(in srgb, var(--background) 97%, white)",
                                 borderColor: "color-mix(in srgb, var(--primary) 22%, var(--border))",
                             }}
                         >
@@ -193,11 +207,11 @@ export function DetailModal({
                                                 <section
                                                     className="rounded-3xl border p-4 md:col-span-2"
                                                     style={{
-                                                        backgroundColor: "color-mix(in srgb, var(--muted) 82%, var(--card))",
-                                                        borderColor: "color-mix(in srgb, var(--primary) 18%, var(--border))",
+                                                        backgroundColor: sectionSurfaceColor,
+                                                        borderColor: sectionBorderColor,
                                                     }}
                                                 >
-                                                    <h4 className="mb-3 text-sm font-semibold" style={{ color: "color-mix(in srgb, var(--primary) 72%, var(--foreground))" }}>
+                                                    <h4 className="mb-4 text-base font-semibold md:text-lg" style={{ color: "var(--foreground)" }}>
                                                         개요
                                                     </h4>
                                                     <div className="flex flex-wrap gap-2">
@@ -222,11 +236,11 @@ export function DetailModal({
                                                 <section
                                                     className="rounded-3xl border p-4 md:col-span-2"
                                                     style={{
-                                                        backgroundColor: "color-mix(in srgb, var(--muted) 82%, var(--card))",
-                                                        borderColor: "color-mix(in srgb, var(--primary) 18%, var(--border))",
+                                                        backgroundColor: sectionSurfaceColor,
+                                                        borderColor: sectionBorderColor,
                                                     }}
                                                 >
-                                                    <h4 className="mb-3 text-sm font-semibold" style={{ color: "color-mix(in srgb, var(--primary) 72%, var(--foreground))" }}>
+                                                    <h4 className="mb-4 text-base font-semibold md:text-lg" style={{ color: "var(--foreground)" }}>
                                                         기술 스택
                                                     </h4>
                                                     <div className="flex flex-wrap gap-2">
@@ -249,6 +263,126 @@ export function DetailModal({
                                         </div>
                                     )}
 
+                                    {architecture && (
+                                        <details
+                                            className="group mb-8 overflow-hidden rounded-[28px] border"
+                                            style={{
+                                                backgroundColor: sectionSurfaceColor,
+                                                borderColor: sectionBorderColor,
+                                                boxShadow: "0 18px 30px -24px rgba(17, 24, 39, 0.22), 0 0 0 1px color-mix(in srgb, var(--primary) 8%, transparent)",
+                                            }}
+                                        >
+                                            <summary
+                                                className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 md:px-6"
+                                                style={{ WebkitTapHighlightColor: "transparent" }}
+                                            >
+                                                <div>
+                                                    <h4
+                                                        className="text-base font-semibold md:text-lg"
+                                                        style={{ color: "var(--foreground)" }}
+                                                    >
+                                                        {architecture.title}
+                                                    </h4>
+                                                    <p
+                                                        className="mt-1 text-sm break-keep [text-wrap:pretty] md:text-base"
+                                                        style={{ color: "color-mix(in srgb, var(--muted-foreground) 88%, var(--foreground))" }}
+                                                    >
+                                                        한눈에 보는 구조와 설계 포인트
+                                                    </p>
+                                                </div>
+                                                <span
+                                                    className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border transition-transform duration-300 group-open:rotate-180"
+                                                    style={{
+                                                        backgroundColor: "color-mix(in srgb, var(--muted) 72%, var(--card))",
+                                                        borderColor: "color-mix(in srgb, var(--primary) 20%, var(--border))",
+                                                        color: "var(--primary)",
+                                                    }}
+                                                >
+                                                    <ChevronDown className="h-4 w-4" />
+                                                </span>
+                                            </summary>
+
+                                            <div className="border-t px-5 pb-5 pt-5 md:px-6 md:pb-6" style={{ borderColor: "color-mix(in srgb, var(--primary) 12%, var(--border))" }}>
+                                                {architecture.summary && (
+                                                    <p
+                                                        className="mb-5 text-sm leading-7 break-keep [text-wrap:pretty] md:text-base"
+                                                        style={{ color: "color-mix(in srgb, var(--muted-foreground) 88%, var(--foreground))" }}
+                                                    >
+                                                        {architecture.summary}
+                                                    </p>
+                                                )}
+
+                                                {architecture.imageSrc && (
+                                                    <div
+                                                        className="mb-5 overflow-hidden rounded-[24px] border"
+                                                        style={{
+                                                            backgroundColor: "color-mix(in srgb, var(--card) 82%, var(--background))",
+                                                            borderColor: "color-mix(in srgb, var(--primary) 18%, var(--border))",
+                                                        }}
+                                                    >
+                                                        <div className="relative aspect-[16/8] w-full">
+                                                            <Image
+                                                                src={architecture.imageSrc}
+                                                                alt={architecture.imageAlt ?? architecture.title}
+                                                                fill
+                                                                className="object-cover"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                                                    {architecture.diagram.map((node) => (
+                                                        <div
+                                                            key={node.label}
+                                                            className="relative rounded-3xl border p-4"
+                                                            style={{
+                                                                backgroundColor: "color-mix(in srgb, var(--card) 76%, var(--background))",
+                                                                borderColor: "color-mix(in srgb, var(--primary) 18%, var(--border))",
+                                                            }}
+                                                        >
+                                                            <h5 className="text-sm font-semibold md:text-base" style={{ color: "var(--foreground)" }}>
+                                                                {node.label}
+                                                            </h5>
+                                                            <p
+                                                                className="mt-2 text-sm leading-6 break-keep [text-wrap:pretty]"
+                                                                style={{ color: "color-mix(in srgb, var(--muted-foreground) 88%, var(--foreground))" }}
+                                                            >
+                                                                {node.description}
+                                                            </p>
+                                                        </div>
+                                                    ))}
+                                                </div>
+
+                                                {architecture.highlights && architecture.highlights.length > 0 && (
+                                                    <div className="mt-5">
+                                                        <h5
+                                                            className="mb-3 text-sm font-semibold break-keep [text-wrap:balance]"
+                                                            style={{ color: "color-mix(in srgb, var(--primary) 72%, var(--foreground))" }}
+                                                        >
+                                                            설계 포인트
+                                                        </h5>
+                                                        <ul className="space-y-2">
+                                                            {architecture.highlights.map((item) => (
+                                                                <li
+                                                                    key={item}
+                                                                    className="rounded-2xl border px-4 py-3 text-sm leading-6 break-keep [text-wrap:pretty] md:text-base"
+                                                                    style={{
+                                                                        backgroundColor: "color-mix(in srgb, var(--card) 78%, var(--background))",
+                                                                        borderColor: "color-mix(in srgb, var(--primary) 16%, var(--border))",
+                                                                        color: "color-mix(in srgb, var(--foreground) 92%, var(--background))",
+                                                                    }}
+                                                                >
+                                                                    {item}
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </details>
+                                    )}
+
                                     {caseStudies.length > 0 ? (
                                         <div className="space-y-6">
                                             {caseStudies.map((caseStudy) => (
@@ -256,8 +390,8 @@ export function DetailModal({
                                                     key={caseStudy.title}
                                                     className="rounded-[28px] border p-5 md:p-6"
                                                     style={{
-                                                        backgroundColor: "color-mix(in srgb, var(--card) 86%, var(--popover))",
-                                                        borderColor: "color-mix(in srgb, var(--primary) 22%, var(--border))",
+                                                        backgroundColor: sectionSurfaceColor,
+                                                        borderColor: sectionBorderColor,
                                                         boxShadow: "0 18px 30px -24px rgba(17, 24, 39, 0.22), 0 0 0 1px color-mix(in srgb, var(--primary) 8%, transparent)",
                                                     }}
                                                 >
@@ -339,8 +473,8 @@ export function DetailModal({
                                                     key={section.title}
                                                     className="rounded-[28px] border p-5 md:p-6"
                                                     style={{
-                                                        backgroundColor: "color-mix(in srgb, var(--card) 86%, var(--popover))",
-                                                        borderColor: "color-mix(in srgb, var(--primary) 22%, var(--border))",
+                                                        backgroundColor: sectionSurfaceColor,
+                                                        borderColor: sectionBorderColor,
                                                         boxShadow: "0 18px 30px -24px rgba(17, 24, 39, 0.22), 0 0 0 1px color-mix(in srgb, var(--primary) 8%, transparent)",
                                                     }}
                                                 >

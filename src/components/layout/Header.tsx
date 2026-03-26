@@ -8,10 +8,10 @@ import { Sun, Moon } from "lucide-react";
 
 const navItems = [
     { name: "About", href: "#about" },
-    { name: "Competency", href: "#competency" },
-    { name: "Skills", href: "#skills" },
-    { name: "Experience", href: "#experience" },
     { name: "Projects", href: "#projects" },
+    { name: "Competency", href: "#competency" },
+    { name: "Experience", href: "#experience" },
+    { name: "Skills", href: "#skills" },
     { name: "Education", href: "#education" },
 ];
 
@@ -73,81 +73,77 @@ export function Header() {
         <motion.header
             initial={{ y: -100 }}
             animate={{ y: 0 }}
-            className="fixed top-4 z-50 w-full px-4 md:px-6 pointer-events-none"
+            className="fixed top-0 z-50 w-full px-4 pt-4 md:px-6 md:pt-5 pointer-events-none"
         >
-            <div className="glass container mx-auto flex h-16 items-center justify-between px-6 rounded-full max-w-5xl pointer-events-auto bg-white/40 dark:bg-black/40 backdrop-blur-xl border border-white/20 shadow-lg">
-                <div className="flex items-center gap-2">
-                    <Link href="/" className="text-xl font-bold tracking-tighter text-gradient-primary">
-                        박재현&apos;s Portfolio
-                    </Link>
-                </div>
-                <nav className="hidden md:flex gap-6">
-                    {navItems.map((item) => {
-                        const isActive = activeSection === item.href.substring(1);
-                        return (
-                            <Link
-                                key={item.href}
-                                href={item.href}
-                                onClick={(e) => scrollToSection(e, item.href)}
-                                className="text-sm font-medium transition-all relative group"
-                                style={{
-                                    color: isActive ? 'var(--primary)' : 'var(--muted-foreground)',
-                                    fontWeight: isActive ? 700 : 500
-                                }}
-                            >
-                                {item.name}
-                                {isActive && (
-                                    <motion.span
-                                        layoutId="activeNav"
-                                        className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-[#6667AB] to-purple-500"
-                                    />
-                                )}
-                                {!isActive && (
-                                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#6667AB] to-purple-500 transition-all group-hover:w-full" />
-                                )}
+            <div className="container mx-auto max-w-6xl pointer-events-auto">
+                <div className="section-shell px-4 py-3 md:px-6">
+                    <div className="section-shell-inner flex items-center justify-between gap-6">
+                        <div className="flex items-center gap-4">
+                            <Link href="/" className="flex flex-col leading-none">
+                                <span className="text-[11px] font-semibold uppercase tracking-[0.28em]" style={{ color: "var(--primary)" }}>
+                                    Fullstack Developer
+                                </span>
+                                <span className="text-2xl font-extrabold tracking-tight" style={{ color: "var(--foreground)" }}>
+                                    박재현&apos;s Portfolio
+                                </span>
                             </Link>
-                        )
-                    })}
-                </nav>
-
-                {/* Theme Toggle Switch */}
-                <div className="flex items-center gap-2">
-                    <motion.span
-                        key={mounted ? resolvedTheme : "unmounted"}
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="text-xs font-medium"
-                        style={{ color: 'var(--muted-foreground)' }}
-                    >
-                        {mounted && (resolvedTheme === 'dark' ? 'Dark' : 'Light')}
-                    </motion.span>
-                    <button
-                        onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-                        className="relative w-14 h-7 rounded-full bg-slate-200 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 shadow-inner"
-                        aria-label="Toggle theme"
-                        disabled={!mounted}
-                    >
-                        {/* Sliding Circle */}
-                        <motion.span
-                            layout
-                            transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                            className="absolute top-0.5 w-6 h-6 rounded-full bg-white dark:bg-slate-900 shadow-md flex items-center justify-center"
-                            style={{ left: mounted && resolvedTheme === 'dark' ? 28 : 2 }}
-                        >
-                            <motion.div
+                        </div>
+                        <nav className="hidden md:flex items-center gap-5">
+                            {navItems.map((item) => {
+                                const isActive = activeSection === item.href.substring(1);
+                                return (
+                                    <Link
+                                        key={item.href}
+                                        href={item.href}
+                                        onClick={(e) => scrollToSection(e, item.href)}
+                                        className="relative px-1 pb-1 text-sm font-semibold transition-colors"
+                                        style={{
+                                            color: isActive ? "var(--foreground)" : "var(--muted-foreground)",
+                                        }}
+                                    >
+                                        {item.name}
+                                        <span
+                                            className="absolute bottom-0 left-0 h-px transition-all duration-300"
+                                            style={{
+                                                width: isActive ? "100%" : "0%",
+                                                backgroundColor: "var(--primary)",
+                                            }}
+                                        />
+                                    </Link>
+                                );
+                            })}
+                        </nav>
+                        <div className="flex items-center gap-3">
+                            <motion.span
                                 key={mounted ? resolvedTheme : "unmounted"}
-                                initial={{ rotate: -90, opacity: 0 }}
-                                animate={{ rotate: 0, opacity: 1 }}
-                                transition={{ duration: 0.2 }}
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="hidden text-[11px] font-semibold uppercase tracking-[0.24em] md:inline-flex"
+                                style={{ color: 'var(--muted-foreground)' }}
                             >
-                                {mounted && (
-                                    resolvedTheme === 'dark'
-                                        ? <Moon className="w-3.5 h-3.5 text-blue-400" />
-                                        : <Sun className="w-3.5 h-3.5 text-amber-500" />
-                                )}
-                            </motion.div>
-                        </motion.span>
-                    </button>
+                                {mounted && (resolvedTheme === 'dark' ? 'Dark' : 'Light')}
+                            </motion.span>
+                            <button
+                                onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+                                className="relative h-10 w-10 rounded-full border transition-colors"
+                                style={{
+                                    borderColor: "color-mix(in srgb, var(--primary) 18%, var(--border))",
+                                    backgroundColor: "color-mix(in srgb, var(--surface-soft) 90%, white)",
+                                    color: "var(--foreground)",
+                                }}
+                                aria-label="Toggle theme"
+                                disabled={!mounted}
+                            >
+                                <span className="flex h-full w-full items-center justify-center">
+                                    {mounted && (
+                                        resolvedTheme === 'dark'
+                                            ? <Moon className="h-4 w-4 text-blue-300" />
+                                            : <Sun className="h-4 w-4 text-amber-500" />
+                                    )}
+                                </span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </motion.header>

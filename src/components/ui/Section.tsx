@@ -19,21 +19,21 @@ export function Section({
     return (
         <section
             id={id}
-            className={cn("relative py-16 md:py-24", className)}
+            className={cn("relative py-10 md:py-14", className)}
             {...props}
         >
             <div className="container mx-auto px-4 md:px-6">
                 {(title || subtitle) && (
-                    <div className={cn("mb-10 space-y-2", centered && "text-center")}>
-                        {title && (
-                            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl [text-wrap:balance] break-keep" style={{ color: 'var(--foreground)' }}>
-                                {title}
-                            </h2>
-                        )}
+                    <div className={cn("mb-8 space-y-3 md:mb-9", centered && "text-center")}>
                         {subtitle && (
-                            <p className={cn("max-w-[700px] break-keep [text-wrap:pretty] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed", centered && "mx-auto")} style={{ color: 'var(--muted-foreground)' }}>
+                            <p className={cn("text-sm font-semibold tracking-[0.04em]", centered && "mx-auto")} style={{ color: "var(--primary)" }}>
                                 {subtitle}
                             </p>
+                        )}
+                        {title && (
+                            <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl md:text-[2.75rem] [text-wrap:balance] break-keep" style={{ color: 'var(--foreground)' }}>
+                                {title}
+                            </h2>
                         )}
                     </div>
                 )}

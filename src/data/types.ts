@@ -4,6 +4,17 @@ export interface ModalContent {
     gallery?: string[];
     links?: Record<string, string>;
     metaBadges?: string[];
+    architecture?: {
+        title: string;
+        summary?: string;
+        imageSrc?: string;
+        imageAlt?: string;
+        diagram: {
+            label: string;
+            description: string;
+        }[];
+        highlights?: string[];
+    };
     caseStudies?: {
         title: string;
         problem: string[];

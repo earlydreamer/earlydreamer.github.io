@@ -1,0 +1,57 @@
+<svg width="1600" height="800" viewBox="0 0 1600 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="800" rx="40" fill="#F4F7FB"/>
+  <rect x="48" y="48" width="1504" height="704" rx="32" fill="url(#bg)"/>
+
+  <rect x="108" y="120" width="270" height="130" rx="28" fill="#FDFEFF" stroke="#91B4D8" stroke-width="4"/>
+  <text x="243" y="170" text-anchor="middle" fill="#355C86" font-size="32" font-family="Pretendard, sans-serif" font-weight="700">React Client</text>
+  <text x="243" y="210" text-anchor="middle" fill="#4F7299" font-size="24" font-family="Pretendard, sans-serif">Messenger · Kanban · Calendar</text>
+
+  <rect x="470" y="96" width="340" height="178" rx="30" fill="#FFFFFF" stroke="#A8B4E0" stroke-width="4"/>
+  <text x="640" y="146" text-anchor="middle" fill="#4A5695" font-size="34" font-family="Pretendard, sans-serif" font-weight="700">Spring Boot API</text>
+  <text x="640" y="186" text-anchor="middle" fill="#6773AB" font-size="24" font-family="Pretendard, sans-serif">Auth · Project · Chat · Schedule</text>
+  <text x="640" y="224" text-anchor="middle" fill="#6773AB" font-size="22" font-family="Pretendard, sans-serif">Service Layer + JPA</text>
+
+  <rect x="910" y="120" width="250" height="130" rx="28" fill="#F6FFFC" stroke="#91C6B8" stroke-width="4"/>
+  <text x="1035" y="170" text-anchor="middle" fill="#2D6B5B" font-size="32" font-family="Pretendard, sans-serif" font-weight="700">SSE</text>
+  <text x="1035" y="210" text-anchor="middle" fill="#4A8878" font-size="24" font-family="Pretendard, sans-serif">Real-time Messaging</text>
+
+  <rect x="1250" y="96" width="236" height="178" rx="30" fill="#FFFDFC" stroke="#D9B98F" stroke-width="4"/>
+  <text x="1368" y="146" text-anchor="middle" fill="#7D5C30" font-size="30" font-family="Pretendard, sans-serif" font-weight="700">Infra</text>
+  <text x="1368" y="184" text-anchor="middle" fill="#957249" font-size="22" font-family="Pretendard, sans-serif">MySQL · EC2 · NGINX</text>
+  <text x="1368" y="216" text-anchor="middle" fill="#957249" font-size="22" font-family="Pretendard, sans-serif">GitHub Actions</text>
+
+  <rect x="380" y="398" width="400" height="166" rx="30" fill="#FFFDFE" stroke="#D9A7C2" stroke-width="4"/>
+  <text x="580" y="450" text-anchor="middle" fill="#96466D" font-size="32" font-family="Pretendard, sans-serif" font-weight="700">Collaboration Features</text>
+  <text x="580" y="492" text-anchor="middle" fill="#AE6086" font-size="24" font-family="Pretendard, sans-serif">Team workflow inside one service</text>
+  <text x="580" y="528" text-anchor="middle" fill="#AE6086" font-size="22" font-family="Pretendard, sans-serif">chat · board · meeting entry</text>
+
+  <rect x="860" y="398" width="430" height="166" rx="30" fill="#FBFFFD" stroke="#A4C7A7" stroke-width="4"/>
+  <text x="1075" y="450" text-anchor="middle" fill="#3D6E43" font-size="32" font-family="Pretendard, sans-serif" font-weight="700">Delivery Pipeline</text>
+  <text x="1075" y="492" text-anchor="middle" fill="#58885E" font-size="24" font-family="Pretendard, sans-serif">build → deploy → verify</text>
+  <text x="1075" y="528" text-anchor="middle" fill="#58885E" font-size="22" font-family="Pretendard, sans-serif">repeatable CI/CD flow</text>
+
+  <path d="M378 185H456" stroke="#7FA5CE" stroke-width="8" stroke-linecap="round"/>
+  <path d="M810 185H900" stroke="#7D88C4" stroke-width="8" stroke-linecap="round"/>
+  <path d="M1160 185H1240" stroke="#6FAF9F" stroke-width="8" stroke-linecap="round"/>
+  <path d="M640 274V378" stroke="#B883A2" stroke-width="8" stroke-linecap="round"/>
+  <path d="M640 480H840" stroke="#9AB99B" stroke-width="8" stroke-linecap="round"/>
+  <path d="M1035 250V378" stroke="#6FAF9F" stroke-width="8" stroke-linecap="round"/>
+
+  <circle cx="456" cy="185" r="10" fill="#7FA5CE"/>
+  <circle cx="900" cy="185" r="10" fill="#7D88C4"/>
+  <circle cx="1240" cy="185" r="10" fill="#6FAF9F"/>
+  <circle cx="640" cy="378" r="10" fill="#B883A2"/>
+  <circle cx="840" cy="480" r="10" fill="#9AB99B"/>
+  <circle cx="1035" cy="378" r="10" fill="#6FAF9F"/>
+
+  <text x="118" y="666" fill="#355C86" font-size="24" font-family="Pretendard, sans-serif" font-weight="700">Pick Team Architecture</text>
+  <text x="118" y="706" fill="#4F7299" font-size="22" font-family="Pretendard, sans-serif">협업 기능과 실시간 메시징, 자동 배포를 하나의 흐름으로 묶은 운영 구조</text>
+
+  <defs>
+    <linearGradient id="bg" x1="164" y1="116" x2="1436" y2="688" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F7FBFF"/>
+      <stop offset="0.56" stop-color="#FFF8FC"/>
+      <stop offset="1" stop-color="#F6FFF9"/>
+    </linearGradient>
+  </defs>
+</svg>

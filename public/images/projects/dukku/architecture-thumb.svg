@@ -1,0 +1,55 @@
+<svg width="1600" height="800" viewBox="0 0 1600 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="800" rx="40" fill="#F7F3EE"/>
+  <rect x="48" y="48" width="1504" height="704" rx="32" fill="url(#bg)"/>
+  <rect x="100" y="120" width="260" height="120" rx="28" fill="#FFF9F2" stroke="#D9B88E" stroke-width="4"/>
+  <text x="230" y="168" text-anchor="middle" fill="#6D4C2C" font-size="32" font-family="Pretendard, sans-serif" font-weight="700">React</text>
+  <text x="230" y="208" text-anchor="middle" fill="#8A6A49" font-size="24" font-family="Pretendard, sans-serif">Frontend</text>
+
+  <rect x="470" y="92" width="300" height="176" rx="30" fill="#FFFFFF" stroke="#C7AFD8" stroke-width="4"/>
+  <text x="620" y="142" text-anchor="middle" fill="#5C4B87" font-size="34" font-family="Pretendard, sans-serif" font-weight="700">Spring Boot</text>
+  <text x="620" y="182" text-anchor="middle" fill="#7C6AA4" font-size="24" font-family="Pretendard, sans-serif">API / Domain Modules</text>
+  <text x="620" y="220" text-anchor="middle" fill="#7C6AA4" font-size="22" font-family="Pretendard, sans-serif">Product · Order · Payment · Deposit</text>
+
+  <rect x="900" y="120" width="260" height="120" rx="28" fill="#FFF7FB" stroke="#E2A3BE" stroke-width="4"/>
+  <text x="1030" y="168" text-anchor="middle" fill="#924565" font-size="32" font-family="Pretendard, sans-serif" font-weight="700">Kafka</text>
+  <text x="1030" y="208" text-anchor="middle" fill="#A55C7A" font-size="24" font-family="Pretendard, sans-serif">Event Flow</text>
+
+  <rect x="1250" y="92" width="220" height="176" rx="30" fill="#FFFDF8" stroke="#D6C48D" stroke-width="4"/>
+  <text x="1360" y="142" text-anchor="middle" fill="#7A6531" font-size="30" font-family="Pretendard, sans-serif" font-weight="700">Data Layer</text>
+  <text x="1360" y="184" text-anchor="middle" fill="#917A44" font-size="22" font-family="Pretendard, sans-serif">PostgreSQL</text>
+  <text x="1360" y="216" text-anchor="middle" fill="#917A44" font-size="22" font-family="Pretendard, sans-serif">Redis · Elasticsearch</text>
+
+  <rect x="470" y="398" width="460" height="160" rx="30" fill="#FFFCF6" stroke="#D9B88E" stroke-width="4"/>
+  <text x="700" y="450" text-anchor="middle" fill="#6D4C2C" font-size="32" font-family="Pretendard, sans-serif" font-weight="700">Modular Monolith</text>
+  <text x="700" y="492" text-anchor="middle" fill="#8A6A49" font-size="24" font-family="Pretendard, sans-serif">Bounded Context 분리 후 점진적 MSA 전환</text>
+  <text x="700" y="528" text-anchor="middle" fill="#8A6A49" font-size="22" font-family="Pretendard, sans-serif">SAGA · Idempotency · Pessimistic Lock</text>
+
+  <rect x="1010" y="398" width="340" height="160" rx="30" fill="#FFFFFF" stroke="#B3C9B0" stroke-width="4"/>
+  <text x="1180" y="450" text-anchor="middle" fill="#3F6B3B" font-size="32" font-family="Pretendard, sans-serif" font-weight="700">Infra</text>
+  <text x="1180" y="492" text-anchor="middle" fill="#537F4F" font-size="24" font-family="Pretendard, sans-serif">Docker · Tailscale</text>
+  <text x="1180" y="528" text-anchor="middle" fill="#537F4F" font-size="22" font-family="Pretendard, sans-serif">Shared test environment</text>
+
+  <path d="M360 180H450" stroke="#B68D63" stroke-width="8" stroke-linecap="round"/>
+  <path d="M770 180H890" stroke="#8E76B8" stroke-width="8" stroke-linecap="round"/>
+  <path d="M1160 180H1240" stroke="#C97A9C" stroke-width="8" stroke-linecap="round"/>
+  <path d="M700 268V378" stroke="#B68D63" stroke-width="8" stroke-linecap="round"/>
+  <path d="M1030 240V320C1030 353.137 1003.14 380 970 380H930" stroke="#C97A9C" stroke-width="8" stroke-linecap="round"/>
+  <path d="M930 478H990" stroke="#90AD89" stroke-width="8" stroke-linecap="round"/>
+
+  <circle cx="450" cy="180" r="10" fill="#B68D63"/>
+  <circle cx="890" cy="180" r="10" fill="#8E76B8"/>
+  <circle cx="1240" cy="180" r="10" fill="#C97A9C"/>
+  <circle cx="700" cy="378" r="10" fill="#B68D63"/>
+  <circle cx="930" cy="478" r="10" fill="#90AD89"/>
+
+  <text x="118" y="666" fill="#6D4C2C" font-size="24" font-family="Pretendard, sans-serif" font-weight="700">DUKKU Architecture</text>
+  <text x="118" y="706" fill="#8A6A49" font-size="22" font-family="Pretendard, sans-serif">취미 기반 거래 도메인을 중심으로 설계한 점진적 확장 구조</text>
+
+  <defs>
+    <linearGradient id="bg" x1="152" y1="112" x2="1438" y2="688" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF8EF"/>
+      <stop offset="0.55" stop-color="#F8F4FF"/>
+      <stop offset="1" stop-color="#F3FAF6"/>
+    </linearGradient>
+  </defs>
+</svg>
