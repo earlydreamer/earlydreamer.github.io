@@ -56,7 +56,7 @@ export const PROJECTS: Project[] = [
                     ],
                 },
                 {
-                    title: "LLM을 적극 활용한 프로토타입으로 기획 병목을 줄이고 제품의 이미지를 팀 전체에 빠르게 공유",
+                    title: "LLM 프로토타입으로 기획 병목을 줄이고 팀의 인식을 빠르게 통일",
                     problem: [
                         "텍스트 설명만으로는 이해가 어긋나기 쉬웠고, 와이어프레임은 그리는 데 시간이 많이 들었습니다.",
                     ],
@@ -69,7 +69,7 @@ export const PROJECTS: Project[] = [
                     ],
                 },
                 {
-                    title: "Tailscale 네트워크로 테스트용 Docker 컨테이너를 분리해 로컬 개발환경의 리소스 최적화",
+                    title: "Tailscale 기반 컨테이너 분리로 로컬 리소스 부담 완화",
                     problem: [
                         "Elasticsearch, Redis, Kafka, PostgreSQL 등 여러 컨테이너가 동시에 필요해 일부 팀원 PC에서 사양 이슈가 발생했습니다.",
                     ],

@@ -59,6 +59,9 @@ export function DetailModal({
         dialogRef,
     });
 
+    const sectionHeadingClassName = "mb-4 text-base font-semibold md:text-lg";
+    const sectionHeadingStyle = { color: "var(--foreground)" } as const;
+
     return (
         <AnimatePresence>
             {isOpen && (
@@ -154,7 +157,7 @@ export function DetailModal({
 
                                     {links.length > 0 && (
                                         <div className="mb-8">
-                                            <h4 className="mb-3 text-sm font-semibold" style={{ color: "color-mix(in srgb, var(--primary) 72%, var(--foreground))" }}>
+                                            <h4 className={sectionHeadingClassName} style={sectionHeadingStyle}>
                                                 관련 링크
                                             </h4>
                                             <div className="flex flex-wrap gap-3">
@@ -197,7 +200,7 @@ export function DetailModal({
                                                         borderColor: "color-mix(in srgb, var(--primary) 18%, var(--border))",
                                                     }}
                                                 >
-                                                    <h4 className="mb-3 text-sm font-semibold" style={{ color: "color-mix(in srgb, var(--primary) 72%, var(--foreground))" }}>
+                                                    <h4 className={sectionHeadingClassName} style={sectionHeadingStyle}>
                                                         개요
                                                     </h4>
                                                     <div className="flex flex-wrap gap-2">
@@ -226,7 +229,7 @@ export function DetailModal({
                                                         borderColor: "color-mix(in srgb, var(--primary) 18%, var(--border))",
                                                     }}
                                                 >
-                                                    <h4 className="mb-3 text-sm font-semibold" style={{ color: "color-mix(in srgb, var(--primary) 72%, var(--foreground))" }}>
+                                                    <h4 className={sectionHeadingClassName} style={sectionHeadingStyle}>
                                                         기술 스택
                                                     </h4>
                                                     <div className="flex flex-wrap gap-2">
@@ -261,7 +264,7 @@ export function DetailModal({
                                                         boxShadow: "0 18px 30px -24px rgba(17, 24, 39, 0.22), 0 0 0 1px color-mix(in srgb, var(--primary) 8%, transparent)",
                                                     }}
                                                 >
-                                                    <h4 className="mb-5 text-base font-semibold md:text-lg" style={{ color: "var(--foreground)" }}>
+                                                    <h4 className={sectionHeadingClassName} style={sectionHeadingStyle}>
                                                         {caseStudy.title}
                                                     </h4>
 
@@ -344,7 +347,7 @@ export function DetailModal({
                                                         boxShadow: "0 18px 30px -24px rgba(17, 24, 39, 0.22), 0 0 0 1px color-mix(in srgb, var(--primary) 8%, transparent)",
                                                     }}
                                                 >
-                                                    <h4 className="mb-4 text-base font-semibold md:text-lg" style={{ color: "var(--foreground)" }}>
+                                                    <h4 className={sectionHeadingClassName} style={sectionHeadingStyle}>
                                                         {section.title}
                                                     </h4>
                                                     <ul className="space-y-2">
