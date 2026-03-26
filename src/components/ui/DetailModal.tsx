@@ -61,6 +61,8 @@ export function DetailModal({
 
     const sectionHeadingClassName = "mb-4 text-base font-semibold md:text-lg";
     const sectionHeadingStyle = { color: "var(--foreground)" } as const;
+    const sectionSurfaceColor = "color-mix(in srgb, var(--card) 86%, var(--popover))";
+    const sectionBorderColor = "color-mix(in srgb, var(--primary) 22%, var(--border))";
 
     return (
         <AnimatePresence>
@@ -116,7 +118,7 @@ export function DetailModal({
                                                         style={{
                                                             backgroundColor: "var(--muted)",
                                                             color: "var(--muted-foreground)",
-                                                            borderColor: "var(--border)",
+                                                            borderColor: "color-mix(in srgb, var(--primary) 18%, var(--border))",
                                                         }}
                                                     >
                                                         {period}
@@ -196,8 +198,8 @@ export function DetailModal({
                                                 <section
                                                     className="rounded-3xl border p-4 md:col-span-2"
                                                     style={{
-                                                        backgroundColor: "color-mix(in srgb, var(--muted) 82%, var(--card))",
-                                                        borderColor: "color-mix(in srgb, var(--primary) 18%, var(--border))",
+                                                        backgroundColor: sectionSurfaceColor,
+                                                        borderColor: sectionBorderColor,
                                                     }}
                                                 >
                                                     <h4 className={sectionHeadingClassName} style={sectionHeadingStyle}>
@@ -225,8 +227,8 @@ export function DetailModal({
                                                 <section
                                                     className="rounded-3xl border p-4 md:col-span-2"
                                                     style={{
-                                                        backgroundColor: "color-mix(in srgb, var(--muted) 82%, var(--card))",
-                                                        borderColor: "color-mix(in srgb, var(--primary) 18%, var(--border))",
+                                                        backgroundColor: sectionSurfaceColor,
+                                                        borderColor: sectionBorderColor,
                                                     }}
                                                 >
                                                     <h4 className={sectionHeadingClassName} style={sectionHeadingStyle}>
@@ -259,8 +261,8 @@ export function DetailModal({
                                                     key={caseStudy.title}
                                                     className="rounded-[28px] border p-5 md:p-6"
                                                     style={{
-                                                        backgroundColor: "color-mix(in srgb, var(--card) 86%, var(--popover))",
-                                                        borderColor: "color-mix(in srgb, var(--primary) 22%, var(--border))",
+                                                        backgroundColor: sectionSurfaceColor,
+                                                        borderColor: sectionBorderColor,
                                                         boxShadow: "0 18px 30px -24px rgba(17, 24, 39, 0.22), 0 0 0 1px color-mix(in srgb, var(--primary) 8%, transparent)",
                                                     }}
                                                 >
@@ -342,8 +344,8 @@ export function DetailModal({
                                                     key={section.title}
                                                     className="rounded-[28px] border p-5 md:p-6"
                                                     style={{
-                                                        backgroundColor: "color-mix(in srgb, var(--card) 86%, var(--popover))",
-                                                        borderColor: "color-mix(in srgb, var(--primary) 22%, var(--border))",
+                                                        backgroundColor: sectionSurfaceColor,
+                                                        borderColor: sectionBorderColor,
                                                         boxShadow: "0 18px 30px -24px rgba(17, 24, 39, 0.22), 0 0 0 1px color-mix(in srgb, var(--primary) 8%, transparent)",
                                                     }}
                                                 >
