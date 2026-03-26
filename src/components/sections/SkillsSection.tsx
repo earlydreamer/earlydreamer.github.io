@@ -138,7 +138,7 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                             tabIndex={-1}
                             className="mx-4 flex max-h-[80vh] flex-col overflow-hidden rounded-[28px] border shadow-2xl"
                             style={{
-                                backgroundColor: "var(--popover)",
+                                backgroundColor: "color-mix(in srgb, var(--background) 98%, white)",
                                 borderColor: "color-mix(in srgb, var(--primary) 24%, var(--border))",
                             }}
                         >
@@ -147,7 +147,7 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                 className="border-b p-6 pb-4"
                                 style={{
                                     borderColor: "color-mix(in srgb, var(--primary) 18%, var(--border))",
-                                    background: "linear-gradient(180deg, color-mix(in srgb, var(--card) 92%, var(--popover)), color-mix(in srgb, var(--muted) 88%, var(--card)))",
+                                    background: "linear-gradient(180deg, color-mix(in srgb, var(--background) 97%, white), color-mix(in srgb, var(--muted) 92%, var(--background)))",
                                 }}
                             >
                                 <div className="flex items-center justify-between mb-4">
@@ -212,7 +212,7 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                 <div
                                     className="rounded-2xl p-3 text-sm"
                                     style={{
-                                        backgroundColor: "color-mix(in srgb, var(--muted) 84%, var(--card))",
+                                        backgroundColor: "color-mix(in srgb, var(--background) 96%, white)",
                                         border: "1px solid color-mix(in srgb, var(--primary) 22%, var(--border))",
                                     }}
                                 >
@@ -265,7 +265,7 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                                             key={skill.name}
                                                             className="rounded-[22px] border p-4 transition-all"
                                                             style={{
-                                                                backgroundColor: "color-mix(in srgb, var(--card) 86%, var(--popover))",
+                                                                backgroundColor: "color-mix(in srgb, var(--background) 96%, white)",
                                                                 borderColor: "color-mix(in srgb, var(--primary) 24%, var(--border))",
                                                                 boxShadow: "0 18px 30px -24px rgba(17, 24, 39, 0.24), 0 0 0 1px color-mix(in srgb, var(--primary) 8%, transparent)",
                                                             }}
@@ -275,13 +275,13 @@ function SkillModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                                                                     {skill.name}
                                                                 </span>
                                                                 <div className="flex items-center gap-2">
-                                                                    <span
-                                                                        className="rounded-full px-2 py-1 text-xs font-medium"
-                                                                        style={{
-                                                                            backgroundColor: "color-mix(in srgb, var(--card) 74%, var(--background))",
-                                                                            color: cardTextColor,
-                                                                            border: "1px solid color-mix(in srgb, var(--primary) 16%, var(--border))",
-                                                                        }}
+                                                                        <span
+                                                                            className="rounded-full px-2 py-1 text-xs font-medium"
+                                                                            style={{
+                                                                                backgroundColor: "color-mix(in srgb, var(--background) 92%, white)",
+                                                                                color: cardTextColor,
+                                                                                border: "1px solid color-mix(in srgb, var(--primary) 16%, var(--border))",
+                                                                            }}
                                                                     >
                                                                         {skill.category}
                                                                     </span>
