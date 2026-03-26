@@ -11,8 +11,8 @@ export default function Home() {
       <ProfileSection />
       <CompetencySection />
       <SkillsSection />
-      <ExperienceSection />
       <ProjectsSection />
+      <ExperienceSection />
       <EducationSection />
     </div>
   );
