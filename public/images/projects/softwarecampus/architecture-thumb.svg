@@ -1,0 +1,129 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text {
+        font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "맑은 고딕", sans-serif;
+        letter-spacing: -0.2px;
+      }
+    </style>
+    <linearGradient id="campus-bg" x1="0" y1="0" x2="1200" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8F6FF"/>
+      <stop offset="1" stop-color="#EDE7FF"/>
+    </linearGradient>
+    <marker id="campus-arr" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L0,7 L9,3.5 z" fill="#8872CC"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="900" rx="20" fill="url(#campus-bg)"/>
+
+  <!-- Title y=50 -->
+  <text x="600" y="50" text-anchor="middle" font-size="20" font-weight="700" fill="#2A1F6E">SoftwareCampus — Monolithic Operation Structure</text>
+  <text x="600" y="75" text-anchor="middle" font-size="12" fill="#6B5FA8">3-Tier 아키텍처 · 역할 기반 접근 제어 (USER / ACADEMY / ADMIN)</text>
+
+  <!-- L1 UIs y=120 -->
+  <rect x="200" y="120" width="370" height="80" rx="12" fill="#EAE4FF" stroke="#B4A8EE" stroke-width="1.5"/>
+  <rect x="200" y="120" width="70" height="20" rx="10" fill="#7160C8"/>
+  <text x="235" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="white">USER UI</text>
+  <text x="385" y="155" text-anchor="middle" font-size="14" font-weight="700" fill="#2A1F6E">일반 사용자 접속 화면</text>
+  <text x="385" y="175" text-anchor="middle" font-size="11" fill="#6B5FA8">부트캠프 탐색 · 수강 후기 작성 · 정보 비교</text>
+
+  <rect x="630" y="120" width="370" height="80" rx="12" fill="#EAE4FF" stroke="#B4A8EE" stroke-width="1.5"/>
+  <rect x="630" y="120" width="118" height="20" rx="10" fill="#8872CC"/>
+  <text x="689" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="white">ACADEMY / ADMIN</text>
+  <text x="815" y="155" text-anchor="middle" font-size="14" font-weight="700" fill="#2A1F6E">콘텐츠 · 시스템 운영 화면</text>
+  <text x="815" y="175" text-anchor="middle" font-size="11" fill="#6B5FA8">기관 정보 관리 · 배너 대시보드 · 권한 승인</text>
+
+  <!-- Flow to Gateway gap 40 (200 to 240) -->
+  <path d="M 385,200 L 385,215 L 600,215" stroke="#8872CC" stroke-width="2.5" fill="none"/>
+  <path d="M 815,200 L 815,215 L 600,215" stroke="#8872CC" stroke-width="2.5" fill="none"/>
+  <path d="M 600,215 L 600,235" stroke="#8872CC" stroke-width="2.5" marker-end="url(#campus-arr)"/>
+
+  <!-- L2 Gateway y=240 -->
+  <rect x="450" y="240" width="300" height="70" rx="12" fill="#E4DEFF" stroke="#B4A8EE" stroke-width="1.5"/>
+  <rect x="450" y="240" width="78" height="20" rx="10" fill="#8872CC"/>
+  <text x="489" y="254" text-anchor="middle" font-size="10" font-weight="700" fill="white">GATEWAY</text>
+  <text x="600" y="275" text-anchor="middle" font-size="13" font-weight="700" fill="#2A1F6E">NGINX 리버스 프록시</text>
+  <text x="600" y="295" text-anchor="middle" font-size="11" fill="#6B5FA8">Static Content Serving · API Proxy</text>
+
+  <path d="M 600,310 L 600,345" stroke="#8872CC" stroke-width="2.5" marker-end="url(#campus-arr)"/>
+
+  <!-- L3 Monolith y=350 -->
+  <rect x="150" y="350" width="900" height="190" rx="14" fill="#F3F0FF" stroke="#C2B6EE" stroke-width="1.5"/>
+  <rect x="150" y="350" width="148" height="20" rx="10" fill="#6B5FA8"/>
+  <text x="224" y="364" text-anchor="middle" font-size="10" font-weight="700" fill="white">SPRING BOOT MONOLITH</text>
+  <text x="600" y="385" text-anchor="middle" font-size="15" font-weight="700" fill="#2A1F6E">레이어드 아키텍처 기반 모놀리식 서버</text>
+
+  <!-- Auth Layer inside Monolith -->
+  <rect x="180" y="410" width="840" height="50" rx="9" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.5"/>
+  <text x="600" y="432" text-anchor="middle" font-size="13" font-weight="700" fill="#2A1F6E">JWT &amp; Spring Security (PreAuthorize)</text>
+  <text x="600" y="450" text-anchor="middle" font-size="11" fill="#6B5FA8">토큰 파싱 · @PreAuthorize 기반 API 접근 제어</text>
+
+  <!-- Domains -->
+  <rect x="180" y="475" width="160" height="50" rx="9" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="260" y="499" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">Academy Module</text>
+  <text x="260" y="515" text-anchor="middle" font-size="10" fill="#6B5FA8">부트캠프/학원 관리</text>
+
+  <rect x="350" y="475" width="160" height="50" rx="9" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="430" y="499" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">Review Module</text>
+  <text x="430" y="515" text-anchor="middle" font-size="10" fill="#6B5FA8">수강생 평점 및 리뷰</text>
+
+  <rect x="520" y="475" width="160" height="50" rx="9" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="600" y="499" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">Content Module</text>
+  <text x="600" y="515" text-anchor="middle" font-size="10" fill="#6B5FA8">과정 탐색 및 검색 필터</text>
+
+  <rect x="690" y="475" width="160" height="50" rx="9" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="770" y="499" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">Admin Operation</text>
+  <text x="770" y="515" text-anchor="middle" font-size="10" fill="#6B5FA8">사이트 배너 운영 관리</text>
+
+  <rect x="860" y="475" width="160" height="50" rx="9" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="940" y="499" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">File Transfer</text>
+  <text x="940" y="515" text-anchor="middle" font-size="10" fill="#6B5FA8">이미지 압축 및 보관</text>
+
+  <!-- L4 Data Stores y=580 -->
+  <rect x="150" y="580" width="900" height="135" rx="14" fill="#F8F6FF" stroke="#C2B6EE" stroke-width="1.5"/>
+  <rect x="150" y="580" width="100" height="20" rx="10" fill="#8872CC"/>
+  <text x="200" y="594" text-anchor="middle" font-size="10" font-weight="700" fill="white">DATA STORES</text>
+
+  <!-- Flow to Data gap 40 (540 to 580) -->
+  <path d="M 350,540 L 350,575" stroke="#8872CC" stroke-width="2.5" marker-end="url(#campus-arr)"/>
+  <path d="M 600,540 L 600,575" stroke="#8872CC" stroke-width="2.5" marker-end="url(#campus-arr)"/>
+  <path d="M 850,540 L 850,575" stroke="#8872CC" stroke-width="2.5" marker-end="url(#campus-arr)"/>
+
+  <!-- DB Blocks -->
+  <rect x="200" y="615" width="250" height="80" rx="12" fill="#EAE4FF" stroke="#C2B6EE" stroke-width="1.5"/>
+  <text x="325" y="642" text-anchor="middle" font-size="14" font-weight="700" fill="#2A1F6E">MySQL RDBMS</text>
+  <text x="325" y="664" text-anchor="middle" font-size="11" fill="#6B5FA8">JPA 연관 관계 매핑 · ORM 쿼리</text>
+  <text x="325" y="682" text-anchor="middle" font-size="11" fill="#6B5FA8">부트캠프 과정/계정 테이블 저장</text>
+
+  <rect x="475" y="615" width="250" height="80" rx="12" fill="#EAE4FF" stroke="#C2B6EE" stroke-width="1.5"/>
+  <text x="600" y="642" text-anchor="middle" font-size="14" font-weight="700" fill="#2A1F6E">Redis Cache</text>
+  <text x="600" y="664" text-anchor="middle" font-size="11" fill="#6B5FA8">액세스 토큰 블랙리스트 · 세션 무효화</text>
+  <text x="600" y="682" text-anchor="middle" font-size="11" fill="#6B5FA8">처리량 최소화 기반 빠른 조회</text>
+
+  <rect x="750" y="615" width="250" height="80" rx="12" fill="#EAE4FF" stroke="#C2B6EE" stroke-width="1.5"/>
+  <text x="875" y="642" text-anchor="middle" font-size="14" font-weight="700" fill="#2A1F6E">Amazon S3 Storage</text>
+  <text x="875" y="664" text-anchor="middle" font-size="11" fill="#6B5FA8">로고 · 화면 이미지 대용량 저장</text>
+  <text x="875" y="682" text-anchor="middle" font-size="11" fill="#6B5FA8">Presigned URL 기반 클라이언트 직접 업로드</text>
+
+  <!-- L5 Infra y=755 -->
+  <rect x="150" y="755" width="900" height="65" rx="13" fill="#E6E0FF" stroke="#C0B4EE" stroke-width="1.5"/>
+  <rect x="150" y="755" width="126" height="20" rx="10" fill="#6B5FA8"/>
+  <text x="213" y="769" text-anchor="middle" font-size="10" font-weight="700" fill="white">INFRA &amp; DEPLOY</text>
+
+  <!-- Infra items inside -->
+  <rect x="180" y="785" width="150" height="22" rx="6" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="255" y="800" text-anchor="middle" font-size="11" font-weight="700" fill="#2A1F6E">Docker Container</text>
+
+  <rect x="340" y="785" width="150" height="22" rx="6" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="415" y="800" text-anchor="middle" font-size="11" font-weight="700" fill="#2A1F6E">Amazon EC2 Host</text>
+
+  <rect x="500" y="785" width="150" height="22" rx="6" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="575" y="800" text-anchor="middle" font-size="11" font-weight="700" fill="#2A1F6E">GH Actions CI/CD</text>
+
+  <rect x="660" y="785" width="150" height="22" rx="6" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="735" y="800" text-anchor="middle" font-size="11" font-weight="700" fill="#2A1F6E">GHCR 이미지 저장소</text>
+
+  <rect x="820" y="785" width="150" height="22" rx="6" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="895" y="800" text-anchor="middle" font-size="11" font-weight="700" fill="#2A1F6E">AWS IAM Roles</text>
+</svg>

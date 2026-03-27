@@ -1,0 +1,181 @@
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; letter-spacing: -0.2px; }
+    </style>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="1200" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8F6FF"/><stop offset="1" stop-color="#EDE7FF"/>
+    </linearGradient>
+    <marker id="arr" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L0,7 L9,3.5 z" fill="#8872CC"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="1200" rx="20" fill="url(#bg)"/>
+
+  <!-- TITLE -->
+  <text x="600" y="46" text-anchor="middle" font-size="21" font-weight="700" fill="#2A1F6E">DUKKU — MSA Commerce Architecture</text>
+  <text x="600" y="70" text-anchor="middle" font-size="11" fill="#6B5FA8">Modular Monolith → MSA 전환 · 서비스별 독립 DB · 이벤트 기반 통신</text>
+
+  <!-- L1: FRONTEND  x=400 w=400  y=90~168 -->
+  <rect x="400" y="90" width="400" height="78" rx="12" fill="#EAE4FF" stroke="#B4A8EE" stroke-width="1.5"/>
+  <rect x="400" y="90" width="88" height="20" rx="10" fill="#6B5FA8"/>
+  <text x="444" y="104" text-anchor="middle" font-size="10" font-weight="700" fill="white">FRONTEND</text>
+  <text x="600" y="133" text-anchor="middle" font-size="14" font-weight="700" fill="#2A1F6E">React SPA</text>
+  <text x="600" y="152" text-anchor="middle" font-size="11" fill="#6B5FA8">Vite · React Router · 상품 탐색 / 주문 결제</text>
+
+  <!-- arrow: x=600, y=168 -> y=208 -->
+  <path d="M600,168 L600,208" stroke="#8872CC" stroke-width="2.5" marker-end="url(#arr)"/>
+
+  <!-- L2: GATEWAY  x=400 w=400  y=212~282 -->
+  <rect x="400" y="212" width="400" height="70" rx="12" fill="#E4DEFF" stroke="#B4A8EE" stroke-width="1.5"/>
+  <rect x="400" y="212" width="78" height="20" rx="10" fill="#6B5FA8"/>
+  <text x="439" y="226" text-anchor="middle" font-size="10" font-weight="700" fill="white">GATEWAY</text>
+  <text x="600" y="251" text-anchor="middle" font-size="13" font-weight="700" fill="#2A1F6E">NGINX 인그레스</text>
+  <text x="600" y="270" text-anchor="middle" font-size="11" fill="#6B5FA8">NGINX · API / WebSocket Routing · SSL</text>
+
+  <!-- arrow: x=600, y=282 -> y=318 -->
+  <path d="M600,282 L600,318" stroke="#8872CC" stroke-width="2.5" marker-end="url(#arr)"/>
+
+  <!-- L3: MSA SERVICES  x=40 w=1120  y=322~542 -->
+  <rect x="40" y="322" width="1120" height="186" rx="14" fill="#F3F0FF" stroke="#C2B6EE" stroke-width="1.5"/>
+  <rect x="40" y="322" width="126" height="20" rx="10" fill="#6B5FA8"/>
+  <text x="103" y="336" text-anchor="middle" font-size="10" font-weight="700" fill="white">MSA SERVICES</text>
+  <text x="1150" y="340" text-anchor="end" font-size="10" fill="#9888C8">Spring Boot · 도메인별 독립 서비스</text>
+
+  <!-- Row1: 5 services  y=356 h=55  inner x=60..1140=1080px  box_w=204 gap=15 -->
+  <!-- x: 60, 279, 498, 717, 936  centers: 162, 381, 600, 819, 1038 -->
+  <rect x="60"   y="356" width="204" height="55" rx="9" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="162"  y="379" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">auth-service</text>
+  <text x="162"  y="397" text-anchor="middle" font-size="10" fill="#6B5FA8">JWT · 소셜 로그인 · 권한 제어</text>
+
+  <rect x="279"  y="356" width="204" height="55" rx="9" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="381"  y="379" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">user-service</text>
+  <text x="381"  y="397" text-anchor="middle" font-size="10" fill="#6B5FA8">프로필 · 팔로우 · 유저 검색</text>
+
+  <rect x="498"  y="356" width="204" height="55" rx="9" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="600"  y="379" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">product-service</text>
+  <text x="600"  y="397" text-anchor="middle" font-size="10" fill="#6B5FA8">상품 카탈로그 · Presigned URL</text>
+
+  <rect x="717"  y="356" width="204" height="55" rx="9" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="819"  y="379" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">order-service</text>
+  <text x="819"  y="397" text-anchor="middle" font-size="10" fill="#6B5FA8">주문 생성 · 상태 워크플로우</text>
+
+  <rect x="936"  y="356" width="204" height="55" rx="9" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="1038" y="379" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">settlement-service</text>
+  <text x="1038" y="397" text-anchor="middle" font-size="10" fill="#6B5FA8">입점사 자동 정산 배치</text>
+
+  <!-- Row2: 4 services  y=428 h=58  box_w=258 gap=16 -->
+  <!-- x: 60, 334, 608, 882  centers: 189, 463, 737, 1011 -->
+  <rect x="60"  y="428" width="258" height="58" rx="9" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="189" y="452" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">payment-service</text>
+  <text x="189" y="470" text-anchor="middle" font-size="10" fill="#6B5FA8">PG 연동 · 멱등 키 · SAGA 트랜잭션</text>
+
+  <rect x="334" y="428" width="258" height="58" rx="9" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="463" y="452" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">deposit-service</text>
+  <text x="463" y="470" text-anchor="middle" font-size="10" fill="#6B5FA8">예치금 · 비관적 락 · Inbox-Lite</text>
+
+  <rect x="608" y="428" width="258" height="58" rx="9" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="737" y="452" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">coupon-service</text>
+  <text x="737" y="470" text-anchor="middle" font-size="10" fill="#6B5FA8">마케팅 쿠폰 발행 · 사용 제어</text>
+
+  <rect x="882" y="428" width="258" height="58" rx="9" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="1011" y="452" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">ai-service</text>
+  <text x="1011" y="470" text-anchor="middle" font-size="10" fill="#6B5FA8">GPT-4o 추천 · 스트리밍 챗봇</text>
+
+  <!-- FORK ARROWS: MSA bottom y=508 -> L4 top y=584 -->
+  <!-- Left arrow to DATA STORES center x=310 -->
+  <path d="M310,508 L310,580" stroke="#8872CC" stroke-width="2.5" marker-end="url(#arr)"/>
+  <!-- Right arrow to EVENT BUS center x=890 -->
+  <path d="M890,508 L890,580" stroke="#8872CC" stroke-width="2.5" marker-end="url(#arr)"/>
+
+  <!-- Fork labels at midpoint of arrows (y=544), right of left / left of right -->
+  <text x="322" y="548" text-anchor="start" font-size="10" font-weight="700" fill="#8872CC">READ / WRITE</text>
+  <text x="878" y="548" text-anchor="end"   font-size="10" font-weight="700" fill="#8872CC">PUBLISH / SUBSCRIBE</text>
+
+  <!-- L4 LEFT: DATA STORES  x=40 w=540  y=584~794 -->
+  <rect x="40" y="584" width="540" height="210" rx="14" fill="#F3F0FF" stroke="#C2B6EE" stroke-width="1.5"/>
+  <rect x="40" y="584" width="100" height="20" rx="10" fill="#6B5FA8"/>
+  <text x="90" y="598" text-anchor="middle" font-size="10" font-weight="700" fill="white">DATA STORES</text>
+  <text x="310" y="622" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">서비스별 독립 데이터 저장소</text>
+  <text x="310" y="640" text-anchor="middle" font-size="11" fill="#6B5FA8">JPA · 비관적 락 · 분산 락 · 전문 검색</text>
+
+  <!-- DB chips row1  y=652 h=36  each w=242 gap=16  x: 60, 318  centers: 181, 439 -->
+  <rect x="60"  y="652" width="242" height="36" rx="8" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="181" y="675" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">PostgreSQL</text>
+  <rect x="318" y="652" width="242" height="36" rx="8" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="439" y="675" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">Redis (캐시 · 세션)</text>
+
+  <!-- DB chips row2  y=700 h=36 -->
+  <rect x="60"  y="700" width="242" height="36" rx="8" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="181" y="723" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">Elasticsearch</text>
+  <rect x="318" y="700" width="242" height="36" rx="8" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="439" y="723" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">Amazon S3</text>
+
+  <!-- DB per Service note  y=748 h=26  x=60 w=500 center=310 -->
+  <rect x="60" y="748" width="500" height="26" rx="6" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="310" y="765" text-anchor="middle" font-size="10" fill="#6B5FA8">각 서비스는 독립적인 PostgreSQL 스키마를 소유</text>
+
+  <!-- L4 RIGHT: EVENT BUS  x=620 w=540  y=584~794 -->
+  <rect x="620" y="584" width="540" height="210" rx="14" fill="#F3F0FF" stroke="#C2B6EE" stroke-width="1.5"/>
+  <rect x="620" y="584" width="86" height="20" rx="10" fill="#6B5FA8"/>
+  <text x="663" y="598" text-anchor="middle" font-size="10" font-weight="700" fill="white">EVENT BUS</text>
+  <text x="890" y="622" text-anchor="middle" font-size="16" font-weight="700" fill="#2A1F6E">Redpanda</text>
+  <text x="890" y="642" text-anchor="middle" font-size="11" fill="#6B5FA8">Kafka 호환 메시지 브로커 · SAGA Choreography · 보상 트랜잭션</text>
+  <text x="890" y="660" text-anchor="middle" font-size="11" fill="#6B5FA8">Inbox-Lite 패턴 — at-least-once 메시지 보장</text>
+
+  <!-- LOGGING PIPELINE header -->
+  <text x="890" y="682" text-anchor="middle" font-size="10" font-weight="700" fill="#8872CC">LOGGING PIPELINE</text>
+
+  <!-- Pipeline flow: Kafka Appender -> log-consumer -> MongoDB  y=688 h=40 -->
+  <!-- x positions: Appender:640~792, gap+arrow:792~820, log-consumer:820~962, gap+arrow:962~990, MongoDB:990~1142 -->
+  <rect x="640" y="690" width="150" height="40" rx="7" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="715" y="706" text-anchor="middle" font-size="10" font-weight="700" fill="#2A1F6E">Kafka Appender</text>
+  <text x="715" y="722" text-anchor="middle" font-size="9"  fill="#6B5FA8">각 MSA 로그 발행</text>
+
+  <path d="M790,710 L818,710" stroke="#8872CC" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="822" y="690" width="150" height="40" rx="7" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="897" y="706" text-anchor="middle" font-size="10" font-weight="700" fill="#2A1F6E">log-consumer</text>
+  <text x="897" y="722" text-anchor="middle" font-size="9"  fill="#6B5FA8">Kafka 전용 컨슈머</text>
+
+  <path d="M972,710 L1000,710" stroke="#8872CC" stroke-width="2" marker-end="url(#arr)"/>
+
+  <rect x="1004" y="690" width="146" height="40" rx="7" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="1077" y="706" text-anchor="middle" font-size="10" font-weight="700" fill="#2A1F6E">MongoDB</text>
+  <text x="1077" y="722" text-anchor="middle" font-size="9"  fill="#6B5FA8">로그 영구 적재</text>
+
+  <!-- Pipeline summary bar  y=742 h=28 -->
+  <rect x="640" y="742" width="500" height="28" rx="6" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="890" y="760" text-anchor="middle" font-size="10" fill="#6B5FA8">로그 → Kafka Topic → log-consumer 소비 → MongoDB 적재 → Grafana 조회</text>
+
+  <!-- MONITORING ARROWS: from y=794 to y=836 -->
+  <!-- Left arrow: x=310 (DATA STORES center) -->
+  <path d="M310,794 L310,836" stroke="#8872CC" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text x="322" y="818" text-anchor="start" font-size="10" font-weight="700" fill="#8872CC">메트릭 수집</text>
+  <!-- Right arrow: x=890 (EVENT BUS center, Grafana → MongoDB log query) -->
+  <path d="M890,794 L890,836" stroke="#8872CC" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text x="878" y="818" text-anchor="end" font-size="10" font-weight="700" fill="#8872CC">로그 조회</text>
+
+  <!-- L5: MONITORING  x=40 w=1120  y=840~968 -->
+  <rect x="40" y="840" width="1120" height="128" rx="14" fill="#F3F0FF" stroke="#C2B6EE" stroke-width="1.5"/>
+  <rect x="40" y="840" width="96" height="20" rx="10" fill="#6B5FA8"/>
+  <text x="88" y="854" text-anchor="middle" font-size="10" font-weight="700" fill="white">MONITORING</text>
+
+  <!-- Prometheus  x=60 w=530 y=880~948 (vertically centered) -->
+  <rect x="60" y="880" width="530" height="68" rx="10" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="325" y="910" text-anchor="middle" font-size="13" font-weight="700" fill="#2A1F6E">Prometheus</text>
+  <text x="325" y="930" text-anchor="middle" font-size="11" fill="#6B5FA8">MSA 서비스 메트릭 주기적 수집 · 시계열 저장</text>
+
+  <!-- Grafana  x=610 w=530 y=880~948 -->
+  <rect x="610" y="880" width="530" height="68" rx="10" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="875" y="910" text-anchor="middle" font-size="13" font-weight="700" fill="#2A1F6E">Grafana</text>
+  <text x="875" y="930" text-anchor="middle" font-size="11" fill="#6B5FA8">메트릭 대시보드 · Infinity 플러그인으로 MongoDB 로그 직접 쿼리</text>
+
+  <!-- L6: INFRA  x=40 w=1120  y=1008~1090 -->
+  <rect x="40" y="1008" width="1120" height="82" rx="13" fill="#E6E0FF" stroke="#C0B4EE" stroke-width="1.5"/>
+  <rect x="40" y="1008" width="62" height="20" rx="10" fill="#6B5FA8"/>
+  <text x="71" y="1022" text-anchor="middle" font-size="10" font-weight="700" fill="white">INFRA</text>
+  <text x="600" y="1044" text-anchor="middle" font-size="13" font-weight="700" fill="#2A1F6E">Kubernetes (k3d) · Amazon EC2 · GitHub Actions CI/CD · Tailscale Team VPN</text>
+  <text x="600" y="1064" text-anchor="middle" font-size="11" fill="#6B5FA8">컨테이너 오케스트레이션 및 무중단 자동 배포 파이프라인</text>
+</svg>

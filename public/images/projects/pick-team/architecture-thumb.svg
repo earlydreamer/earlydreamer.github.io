@@ -1,0 +1,117 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text {
+        font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "맑은 고딕", sans-serif;
+        letter-spacing: -0.2px;
+      }
+    </style>
+    <linearGradient id="pick-bg" x1="0" y1="0" x2="1200" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8F6FF"/>
+      <stop offset="1" stop-color="#EDE7FF"/>
+    </linearGradient>
+    <marker id="pick-arr" markerWidth="9" markerHeight="7" refX="9" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L0,7 L9,3.5 z" fill="#8872CC"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="900" rx="20" fill="url(#pick-bg)"/>
+
+  <!-- Title y=50 -->
+  <text x="600" y="50" text-anchor="middle" font-size="20" font-weight="700" fill="#2A1F6E">Pick Team — Collaboration Platform Architecture</text>
+  <text x="600" y="75" text-anchor="middle" font-size="12" fill="#6B5FA8">모놀리식 메인 API와 실시간 이벤트 서버 분리 구성</text>
+
+  <!-- L1 y=120 -->
+  <rect x="250" y="120" width="320" height="80" rx="12" fill="#EAE4FF" stroke="#B4A8EE" stroke-width="1.5"/>
+  <rect x="250" y="120" width="100" height="20" rx="10" fill="#7160C8"/>
+  <text x="300" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="white">WORKSPACE</text>
+  <text x="410" y="158" text-anchor="middle" font-size="14" font-weight="700" fill="#2A1F6E">스페이스 / 칸반 화면</text>
+  <text x="410" y="178" text-anchor="middle" font-size="11" fill="#6B5FA8">팀 모집 · 칸반 · 달력 · 회의</text>
+
+  <rect x="630" y="120" width="320" height="80" rx="12" fill="#EAE4FF" stroke="#B4A8EE" stroke-width="1.5"/>
+  <rect x="630" y="120" width="108" height="20" rx="10" fill="#8872CC"/>
+  <text x="684" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="white">MESSENGER</text>
+  <text x="790" y="158" text-anchor="middle" font-size="14" font-weight="700" fill="#2A1F6E">알림 및 채팅 화면</text>
+  <text x="790" y="178" text-anchor="middle" font-size="11" fill="#6B5FA8">실시간 메시지 송수신 · SSE</text>
+
+  <!-- Merge to L2 gap 40 (200 to 240) -->
+  <path d="M 410,200 L 410,215 L 600,215" stroke="#8872CC" stroke-width="2.5" fill="none"/>
+  <path d="M 790,200 L 790,215 L 600,215" stroke="#8872CC" stroke-width="2.5" fill="none"/>
+  <path d="M 600,215 L 600,235" stroke="#8872CC" stroke-width="2.5" marker-end="url(#pick-arr)"/>
+
+  <!-- L2 Gateway y=240 -->
+  <rect x="450" y="240" width="300" height="70" rx="12" fill="#E4DEFF" stroke="#B4A8EE" stroke-width="1.5"/>
+  <rect x="450" y="240" width="78" height="20" rx="10" fill="#8872CC"/>
+  <text x="489" y="254" text-anchor="middle" font-size="10" font-weight="700" fill="white">GATEWAY</text>
+  <text x="600" y="275" text-anchor="middle" font-size="13" font-weight="700" fill="#2A1F6E">NGINX Reverse Proxy</text>
+  <text x="600" y="292" text-anchor="middle" font-size="11" fill="#6B5FA8">SSL · API / WebSocket Routing</text>
+
+  <!-- Fork to L3 & L4 gap 40 (310 to 350) -->
+  <path d="M 600,310 L 600,325 L 360,325 L 360,345" stroke="#8872CC" stroke-width="2.5" fill="none" marker-end="url(#pick-arr)"/>
+  <path d="M 600,325 L 840,325 L 840,345" stroke="#8872CC" stroke-width="2.5" fill="none" marker-end="url(#pick-arr)"/>
+
+  <!-- L3 y=350 -->
+  <rect x="150" y="350" width="420" height="190" rx="14" fill="#F3F0FF" stroke="#C2B6EE" stroke-width="1.5"/>
+  <rect x="150" y="350" width="148" height="20" rx="10" fill="#6B5FA8"/>
+  <text x="224" y="364" text-anchor="middle" font-size="10" font-weight="700" fill="white">SPRING BOOT MONOLITH</text>
+  <text x="360" y="390" text-anchor="middle" font-size="15" font-weight="700" fill="#2A1F6E">Main API Server</text>
+
+  <!-- Monolith Modules -->
+  <rect x="170" y="410" width="180" height="52" rx="8" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="260" y="434" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">공통 인증 (JWT)</text>
+  <text x="260" y="451" text-anchor="middle" font-size="10" fill="#6B5FA8">Spring Security Auth</text>
+
+  <rect x="370" y="410" width="180" height="52" rx="8" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="460" y="434" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">팀 · 일정 관리</text>
+  <text x="460" y="451" text-anchor="middle" font-size="10" fill="#6B5FA8">모집게시판 · 이벤트 캘린더</text>
+
+  <rect x="170" y="475" width="180" height="52" rx="8" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="260" y="499" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">소프트 삭제</text>
+  <text x="260" y="516" text-anchor="middle" font-size="10" fill="#6B5FA8">isDeleted · 삭제 취소(복구) 지원</text>
+
+  <rect x="370" y="475" width="180" height="52" rx="8" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="460" y="499" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">칸반 도메인</text>
+  <text x="460" y="516" text-anchor="middle" font-size="10" fill="#6B5FA8">보드 컬럼 · 상태 변경 기록</text>
+
+  <!-- L4 Realtime Layer y=350 -->
+  <rect x="630" y="350" width="420" height="190" rx="14" fill="#F3F0FF" stroke="#C2B6EE" stroke-width="1.5"/>
+  <rect x="630" y="350" width="110" height="20" rx="10" fill="#8872CC"/>
+  <text x="685" y="364" text-anchor="middle" font-size="10" font-weight="700" fill="white">REALTIME LAYER</text>
+  <text x="840" y="390" text-anchor="middle" font-size="15" font-weight="700" fill="#2A1F6E">실시간 이벤트 서버</text>
+
+  <rect x="650" y="410" width="380" height="52" rx="8" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="840" y="434" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">SSE + Redis Pub/Sub</text>
+  <text x="840" y="451" text-anchor="middle" font-size="10" fill="#6B5FA8">서버발 단방향 알림 · 채팅 메시지 Push 이벤트</text>
+
+  <rect x="650" y="475" width="180" height="52" rx="8" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="740" y="499" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">WebSocket (STOMP)</text>
+  <text x="740" y="516" text-anchor="middle" font-size="10" fill="#6B5FA8">실시간 타이핑 양방향 통신</text>
+
+  <rect x="850" y="475" width="180" height="52" rx="8" fill="#E2DCFF" stroke="#B2A8E4" stroke-width="1.2"/>
+  <text x="940" y="499" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">LiveKit WebRTC</text>
+  <text x="940" y="516" text-anchor="middle" font-size="10" fill="#6B5FA8">화상회의 P2P/SFU 렌더</text>
+
+  <!-- Merge to Data (L5) gap 40 (540 to 580) -->
+  <path d="M 360,540 L 360,555 L 480,555 L 480,575" stroke="#8872CC" stroke-width="2.5" fill="none" marker-end="url(#pick-arr)"/>
+  <path d="M 840,540 L 840,555 L 720,555 L 720,575" stroke="#8872CC" stroke-width="2.5" fill="none" marker-end="url(#pick-arr)"/>
+
+  <!-- Data y=580 -->
+  <rect x="250" y="580" width="700" height="130" rx="13" fill="#F3F0FF" stroke="#C2B6EE" stroke-width="1.5"/>
+  <rect x="250" y="580" width="100" height="20" rx="10" fill="#7160C8"/>
+  <text x="300" y="594" text-anchor="middle" font-size="10" font-weight="700" fill="white">DATA STORES</text>
+  <text x="600" y="612" text-anchor="middle" font-size="12" font-weight="700" fill="#2A1F6E">공유 데이터 저장소</text>
+
+  <rect x="270" y="630" width="315" height="60" rx="8" fill="#E4DEFF" stroke="#B4A8EE" stroke-width="1.2"/>
+  <text x="427" y="655" text-anchor="middle" font-size="14" font-weight="700" fill="#2A1F6E">MySQL Database</text>
+  <text x="427" y="675" text-anchor="middle" font-size="11" fill="#6B5FA8">Spring Data JPA · 서비스 도메인 영구 저장</text>
+
+  <rect x="615" y="630" width="315" height="60" rx="8" fill="#E4DEFF" stroke="#B4A8EE" stroke-width="1.2"/>
+  <text x="772" y="655" text-anchor="middle" font-size="14" font-weight="700" fill="#2A1F6E">Redis In-Memory</text>
+  <text x="772" y="675" text-anchor="middle" font-size="11" fill="#6B5FA8">조회 캐시 · Pub/Sub 채널 · 세션 관리</text>
+
+  <!-- Infra y=750 -->
+  <rect x="150" y="750" width="900" height="65" rx="12" fill="#E6E0FF" stroke="#9A8EE0" stroke-width="1.2"/>
+  <rect x="150" y="750" width="60" height="20" rx="10" fill="#7160C8"/>
+  <text x="180" y="764" text-anchor="middle" font-size="10" font-weight="700" fill="white">INFRA</text>
+  <text x="600" y="788" text-anchor="middle" font-size="13" font-weight="700" fill="#2A1F6E">Docker Container · Amazon EC2 · GitHub Actions CI/CD · cloudflared Tunneling</text>
+</svg>
