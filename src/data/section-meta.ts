@@ -27,7 +27,11 @@ export const SECTION_META = {
     },
     projects: {
         title: "Projects",
-        subtitle: "개발 관련 주요 포트폴리오 프로젝트입니다.",
+        subtitle: "개발 관련 주요 포트폴리오",
+    },
+    collaboration: {
+        title: "Workflow",
+        subtitle: "AI를 접목한 실제 작업 프로세스",
     },
     education: {
         title: "Education",
