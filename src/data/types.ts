@@ -4,6 +4,17 @@ export interface ModalContent {
     gallery?: string[];
     links?: Record<string, string>;
     metaBadges?: string[];
+    architecture?: {
+        title: string;
+        summary?: string;
+        imageSrc?: string;
+        imageAlt?: string;
+        diagram: {
+            label: string;
+            description: string;
+        }[];
+        highlights?: string[];
+    };
     caseStudies?: {
         title: string;
         problem: string[];
@@ -58,6 +69,15 @@ export interface Competency extends ModalExtendable {
     title: string;
     description: string;
     items: string[];
+}
+
+export interface CollaborationStep {
+    id: string;
+    step: string;
+    title: string;
+    description: string;
+    items: string[];
+    accent?: "ai" | "default";
 }
 
 // Education 인터페이스

@@ -21,6 +21,39 @@ export const PROJECTS: Project[] = [
         modalContent: {
             metaBadges: ["팀 프로젝트", "결제 및 예치금 도메인", "프론트엔드", "MSA 이벤트 흐름 설계", "로컬 개발환경 구축"],
             detailDescription: "취미 상품 도메인에 집중해 거래 구조를 단순화한 중고 거래 커머스 프로젝트입니다.\n결제,예치금 구현, 이벤트 흐름 설계, 프론트엔드 프로토타입, 로컬 개발환경 세팅을 맡았습니다.",
+            architecture: {
+                title: "DUKKU 아키텍처",
+                summary: "도메인별로 분리된 서비스 위에 상품 거래, 결제, 예치금, 정산 흐름을 얹고, Kafka 이벤트로 서비스 간 핵심 흐름을 연결한 MSA 구조를 구성했습니다.",
+                imageSrc: "/images/projects/dukku/architecture-thumb.svg",
+                imageAlt: "DUKKU 아키텍처 구조도",
+                diagram: [
+                    {
+                        label: "사용자 화면",
+                        description: "React 프론트엔드에서 상품 탐색, 주문, 결제 흐름을 처리하고, NGINX를 통해 API 요청을 각 도메인 서비스로 라우팅합니다.",
+                    },
+                    {
+                        label: "도메인 서비스",
+                        description: "auth, user, product, order, payment, deposit, settlement 같은 모듈이 책임별로 분리되어 핵심 비즈니스 로직을 담당합니다.",
+                    },
+                    {
+                        label: "이벤트 흐름",
+                        description: "Kafka 기반 메시징으로 결제, 예치금, 환불 같은 분산 흐름을 연결하고 멱등성과 보상 처리 구조를 유지합니다.",
+                    },
+                    {
+                        label: "데이터와 운영 환경",
+                        description: "PostgreSQL, Redis, Elasticsearch로 데이터를 처리하고, Spring Batch로 정산 배치를 수행합니다. Kubernetes 클러스터와 S3를 포함한 인프라로 로컬 개발과 운영 흐름을 함께 구성했습니다.",
+                    },
+                    {
+                        label: "모니터링과 로깅",
+                        description: "각 서비스의 메트릭은 Spring Actuator와 Micrometer를 통해 Prometheus가 수집하고 Grafana로 시각화합니다. 로그는 Kafka를 통해 log-consumer로 전달되어 MongoDB에 저장되며, Grafana Infinity 플러그인으로 메트릭과 로그를 단일 대시보드에서 함께 조회합니다.",
+                    },
+                ],
+                highlights: [
+                    "도메인 경계를 먼저 나누고 Modular Monolith에서 MSA로 전환할 수 있게 구조를 설계했습니다.",
+                    "결제와 예치금 흐름에는 SAGA, Inbox-Lite, 비관적 락을 조합해 정합성과 안정성을 확보했습니다.",
+                    "리소스 부담이 큰 컨테이너를 Tailscale 네트워크로 분리 운영해 팀 전체가 같은 개발 환경을 사용할 수 있게 구성했습니다.",
+                ],
+            },
             caseStudies: [
                 {
                     title: "Modular Monolith로 설계 후 MSA로 전환해 유연한 배포 전환 실현",
@@ -34,7 +67,7 @@ export const PROJECTS: Project[] = [
                     ],
                     result: [
                         "초반 구현 속도를 확보하면서도 Final 단계에서 비교적 자연스럽게 MSA로 이행할 수 있었습니다.",
-                        "구조를 언제 어떤 단계로 도입할지 판단한 경험으로 남았습니다.",
+                        "구조 전환의 시점과 방식을 직접 판단해볼 수 있었습니다.",
                     ],
                 },
                 {
@@ -51,7 +84,7 @@ export const PROJECTS: Project[] = [
                     ],
                     result: [
                         "분산 환경에서 생길 수 있는 정합성, 멱등성, 동시성 문제에 대응할 수 있었습니다.",
-                        "MSA 환경에서 어떤 패턴을 언제 써야 하는지 경험으로 익힐 수 있었습니다.",
+                        "MSA 환경에서 각 패턴의 적용 시점을 직접 익혔습니다.",
                         // 정량적 성과로 보완 필요
                     ],
                 },
@@ -102,6 +135,35 @@ export const PROJECTS: Project[] = [
         modalContent: {
             metaBadges: ["팀 프로젝트", "PM", "기획", "프론트엔드", "인프라 및 배포", "관리자 기능 및 대시보드"],
             detailDescription: "인증된 수강생 후기를 기반으로 부트캠프 정보를 비교할 수 있는 서비스입니다.\nPM, 프론트엔드, 관리자 기능, 인증/인가, 인프라 세팅과 배포를 맡았습니다.",
+            architecture: {
+                title: "SoftwareCampus 아키텍처",
+                summary: "단일 프론트엔드와 단일 백엔드 위에 USER·ACADEMY·ADMIN 세 역할의 운영 흐름을 얹고, 역할별 접근 제어와 파일 저장을 포함한 서비스 구조를 구성했습니다.",
+                imageSrc: "/images/projects/softwarecampus/architecture-thumb.svg",
+                imageAlt: "SoftwareCampus 아키텍처 구조도",
+                diagram: [
+                    {
+                        label: "사용자와 운영 화면",
+                        description: "React 프론트엔드에서 일반 사용자용 탐색 화면과 관리자·기관용 운영 화면을 함께 제공합니다.",
+                    },
+                    {
+                        label: "애플리케이션 계층",
+                        description: "Spring Boot 백엔드가 리뷰, 기관, 과정, 승인 요청, 배너 관리 같은 핵심 기능을 하나의 서비스로 처리합니다.",
+                    },
+                    {
+                        label: "권한과 인증",
+                        description: "JWT와 Spring Security를 기반으로 USER, ACADEMY, ADMIN 역할을 분리해 화면과 API 권한을 일관되게 제어합니다.",
+                    },
+                    {
+                        label: "데이터와 배포 환경",
+                        description: "MySQL, Redis, 객체 스토리지, Docker 기반 배포 흐름을 묶어 서비스 운영과 인수인계를 고려한 환경을 구성했습니다.",
+                    },
+                ],
+                highlights: [
+                    "서비스 이용 흐름과 운영 흐름이 같은 애플리케이션 안에서 자연스럽게 이어지도록 구조를 설계했습니다.",
+                    "기관과 관리자 권한을 분리해 승인과 수정 같은 운영 작업을 서비스 내부에서 처리할 수 있게 구현했습니다.",
+                    "IAM, GHCR, 배포 환경 구성을 함께 다루며 납품형 프로젝트에 맞는 운영 구조를 만들었습니다.",
+                ],
+            },
             caseStudies: [
                 {
                     title: "IAM 기반 인프라 권한 설계로 납품형 프로젝트에 맞는 운영 환경 구성",
@@ -115,8 +177,8 @@ export const PROJECTS: Project[] = [
                         "개발 편의보다 이후 운영과 인수인계를 우선해 인프라 권한 체계를 맞췄습니다.",
                     ],
                     result: [
-                        "운영 주체가 바뀌더라도 관리 가능한 납품형 인프라 구성을 경험할 수 있었습니다.",
-                        "애플리케이션 구현과 별개로 운영 권한 설계의 중요성을 체감한 프로젝트였습니다.",
+                        "운영 주체가 바뀌어도 유지 가능한 납품형 인프라 구조를 직접 구성했습니다.",
+                        "애플리케이션 구현과 별개로 운영 권한 설계의 중요성을 체감했습니다.",
                     ],
                 },
                 {
@@ -132,7 +194,7 @@ export const PROJECTS: Project[] = [
                     ],
                     result: [
                         "계정 유형별로 구분된 관리자 기능이 실제 서비스에 적용되도록 구현했습니다.",
-                        "기본적인 정보 제공과 글 작성 기능을 넘어, 데이터 승인과 운영 업무가 실제로 돌아가는 서비스 구조를 만드는 경험을 할 수 있었습니다."
+                        "단순 정보 제공을 넘어 데이터 승인과 운영 업무가 실제로 작동하는 서비스를 만들었습니다."
                         ,
                     ],
                 },
@@ -179,12 +241,41 @@ export const PROJECTS: Project[] = [
         modalContent: {
             metaBadges: ["팀 프로젝트", "부팀장", "기획", "PM", "인프라 및 배포", "메신저 구현"],
             detailDescription: "부트캠프 수강생을 위해 메신저, 칸반, 일정 관리, 화상회의를 제공하는 협업 플랫폼입니다.\n부팀장으로서 DevOps, 개발환경 세팅, SSE 기반 메신저 구현, CI/CD 구축을 맡았습니다.",
+            architecture: {
+                title: "Pick Team 아키텍처",
+                summary: "하나의 서비스에 협업 기능을 통합하되, 실시간 통신은 SSE·WebSocket/STOMP·LiveKit을 용도에 따라 분리해 처리합니다.",
+                imageSrc: "/images/projects/pick-team/architecture-thumb.svg",
+                imageAlt: "Pick Team 아키텍처 구조도",
+                diagram: [
+                    {
+                        label: "협업 워크스페이스",
+                        description: "React 프론트엔드에서 팀 모집, 칸반, 일정, 메신저, 화상회의 기능을 하나의 워크스페이스 흐름으로 연결합니다.",
+                    },
+                    {
+                        label: "서비스 백엔드",
+                        description: "Spring Boot가 팀 관리, 일정, 메신저, 칸반 등 협업 기능 전반의 비즈니스 로직을 담당하며, JWT 기반 인증과 Google·Kakao OAuth 소셜 로그인을 함께 지원합니다.",
+                    },
+                    {
+                        label: "실시간 계층",
+                        description: "비동기 메신저 알림은 SSE로, 화상회의 중 실시간 채팅은 WebSocket/STOMP로 처리합니다. 단방향 푸시와 양방향 통신의 용도 차이에 따라 프로토콜을 분리했으며, 화상회의는 LiveKit 기반으로 제공합니다.",
+                    },
+                    {
+                        label: "데이터와 운영 환경",
+                        description: "MySQL, Redis, Docker, GitHub Actions 기반 배포 흐름으로 협업 서비스 운영과 CI/CD를 구성했습니다.",
+                    },
+                ],
+                highlights: [
+                    "JWT 위에 Google·Kakao OAuth와 이메일 인증을 함께 구성해, 소셜 로그인과 자체 가입을 모두 지원하는 인증 구조를 갖췄습니다.",
+                    "SSE 기반 메신저와 배포 자동화를 함께 구축해 사용자 경험과 운영 효율을 같이 챙겼습니다.",
+                    "숙련도 편차가 있는 팀에서도 GitHub Flow와 AI 코드리뷰로 안정적인 협업 파이프라인을 유지했습니다.",
+                ],
+            },
             caseStudies: [
                 {
-                    title: "SSE 기반 비동기 메신저로 팀 커뮤니케이션의 즉시성 확보",
+                    title: "SSE를 통한 비동기 메신저의 실시간 메시지 수신 구현",
                     problem: [
                         "실시간 통신을 구현하되, 당시 프로젝트 범위와 학습 단계에 맞는 기술 선택이 필요했습니다.",
-                        "메신저는 실시간성이 중요하기 떄문에 메시지 수신 즉시 화면이 갱신돼야 했습니다.",
+                        "메신저는 실시간성이 중요하기 때문에 메시지 수신 즉시 화면이 갱신돼야 했습니다.",
                     ],
                     solution: [
                         "WebSocket, SSE, Polling을 비교한 끝에 당시 범위와 구조에 맞는 SSE를 채택했습니다.",
@@ -192,7 +283,7 @@ export const PROJECTS: Project[] = [
                         
                     ],
                     result: [
-                        "메시지를 보내는 즉시 상대방의 메신저 화면이 갱신되는 실시간 메신저가 성공적으로 구현되었습니다.",
+                        "메시지를 보내는 즉시 상대방 화면이 갱신되는 실시간 메신저를 구현했습니다.",
                     ],
                 },
                 {
@@ -207,7 +298,7 @@ export const PROJECTS: Project[] = [
                     ],
                     result: [
                         "사람 손으로 반복하던 배포를 GitHub Actions 기반 자동화 파이프라인으로 정리했습니다.",
-                        "실패 지점을 디버깅하며 CI/CD가 지속적으로 동작하도록 다듬은 경험으로 남았습니다.",
+                        "실패 지점을 직접 디버깅하며 CI/CD 파이프라인을 안정화했습니다.",
                     ],
                 },
                 {
@@ -223,7 +314,7 @@ export const PROJECTS: Project[] = [
                     ],
                     result: [
                         "숙련도 차이가 있는 팀에서도 개발 속도와 품질을 함께 관리할 수 있었습니다.",
-                        "팀이 안정적으로 개발할 수 있는 협업 파이프라인을 설계하고 운영한 경험으로 남았습니다.",
+                        "팀 전체가 안정적으로 개발할 수 있는 협업 파이프라인을 직접 설계하고 운영했습니다.",
                     ],
                 },
                 {
@@ -239,7 +330,7 @@ export const PROJECTS: Project[] = [
                     ],
                     result: [
                         "연관관계가 많은 엔티티에서도 LAZY 로딩을 유지하면서 soft-delete 정책을 적용할 수 있었습니다.",
-                        "편의성보다 도메인 제어권과 JPA 동작 특성을 우선해 정책을 재설계한 경험으로 남았습니다.",
+                        "편의성보다 도메인 제어권과 JPA 동작 특성을 우선해 정책을 직접 재설계했습니다.",
                     ],
                 },
                 {
@@ -254,7 +345,7 @@ export const PROJECTS: Project[] = [
                     ],
                     result: [
                         "EC2 유지비 없이 서비스를 계속 운영할 수 있는 구조로 옮길 수 있었습니다.",
-                        "외부 노출 구조를 단순화해 운영 부담을 줄였고, 인프라 이전과 운영 구조 변경까지 이어서 다뤄볼 수 있었습니다.",
+                        "외부 노출 구조를 단순화해 운영 부담을 낮추고, 인프라 이전부터 운영 구조 재정비까지 직접 다뤘습니다.",
                     ],
                 },
             ],

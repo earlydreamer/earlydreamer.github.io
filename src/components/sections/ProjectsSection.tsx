@@ -202,6 +202,7 @@ export function ProjectsSection() {
                     metaBadges={selectedProject.modalContent?.metaBadges}
                     techBadges={selectedProject.techStack}
                     summary={selectedProject.modalContent?.detailDescription}
+                    architecture={selectedProject.modalContent?.architecture}
                     caseStudies={selectedProject.modalContent?.caseStudies}
                     sections={selectedProject.modalContent?.sections}
                     links={[

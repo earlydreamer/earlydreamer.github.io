@@ -1,10 +1,10 @@
 "use client";
 
-import { useId, useRef } from "react";
+import { useId, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ExternalLink, X } from "lucide-react";
+import { ChevronDown, ExternalLink, Maximize2, X } from "lucide-react";
 import { useDialogBehavior } from "@/hooks/useDialogBehavior";
 
 interface DetailModalProps {
@@ -18,6 +18,17 @@ interface DetailModalProps {
     metaBadges?: string[];
     techBadges?: string[];
     summary?: string;
+    architecture?: {
+        title: string;
+        summary?: string;
+        imageSrc?: string;
+        imageAlt?: string;
+        diagram: {
+            label: string;
+            description: string;
+        }[];
+        highlights?: string[];
+    };
     caseStudies?: {
         title: string;
         problem: string[];
@@ -45,6 +56,7 @@ export function DetailModal({
     metaBadges = [],
     techBadges = [],
     summary,
+    architecture,
     caseStudies = [],
     sections = [],
     links = [],
@@ -52,6 +64,8 @@ export function DetailModal({
     const dialogRef = useRef<HTMLDivElement>(null);
     const titleId = useId();
     const descriptionId = useId();
+    const [isArchitectureOpen, setIsArchitectureOpen] = useState(false);
+    const [isImageZoomed, setIsImageZoomed] = useState(false);
 
     useDialogBehavior({
         isOpen,
@@ -65,6 +79,39 @@ export function DetailModal({
     const sectionBorderColor = "color-mix(in srgb, var(--primary) 22%, var(--border))";
 
     return (
+        <>
+        <AnimatePresence>
+            {isImageZoomed && architecture?.imageSrc && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.18 }}
+                    className="fixed inset-0 z-[70] flex items-center justify-center bg-black/88 p-4"
+                    onClick={() => setIsImageZoomed(false)}
+                    onKeyDown={(e) => e.key === "Escape" && setIsImageZoomed(false)}
+                >
+                    <button
+                        type="button"
+                        onClick={() => setIsImageZoomed(false)}
+                        className="absolute right-4 top-4 rounded-full bg-white/12 p-2.5 text-white transition-colors hover:bg-white/22"
+                        aria-label="닫기"
+                    >
+                        <X className="h-5 w-5" />
+                    </button>
+                    <motion.img
+                        initial={{ scale: 0.92, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0.92, opacity: 0 }}
+                        transition={{ type: "spring", damping: 26, stiffness: 280 }}
+                        src={architecture.imageSrc}
+                        alt={architecture.imageAlt ?? architecture.title}
+                        className="max-h-[90vh] max-w-[95vw] cursor-zoom-out rounded-2xl object-contain shadow-2xl"
+                        onClick={(e) => e.stopPropagation()}
+                    />
+                </motion.div>
+            )}
+        </AnimatePresence>
         <AnimatePresence>
             {isOpen && (
                 <>
@@ -254,6 +301,141 @@ export function DetailModal({
                                         </div>
                                     )}
 
+                                    {architecture && (
+                                        <details
+                                            className="mb-8 overflow-hidden rounded-[28px] border"
+                                            style={{
+                                                backgroundColor: sectionSurfaceColor,
+                                                borderColor: sectionBorderColor,
+                                            }}
+                                            onToggle={(event) => setIsArchitectureOpen((event.currentTarget as HTMLDetailsElement).open)}
+                                        >
+                                            <summary
+                                                className="cursor-pointer list-none px-5 py-4 md:px-6"
+                                                style={{ color: "var(--foreground)" }}
+                                            >
+                                                <div className="flex items-center justify-between gap-4">
+                                                    <div className="flex min-w-0 items-center gap-4">
+                                                        {architecture.imageSrc && (
+                                                            <div
+                                                                className="relative hidden h-14 w-24 shrink-0 overflow-hidden rounded-2xl border sm:block"
+                                                                style={{ borderColor: "color-mix(in srgb, var(--primary) 16%, var(--border))" }}
+                                                            >
+                                                                <Image
+                                                                    src={architecture.imageSrc}
+                                                                    alt={architecture.imageAlt ?? architecture.title}
+                                                                    fill
+                                                                    className="object-cover"
+                                                                />
+                                                            </div>
+                                                        )}
+                                                        <div className="min-w-0">
+                                                            <div className="text-base font-semibold">아키텍처 구조</div>
+                                                            {architecture.summary && (
+                                                                <p
+                                                                    className="mt-1 line-clamp-2 text-xs leading-5 break-keep [text-wrap:pretty] md:text-sm"
+                                                                    style={{ color: "var(--muted-foreground)" }}
+                                                                >
+                                                                    {architecture.summary}
+                                                                </p>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                    <span
+                                                        className="inline-flex shrink-0 items-center gap-1.5 text-xs font-semibold md:text-sm"
+                                                        style={{ color: "var(--primary)" }}
+                                                    >
+                                                        {isArchitectureOpen ? "접기" : "펼치기"}
+                                                        <ChevronDown className="h-4 w-4" />
+                                                    </span>
+                                                </div>
+                                            </summary>
+                                            <div className="space-y-5 border-t px-5 pb-5 pt-5 md:px-6 md:pb-6" style={{ borderColor: "color-mix(in srgb, var(--primary) 16%, var(--border))" }}>
+                                                {architecture.imageSrc && (
+                                                    <div
+                                                        className="group relative cursor-zoom-in overflow-hidden rounded-3xl border"
+                                                        style={{ borderColor: "color-mix(in srgb, var(--primary) 18%, var(--border))" }}
+                                                        onClick={() => setIsImageZoomed(true)}
+                                                        role="button"
+                                                        tabIndex={0}
+                                                        aria-label="아키텍처 이미지 확대"
+                                                        onKeyDown={(e) => e.key === "Enter" && setIsImageZoomed(true)}
+                                                    >
+                                                        <div className="relative aspect-[1/1] w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
+                                                            <Image
+                                                                src={architecture.imageSrc}
+                                                                alt={architecture.imageAlt ?? architecture.title}
+                                                                fill
+                                                                className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                                                            />
+                                                            <div className="absolute inset-0 flex items-end justify-end bg-black/0 p-3 transition-colors duration-200 group-hover:bg-black/10">
+                                                                <span className="flex items-center gap-1.5 rounded-full bg-black/40 px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow backdrop-blur-sm transition-opacity duration-200 group-hover:opacity-100">
+                                                                    <Maximize2 className="h-3 w-3" />
+                                                                    확대
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {architecture.summary && (
+                                                    <p
+                                                        className="text-sm leading-7 break-keep [text-wrap:pretty] md:text-base"
+                                                        style={{ color: "color-mix(in srgb, var(--muted-foreground) 88%, var(--foreground))" }}
+                                                    >
+                                                        {architecture.summary}
+                                                    </p>
+                                                )}
+
+                                                <div className="grid gap-3 md:grid-cols-2">
+                                                    {architecture.diagram.map((item, index) => {
+                                                        const isLastOdd = architecture.diagram.length % 2 !== 0 && index === architecture.diagram.length - 1;
+                                                        return (
+                                                        <div
+                                                            key={item.label}
+                                                            className={`rounded-3xl border p-4${isLastOdd ? " md:col-span-2" : ""}`}
+                                                            style={{
+                                                                backgroundColor: "color-mix(in srgb, var(--card) 78%, var(--background))",
+                                                                borderColor: "color-mix(in srgb, var(--primary) 16%, var(--border))",
+                                                            }}
+                                                        >
+                                                            <h5 className="mb-2 text-sm font-semibold md:text-base" style={{ color: "var(--foreground)" }}>
+                                                                {item.label}
+                                                            </h5>
+                                                            <p className="text-sm leading-6 break-keep [text-wrap:pretty]" style={{ color: "var(--muted-foreground)" }}>
+                                                                {item.description}
+                                                            </p>
+                                                        </div>
+                                                        );
+                                                    })}
+                                                </div>
+
+                                                {architecture.highlights && architecture.highlights.length > 0 && (
+                                                    <div>
+                                                        <h4 className={sectionHeadingClassName} style={sectionHeadingStyle}>
+                                                            설계 포인트
+                                                        </h4>
+                                                        <ul className="space-y-2">
+                                                            {architecture.highlights.map((item) => (
+                                                                <li
+                                                                    key={item}
+                                                                    className="rounded-2xl border px-4 py-3 text-sm leading-6 break-keep [text-wrap:pretty] md:text-base"
+                                                                    style={{
+                                                                        backgroundColor: "color-mix(in srgb, var(--card) 78%, var(--background))",
+                                                                        borderColor: "color-mix(in srgb, var(--primary) 16%, var(--border))",
+                                                                        color: "color-mix(in srgb, var(--foreground) 92%, var(--background))",
+                                                                    }}
+                                                                >
+                                                                    {item}
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </details>
+                                    )}
+
                                     {caseStudies.length > 0 ? (
                                         <div className="space-y-6">
                                             {caseStudies.map((caseStudy) => (
@@ -379,5 +561,6 @@ export function DetailModal({
                 </>
             )}
         </AnimatePresence>
+        </>
     );
 }

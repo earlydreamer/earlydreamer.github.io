@@ -6,6 +6,7 @@ export type {
     ExperienceProject,
     Experience,
     Competency,
+    CollaborationStep,
     Education,
     Skill,
     SecondarySkill,
@@ -18,6 +19,7 @@ export type {
 export { PROFILE } from './profile';
 export { SECTION_META } from './section-meta';
 export { COMPETENCIES } from './competency';
+export { WORKFLOW_STEPS } from './workflow';
 export { SKILLS, SECONDARY_SKILLS } from './skills';
 export { FREELANCE_EXPERIENCES, WORK_EXPERIENCES } from './experience';
 export { PROJECTS } from './projects';
